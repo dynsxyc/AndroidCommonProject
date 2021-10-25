@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.dyn.base.utils.BaseActionConstant"/>
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.weight.header.CommonHeaderModel" />
+
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        backgroundColor="@{vm.bg}"
+        bindStatusBar="@{vm.bindStatusBar}"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_header_bar_height"
+        tools:layout_height="@dimen/dp_45"
+        >
+<!--        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            viewHeight="@{vm.height}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />-->
+        <View
+            style="@style/LineDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            visible="@{vm.hasBottomLine}"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mHeaderBackTv"
+            inVisible="@{vm.hasBack}"
+            android:onClick="@{ (view)->action.onAction(view,BaseActionConstant.ACTION_BACK,vm) }"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_12"
+            android:drawableStart="@{vm.backStyle.drawableStart}"
+            android:drawableTop="@{vm.backStyle.drawableTop}"
+            android:drawableEnd="@{vm.backStyle.drawableEnd}"
+            android:drawableBottom="@{vm.backStyle.drawableBottom}"
+            drawableTint="@{vm.backStyle.drawableTint}"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_25"
+            android:minHeight="@dimen/dp_20"
+            android:singleLine="true"
+            android:text="@{vm.backStyle.text}"
+            android:textColor="@{vm.backStyle.textColor}"
+            android:textSize="@{vm.backStyle.textSize}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:drawableTint="@color/common_yellow"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mHeaderFinishTv"
+            android:onClick="@{ (view)->action.onAction(view,BaseActionConstant.ACTION_FINISH,vm) }"
+            visible="@{vm.hasFinish}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_8"
+            android:drawableStart="@{vm.finishStyle.drawableStart}"
+            android:drawableTop="@{vm.finishStyle.drawableTop}"
+            android:drawableEnd="@{vm.finishStyle.drawableEnd}"
+            android:drawableBottom="@{vm.finishStyle.drawableBottom}"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_25"
+            android:minHeight="@dimen/dp_20"
+            android:singleLine="true"
+            android:maxLength="4"
+            android:ellipsize="end"
+            tools:text="关闭页面操作"
+            android:text="@{vm.finishStyle.text}"
+            android:textColor="@{vm.finishStyle.textColor}"
+            android:textSize="@{vm.finishStyle.textSize}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/mHeaderBackTv"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mHeaderTitleTv"
+            style="@style/WrapWrapTextSize18.33.medium"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_90"
+            android:layout_marginEnd="@dimen/dp_90"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:focusable="true"
+            android:clickable="true"
+            android:focusedByDefault="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:alpha="@{vm.titleAlpha}"
+            android:text="@{vm.title}"
+            android:textColor="@{vm.titleColor}"
+            android:textSize="@{vm.titleSize}"
+            android:fontFamily="@font/medium"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="标题标标题标题" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mHeaderRightTv"
+            android:onClick="@{ (view)->action.onAction(view,BaseActionConstant.ACTION_RIGHT,vm) }"
+            visible="@{vm.hasRight}"
+            tools:visible="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
+            android:drawableStart="@{vm.rightStyle.drawableStart}"
+            android:drawableTop="@{vm.rightStyle.drawableTop}"
+            android:drawableEnd="@{vm.rightStyle.drawableEnd}"
+            android:drawableBottom="@{vm.rightStyle.drawableBottom}"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_25"
+            android:minHeight="@dimen/dp_20"
+            android:singleLine="true"
+            android:text="@{vm.rightStyle.text}"
+            android:textColor="@{vm.rightStyle.textColor}"
+            android:textSize="@{vm.rightStyle.textSize}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mHeaderRightLastTv"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mHeaderRightLastTv"
+            inVisible="@{vm.hasRightLast}"
+            tools:visible="true"
+            android:onClick="@{ (view)->action.onAction(view,BaseActionConstant.ACTION_RIGHT_LAST,vm) }"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp_12"
+            android:drawableStart="@{vm.rightLastStyle.drawableStart}"
+            android:drawableTop="@{vm.rightLastStyle.drawableTop}"
+            android:drawableEnd="@{vm.rightLastStyle.drawableEnd}"
+            android:drawableBottom="@{vm.rightLastStyle.drawableBottom}"
+            android:gravity="center"
+            android:minWidth="@dimen/dp_25"
+            android:minHeight="@dimen/dp_20"
+            android:singleLine="true"
+            android:text="@{vm.rightLastStyle.text}"
+            android:textColor="@{vm.rightLastStyle.textColor}"
+            android:textSize="@{vm.rightLastStyle.textSize}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.dyn.base.ui.weight.MessageCountTextView
+            android:id="@+id/mHeaderRightLastMessageTv"
+            isMessageStatus="@{vm.rightLastStyle.isMessageStatus}"
+            messageCount="@{vm.hasRightLast?vm.rightLastStyle.messageCount:0}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/mHeaderRightLastTv"
+            app:layout_constraintEnd_toEndOf="@+id/mHeaderRightLastTv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mHeaderRightLastTv"
+            app:layout_constraintTop_toTopOf="@+id/mHeaderRightLastTv"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <com.dyn.base.ui.weight.MessageCountTextView
+            android:id="@+id/mHeaderBackMessageTv"
+            isMessageStatus="@{vm.backStyle.isMessageStatus}"
+            messageCount="@{vm.hasBack?vm.backStyle.messageCount:0}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/mHeaderBackTv"
+            app:layout_constraintEnd_toEndOf="@+id/mHeaderBackTv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mHeaderBackTv"
+            app:layout_constraintTop_toTopOf="@+id/mHeaderBackTv"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <com.dyn.base.ui.weight.MessageCountTextView
+            android:id="@+id/mHeaderFinishMessageTv"
+            isMessageStatus="@{vm.finishStyle.isMessageStatus}"
+            messageCount="@{vm.hasFinish?vm.finishStyle.messageCount:0}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/mHeaderFinishTv"
+            app:layout_constraintEnd_toEndOf="@+id/mHeaderFinishTv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mHeaderFinishTv"
+            app:layout_constraintTop_toTopOf="@+id/mHeaderFinishTv"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <com.dyn.base.ui.weight.MessageCountTextView
+            android:id="@+id/mHeaderRightMessageTv"
+            isMessageStatus="@{vm.rightStyle.isMessageStatus}"
+            messageCount="@{vm.hasRight?vm.rightStyle.messageCount:0}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/mHeaderRightTv"
+            app:layout_constraintEnd_toEndOf="@+id/mHeaderRightTv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mHeaderRightTv"
+            app:layout_constraintTop_toTopOf="@+id/mHeaderRightTv"
+            app:layout_constraintVertical_bias="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

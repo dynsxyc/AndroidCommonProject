@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/web_fragment"
+    tools:ignore="UnusedNavigation">
+    <fragment
+        android:id="@+id/web_fragment"
+        android:name="com.dyn.webview.WebViewFragment" >
+        <!--loadUrl, title, isSyncCookie, isShowActionBar, header-->
+        <argument android:name="args"
+            app:nullable="true"
+            app:argType="com.dyn.webview.WebViewArgs"
+            />
+    </fragment>
+
+</navigation>

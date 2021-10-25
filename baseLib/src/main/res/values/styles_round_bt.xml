@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DefaultRoundBt">
+        <item name="android:layout_height">@dimen/dp_50</item>
+        <item name="rv_cornerRadius">@dimen/dp_4</item>
+        <item name="rv_backgroundColor">@color/common_white</item>
+        <item name="rv_backgroundPressColor">@color/common_white_press</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="DefaultRoundBt.white">
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:textColor">@color/text_color_33</item>
+        <item name="rv_strokeColor">@color/common_e5</item>
+        <item name="rv_strokeWidth">@dimen/dp_1</item>
+        <item name="rv_backgroundColor">@color/common_white</item>
+        <item name="rv_backgroundPressColor">@color/common_white_press</item>
+    </style>
+    <style name="DefaultRoundBt.blue">
+        <item name="android:textSize">@dimen/sp_18</item>
+        <item name="android:textColor">@color/common_white</item>
+        <item name="rv_backgroundColor">@color/common_blue</item>
+        <item name="rv_backgroundPressColor">@color/common_blue_press</item>
+    </style>
+</resources>

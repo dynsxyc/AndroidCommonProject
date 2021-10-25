@@ -1,0 +1,52 @@
+﻿<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.webkit.WebView"/>
+        <variable
+            name="vm"
+            type="com.dyn.webview.WebViewModelView" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.dyn.base.ui.weight.header.CommonHeaderView
+            viewBindAction="@{vm.MCustomViewActionListener}"
+            viewBindData="@{vm.MCommonHeaderModel}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/webContentParent"
+            autoRefresh="@{vm.autoRefresh}"
+            changePage="@{vm.pageStatus}"
+            enableAutoLoadMore="@{false}"
+            enableLoadMore="@{false}"
+            enableRefresh="@{vm.enableRefresh}"
+            finishLoadMore="@{vm.finishLoadMore}"
+
+            finishRefresh="@{vm.finishRefresh}"
+            refreshListener="@{vm.MOnRefreshLoadMoreListener}"
+            registerPage="@{vm.onReloadListener}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1">
+
+            <com.dyn.webview.NestedScrollBaseWebView
+                android:id="@+id/webView"
+                canGoBackStatus="@{vm.canGoBackStatus}"
+                backListener = "@{vm.backListener}"
+                dispatchEvent="@{vm.dispatchEvent}"
+                initWebView="@{vm.webCallback}"
+                interfaceName="@{vm.interfaceName}"
+                loadWebUrl="@{vm.webUrl}"
+                reloadWeb="@{vm.isReLoad}"
+                webHeader="@{vm.header}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

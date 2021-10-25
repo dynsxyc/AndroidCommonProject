@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="isFirst"
+            type="Boolean" />
+        <variable
+            name="isLast"
+            type="Boolean" />
+        <variable
+            name="adapter"
+            type="com.chad.library.adapter.base.BaseQuickAdapter" />
+
+        <variable
+            name="layoutManager"
+            type="androidx.recyclerview.widget.RecyclerView.LayoutManager" />
+
+        <variable
+            name="vm"
+            type="com.dyn.base.mvvm.viewmodel.BaseRecyclerViewModel" />
+        <variable
+            name="view"
+            type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dyn.base.ui.weight.header.CommonHeaderView
+            android:id="@+id/mCommonHeaderView"
+            viewBindAction="@{vm.MCustomViewActionListener}"
+            viewBindData="@{vm.MCommonHeaderModel}"
+            visible="@{vm.MHasTitle}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/mRecyclerFragmentRefresh"
+            autoRefresh="@{vm.autoRefresh}"
+            enableAutoLoadMore="@{vm.enableAutoLoadMore}"
+            enableLoadMore="@{vm.enableLoadMore}"
+            enableRefresh="@{vm.enableRefresh}"
+            finishLoadMore="@{vm.finishLoadMore}"
+            finishRefresh="@{vm.finishRefresh}"
+            refreshListener="@{vm.mOnRefreshLoadMoreListener}"
+            changePage="@{vm.pageStatus}"
+            registerPage="@{vm.onReloadListener}"
+            emptyTitleText="@{vm.emptyTitleStr}"
+            emptyDesText="@{vm.emptyDesStr}"
+            emptyImg="@{vm.emptyImgDrawable}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/mRecyclerFragmentBottomFl"
+            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView">
+
+            <androidx.recyclerview.widget.RecyclerView
+                layoutManager="@{layoutManager}"
+                adapter="@{adapter}"
+                hasFixedSize="@{vm.MHasFixedSize}"
+                itemData="@{vm.dataList}"
+                itemDecoration="@{vm.mItemDecoration}"
+                removeItemByData="@{vm.MRemoveItemData}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+        <!--<FrameLayout
+            android:id="@+id/mRecyclerFragmentRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/mRecyclerFragmentBottomFl"
+            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView"/>-->
+        <FrameLayout
+            android:id="@+id/mRecyclerFragmentBottomFl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            resetAddView="@{view}"
+            createAddViewModel="@{vm}"
+            createAddView="@{vm::createRecyclerBottomView}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

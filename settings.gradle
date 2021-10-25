@@ -1,0 +1,10 @@
+rootProject.name = "AndroidCommonProject"
+include ':buglyConfig'
+include ':WeChatPayLib'
+include ':AliPayLib'
+include ':AliOssLib'
+include ':umengLib'
+include ':baseLib'
+include ':netApi'
+include ':webView'
+include ':indexlib'

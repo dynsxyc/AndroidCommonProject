@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="parentTextStyle">
+        <item name="android:drawablePadding">5dp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/text_color_33</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="WrapWrap.Text" parent="parentTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WrapMatch.Text" parent="parentTextStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="MatchWrap.Text" parent="parentTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="MatchMatch.Text" parent="parentTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    <!-- 文字大小  15sp-->
+    <style name="WrapWrapTextSize15" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_15</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+    <style name="WrapWrapTextSize15.ff.medium">
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.black.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.34">
+        <item name="android:textColor">@color/text_color_34</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.price">
+        <item name="android:textColor">@color/price_color</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.price.medium"></style>
+
+    <style name="WrapWrapTextSize15.33.medium"></style>
+
+    <style name="WrapWrapTextSize15.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize15.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize15" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_15</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.black.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.33.medium">
+        <item name="font">@font/medium</item>
+    </style>
+    <style name="MatchWrapTextSize15.99.medium">
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize15.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+    <!-- 文字大小  13sp-->
+    <style name="WrapWrapTextSize13" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_13</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+    <style name="WrapWrapTextSize13.black.medium">
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.af">
+        <item name="android:textColor">@color/text_color_AF</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.34">
+        <item name="android:textColor">@color/text_color_34</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.34.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="WrapWrapTextSize13.99.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="MatchWrapTextSize13" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_13</item>
+    </style>
+
+    <style name="MatchWrapTextSize13.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize13.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize13.34">
+        <item name="android:textColor">@color/text_color_34</item>
+    </style>
+
+    <style name="MatchWrapTextSize13.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize13.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="WrapMatchTextSize13" parent="WrapMatch.Text">
+        <item name="android:textSize">@dimen/sp_13</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.33.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapMatchTextSize13.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <!-- 文字大小  11sp-->
+    <style name="WrapWrapTextSize11" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_11</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.34">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.AF">
+        <item name="android:textColor">@color/text_color_AF</item>
+    </style>
+
+    <style name="WrapWrapTextSize11.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize11" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_11</item>
+    </style>
+
+    <style name="MatchWrapTextSize11.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize11.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize11.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize11.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <!-- 文字大小  12sp-->
+    <style name="WrapWrapTextSize12" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.ff.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.AF">
+        <item name="android:textColor">@color/text_color_AF</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.AF.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+    <style name="WrapWrapTextSize12.3C">
+        <item name="android:textColor">@color/text_color_3C</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.0A.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.34">
+        <item name="android:textColor">@color/text_color_34</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.34.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize12.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize12" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="MatchWrapTextSize12.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize12.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize12.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize12.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize12.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+    <!-- 文字大小  10sp-->
+    <style name="WrapWrapTextSize10" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.89">
+        <item name="android:textColor">@color/text_color_89</item>
+    </style>
+
+    <style name="WrapWrapTextSize10.gray">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="WrapMatchTextSize10" parent="WrapMatch.Text">
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.AD">
+        <item name="android:textColor">@color/text_color_AD</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="WrapMatchTextSize10.gray">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <style name="MatchWrapTextSize10" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_10</item>
+    </style>
+
+    <style name="MatchWrapTextSize10.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize10.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize10.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize10.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize10.gray">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+
+    <!-- 文字大小  8sp-->
+    <style name="WrapWrapTextSize8" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_8</item>
+    </style>
+
+    <style name="WrapWrapTextSize8.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize8.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize8.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize8.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize8" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_8</item>
+    </style>
+
+    <style name="MatchWrapTextSize8.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize8.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize8.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize8.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <!-- 文字大小  21sp-->
+    <style name="WrapWrapTextSize21" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_21</item>
+    </style>
+
+    <style name="WrapWrapTextSize21.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize21.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize21.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize21.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize21.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize21" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_21</item>
+    </style>
+
+    <style name="MatchWrapTextSize21.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize21.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize21.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize21.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize21.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+    <!-- 文字大小  16sp-->
+    <style name="WrapWrapTextSize16" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.06">
+        <item name="android:textColor">@color/text_color_06</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.1c">
+        <item name="android:textColor">@color/text_color_1c</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.01">
+        <item name="android:textColor">@color/text_color_01</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.ff.medium">
+
+    </style>
+
+    <style name="WrapWrapTextSize16.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.33.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.0A.medium">
+
+    </style>
+
+    <style name="WrapWrapTextSize16.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize16" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_16</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.33.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize16.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+    <!-- 文字大小  17sp-->
+    <style name="WrapWrapTextSize17" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.ff.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.1c">
+        <item name="android:textColor">@color/text_color_1c</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.33.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize17.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize17" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_17</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.1c">
+        <item name="android:textColor">@color/text_color_1c</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize17.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+    <!-- 文字大小  18sp-->
+    <style name="WrapWrapTextSize18" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.ff.medium">
+            <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.33.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize18.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize18" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="MatchWrapTextSize18.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize18.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize18.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize18.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize18.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+    <!-- 文字大小  24sp-->
+    <style name="WrapWrapTextSize24" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_24</item>
+    </style>
+
+    <style name="WrapWrapTextSize24.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+    <style name="WrapWrapTextSize24.ff.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize24.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize24.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize24.33.medium">
+
+    </style>
+
+    <style name="WrapWrapTextSize24.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize24.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize24" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_24</item>
+    </style>
+
+    <style name="MatchWrapTextSize24.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize24.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize24.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize24.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize24.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <!-- 文字大小  26sp-->
+    <style name="WrapWrapTextSize26" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_26</item>
+    </style>
+
+    <style name="WrapWrapTextSize26.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="WrapWrapTextSize26.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WrapWrapTextSize26.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize26.33.medium">
+
+    </style>
+
+    <style name="WrapWrapTextSize26.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize26.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize26" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_26</item>
+    </style>
+
+    <style name="MatchWrapTextSize26.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize26.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MatchWrapTextSize26.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="MatchWrapTextSize26.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize26.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="WrapWrapTextSizePrice" parent="WrapWrap.Text">
+        <item name="android:textColor">@color/price_color</item>
+    </style>
+    <!-- 文字大小  14sp-->
+    <style name="WrapWrapTextSize14" parent="WrapWrap.Text">
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+    <style name="WrapWrapTextSize14.ff.medium">
+        <item name="android:fontFamily">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.06">
+        <item name="android:textColor">@color/text_color_06</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.black">
+        <item name="android:textColor">@color/common_black</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.0A">
+        <item name="android:textColor">@color/text_color_0A</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.33.medium">
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.yellowFb2">
+        <item name="android:textColor">@color/common_yellowFb2</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.yellowF8f">
+        <item name="android:textColor">@color/common_yellowF8f</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="WrapWrapTextSize14.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize14" parent="MatchWrap.Text">
+        <item name="android:textSize">@dimen/sp_14</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.ff">
+        <item name="android:textColor">@color/common_white</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.33">
+        <item name="android:textColor">@color/text_color_33</item>
+    </style>
+    <style name="MatchWrapTextSize14.33.medium">
+        <item name="font">@font/medium</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.34">
+        <item name="android:textColor">@color/text_color_34</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.66">
+        <item name="android:textColor">@color/text_color_66</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.99">
+        <item name="android:textColor">@color/text_color_99</item>
+    </style>
+
+    <style name="MatchWrapTextSize14.gray">
+        <item name="android:textColor">@color/text_gray</item>
+    </style>
+</resources>

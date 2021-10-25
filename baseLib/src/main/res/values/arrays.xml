@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="default_img_colors">
+        <item>"#cfddd6"</item>
+        <item>"#d4d9de"</item>
+        <item>"#dadbd1"</item>
+        <item>"#cbdad9"</item>
+        <item>"#d6dfec"</item>
+        <item>"#dad7e4"</item>
+        <item>"#dcd5cf"</item>
+        <item>"#d9d2dc"</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading">加载中...</string>
+    <string name="rationale_ask">如果没有请求的权限，此应用程序可能无法正常工作。</string>
+    <string name="rationale_ask_again">
+        如果没有请求的权限，此应用程序可能无法正常工作。
+        打开app设置界面，修改app权限。
+    </string>
+    <string name="title_settings_dialog">权限请求</string>
+    <string name="emptyTitleStr">这里空空如也</string>
+    <string name="emptyDesStr">点击重试</string>
+    <string name="customErrorTitleStr">系统繁忙</string>
+    <string name="customErrorDesStr">请稍候重试</string>
+    <string name="netErrorTitleStr">网络比较繁忙，请稍后再试</string>
+    <string name="netErrorDesStr"></string>
+    <string name="plus" formatted="false">+%s</string>
+    <string name="minus" formatted="false">-%s</string>
+    <string name="rmb" formatted="false">¥%s</string>
+    <string name="hintPass">密码长度8-16位,需包含字母和数字</string>
+    <string name="sendVerification">请先发送验证码</string>
+    <string name="safetyCodeError">安全码最少6位</string>
+    <string name="safetyCodeEqualsError">两次输入的安全码不一致</string>
+    <string name="numberAndEng">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</string>
+</resources>

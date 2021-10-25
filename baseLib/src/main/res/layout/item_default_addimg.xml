@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.dyn.base.utils.BaseActionConstant"/>
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.base.recycler.addImage.AddImageItemBean" />
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/mImageAdd"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_120"
+            android:layout_margin="@dimen/dp_11"
+            app:rv_backgroundColor="#40d8d8d8"
+            app:rv_strokeColor="#979797"
+            app:rv_strokeWidth="@dimen/dp_1"
+            android:text="＋"
+            android:gravity="center"
+            android:textSize="@dimen/sp_32"
+            android:textColor="#667580"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            onClickWithDebouncing='@{(v)->action.onAction(v,BaseActionConstant.ACTION_ADD_MORE_IMG_ADD,vm)}'
+            inVisible="@{vm.isAdd}"
+            tools:visibility="visible"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mImageContent"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="@dimen/dp_120"
+            android:layout_margin="@dimen/dp_11"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            onClickWithDebouncing='@{(v)->action.onAction(v,BaseActionConstant.ACTION_ADD_MORE_IMG_LOOK,vm)}'
+            imageUrl="@{vm.successUrl}"
+            visible="@{!vm.isAdd}"
+            tools:background="@color/common_gray"
+            />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            app:srcCompat="@drawable/icon_cancel"
+            android:padding="@dimen/dp_2"
+            app:tint="@color/common_white"
+            android:background="@drawable/bg_circle_99"
+            app:layout_constraintTop_toTopOf="@+id/mImageAdd"
+            app:layout_constraintBottom_toTopOf="@+id/mImageAdd"
+            app:layout_constraintStart_toEndOf="@id/mImageAdd"
+            app:layout_constraintEnd_toEndOf="@+id/mImageAdd"
+            onClickWithDebouncing='@{(v)->action.onAction(v,BaseActionConstant.ACTION_ADD_MORE_IMG_DEL,vm)}'
+            visible="@{!vm.isAdd &amp;&amp; vm.isEditable}"
+            tools:visibility="visible"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

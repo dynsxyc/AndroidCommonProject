@@ -1,0 +1,72 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+def app_android = rootProject.ext.app_android
+def app_dependencies = rootProject.ext.app_dependencies
+
+android {
+    compileSdkVersion app_android.compileSdkVersion
+    buildToolsVersion app_android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion app_android.minSdkVersion
+        targetSdkVersion app_android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        //友盟统计
+        manifestPlaceholders = [UMENG_APPKEY: UMENG_APP_KEY]
+//        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c0"]
+        buildConfigField("boolean", "IS_INIT_UMENG_STATISTICS", IS_INIT_UMENG_STATISTICS)
+//        flavorDimensions "versionCode"
+        //解决 All flavors must now belong to a named flavor dimension. 问题
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+//    flavorDimensions("channel")
+//    productFlavors {
+//        huawei { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "huawei"] }//华为
+//        c360 { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "360"] }//360
+//        vivo { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "vivo"] }//vivo
+//        oppo { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "oppo"] }//oppo
+//        yingyongbao { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "yingyongbao"] }//应用宝
+//        xiaomi { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "mi"] }//小米
+//        samsung { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "samsung"] }//三星
+//        anzhi { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "anzhi"] }//安智
+//        meizu { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "meizu"] }//魅族
+//        android { manifestPlaceholders = [UMENG_CHANNEL_VALUE: "android"] }//Android
+//        android { manifestPlaceholders = [UMENG_CHANNEL_VALUE: ""] }//Android
+//    }
+}
+
+dependencies {
+    api app_dependencies.kotlin_stdlib
+    api app_dependencies.core_ktx
+
+    /**
+     * 友盟统计 step 2
+     * */
+    api  app_dependencies.umeng_common // (必选)版本号
+    api  app_dependencies.umeng_asms
+    api  app_dependencies.umeng_crash
+    api  app_dependencies.umeng_oaid_lenovo
+    api  app_dependencies.umeng_oaid_mi
+    api  app_dependencies.umeng_oaid_oppo
+    api  app_dependencies.umeng_oaid_vivo
+}

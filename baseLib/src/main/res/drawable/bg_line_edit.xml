@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <layer-list>
+            <item android:top="@dimen/dp_48">
+                <shape android:shape="rectangle">
+                    <size android:height="@dimen/common_divider_height"/>
+                    <solid android:color="@color/colorPrimary"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+    <item >
+        <layer-list>
+            <item android:top="@dimen/dp_48">
+                <shape android:shape="rectangle">
+                    <size android:height="@dimen/common_divider_height"/>
+                    <solid android:color="@color/common_divider" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

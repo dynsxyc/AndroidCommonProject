@@ -1,0 +1,137 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+//apply from: '../publishAndroidLib.gradle'
+apply plugin: 'com.github.dcendents.android-maven'
+group = "com.dyn.base"
+
+//设计借鉴  https://github.com/KunMinX/Jetpack-MVVM-Best-Practice
+
+def app_android = rootProject.ext.app_android
+def app_dependencies = rootProject.ext.app_dependencies
+
+android {
+    compileSdkVersion app_android.compileSdkVersion
+    buildToolsVersion app_android.buildToolsVersion
+
+    defaultConfig {
+
+        minSdkVersion app_android.minSdkVersion
+        targetSdkVersion app_android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildFeatures {
+            dataBinding = true
+        }
+
+        manifestPlaceholders = [UMENG_APPKEY: UMENG_APP_KEY,
+                                AUTO_SIZE_DESIGN_WIDTH: AUTO_SIZE_WIDTH,
+                                AUTO_SIZE_DESIGN_HEIGHT: AUTO_SIZE_HEIGHT]
+    }
+    buildTypes {
+        debug {
+            manifestPlaceholders = [IS_DEBUG:true]
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            manifestPlaceholders = [IS_DEBUG:false]
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+
+}
+
+dependencies {
+    api project(":umengLib")
+
+    api app_dependencies.kotlin_stdlib
+    api app_dependencies.kotlinx_coroutines
+    api app_dependencies.core_ktx
+    api app_dependencies.collection_ktx
+    api app_dependencies.appcompat
+    api app_dependencies.constraintlayout
+    api app_dependencies.google_material
+    api app_dependencies.fragment_ktx
+    api app_dependencies.navigation_ui_ktx
+    api app_dependencies.navigation_runtime
+    api app_dependencies.lefecycle_viewmodel_ktx
+    api app_dependencies.lifecycle_livedata_ktx
+
+    api app_dependencies.immersionbar
+    api app_dependencies.android_multidex
+    api app_dependencies.immersionbar_components
+    api app_dependencies.immersionbar_ktx
+
+    api app_dependencies.rxAndroid
+    api app_dependencies.rxAndroid2
+    api app_dependencies.rxJava
+    api app_dependencies.autodispose
+    api app_dependencies.autodispose_android
+    api app_dependencies.autodispose_lifecycle
+    //Glide
+    api app_dependencies.glide
+    api app_dependencies.lifecycle_common_java8
+    api app_dependencies.loadSir
+    api app_dependencies.lottie
+    api app_dependencies.viewPager2
+    api app_dependencies.utilCode
+    api app_dependencies.BaseRecyclerViewAdapterHelper
+    api app_dependencies.smartRefreshLayout
+    api app_dependencies.smartRefreshHeader
+    api app_dependencies.smartRefreshFooter
+
+    api app_dependencies.rxbinding4
+    api app_dependencies.rxbinding4_core
+    api app_dependencies.rxbinding4_viewpager2
+    api app_dependencies.rxbinding4_material
+    api app_dependencies.rxbinding4_recyclerview
+
+    api app_dependencies.easypermissions
+//    api app_dependencies.room_runtime
+//    kapt app_dependencies.room_compiler
+//    api app_dependencies.room_ktx
+//    api app_dependencies.room_rxjava
+    api app_dependencies.PictureSelector
+    api app_dependencies.FlycoRoundView_Lib
+
+    kapt app_dependencies.glide_compiler
+
+    kapt app_dependencies.databinding_compiler
+    api app_dependencies.gson
+    api app_dependencies.logger
+    api app_dependencies.AutoSize
+    api app_dependencies.ViewPagerBanner
+    api app_dependencies.circleimageview
+    api app_dependencies.roundedimageview
+    api app_dependencies.SwipeDelMenuLayout
+    api app_dependencies.switchbutton
+    api app_dependencies.MagicIndicator
+    api app_dependencies.WheelPicker
+    api app_dependencies.xPopup
+    api app_dependencies.customactivityoncrash
+
+    //    bugly  2/3 start   添加依赖库  application初始化  Proguard配置文件
+//    api 'com.tencent.bugly:nativecrashreport:latest.release'   //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+//    api 'com.tencent.bugly:crashreport_upgrade:1.3.6'  //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+//    api 'com.tencent.tinker:tinker-android-lib:1.9.14'
+//    bugly  2/3 end
+
+}

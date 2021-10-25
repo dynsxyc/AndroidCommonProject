@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tag_navigation_listener" type="id"/>
+    <item name="smart_refresh_listener" type="id"/>
+    <item name="mCommonHeaderView" type="id"/>
+    <item name="loadSir_bind_service" type="id"/>
+    <item name="GrayRightArrow" type="id" />
+    <item name="FixedHeightNestedRecyclerView" type="id" />
+</resources>

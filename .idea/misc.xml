@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/drawable/ic_tab_home_selected.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/drawable/ic_tab_mine.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/drawable/ic_tab_mine_selected.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_apply_invoice.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_choice_city.xml" value="0.23072916666666668" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_edit_invoice.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_global_search.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_login.xml" value="0.16438703140830802" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_main.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_shopping_cart.xml" value="0.1598731884057971" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/fragment_trace_source_certificate.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/layout_line_text.xml" value="0.17198581560283688" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/view_bottom_single_button.xml" value="0.24954710144927536" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/layout/view_single_button.xml" value="0.24954710144927536" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/bg_circle.xml" value="0.3155" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/bg_circle_99.xml" value="0.24" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/bg_circle_99_size4.xml" value="0.1885" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/bt_circle_checkbox.xml" value="0.121" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/divider_line_padding_start.xml" value="0.2025" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/divider_line_padding_start_in_white.xml" value="0.2025" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/divider_transparent.xml" value="0.1755" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/ic_circle_checkbox_checked.xml" value="0.121" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/ic_edit_clear.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/ic_toast_success.xml" value="0.125" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/progress_dialog_bg.xml" value="0.1125" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/drawable/white_clickable_pressed.xml" value="0.2615" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/layout/dialog_model.xml" value="0.1484375" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/layout/fragment_base_recycler.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/layout/layout_empty.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/layout/layout_title.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/baseLib/src/main/res/layout/progress_dialog.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/common/src/main/res/layout/item_common_addimg.xml" value="0.18206521739130435" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/bg_share_bg.xml" value="0.286" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/bt_take_picture.xml" value="0.3025" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/grid_divider_v.xml" value="0.1755" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_facing_convert.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_grey_more.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_more.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_red_cancel.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_save.xml" value="0.2025" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_setting.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_share.xml" value="0.1815" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/ic_take_focus.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/drawable/splash_bg.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_about.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_auction_list.xml" value="0.14792299898682879" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_detail.xml" value="0.3255208333333333" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_main.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_pictureevidence.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_pictureevidenceinfo.xml" value="0.12389380530973451" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_pre_picture.xml" value="0.463452566096423" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_privacy_setting.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_save.xml" value="0.15501519756838905" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_setting.xml" value="0.22" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/fragment_splash.xml" value="0.14907407407407408" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/layout/item_album_img.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraApp/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/bg_black_radius_4.xml" value="0.178" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/bg_camera_menu.xml" value="0.178" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/bg_common_bt.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/bg_common_bt_selector.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_bank_default.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_bank_jianshe.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_delayed.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_delayed_open.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_flash.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_flash_auto.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_flash_open.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_grid_close.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_grid_open.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_mine_buy.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_mine_pick_up_goods.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_mine_pledge.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_mine_transfer.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_ratio_34.xml" value="0.182" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_take_focus.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_take_focus_close.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/drawable/ic_take_focus_open.xml" value="0.2835" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_choice_more.xml" value="0.20153985507246377" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_choice_picture.xml" value="0.4004944375772559" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_city_nodes.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_customer_service.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_login.xml" value="0.29981884057971014" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_model.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_order_entrust.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_order_voucher.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_pay_success.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/dialog_share.xml" value="0.20153985507246377" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/include_common_order_goods.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/include_line_text_h.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/item_camera_menu.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/item_test_user.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/copyrightCameraCommon/src/main/res/layout/layout_camera_option_menu.xml" value="0.37028301886792453" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didAuthSdk/src/main/res/drawable/progress_dialog_bg.xml" value="0.1125" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didAuthSdk/src/main/res/layout/progress_dialog.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_apply_server_info.xml" value="0.28" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_arrow_left_s_fill.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_certificate.xml" value="0.1965" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_certificate_revoke.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_create_did.xml" value="0.169" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_find_did.xml" value="0.195" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_recover_did.xml" value="0.195" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_tab_home.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/ic_tab_home_selected.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/drawable/splash_bg.xml" value="0.2095" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/activity_auth.xml" value="0.2744755244755245" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/dialog_backup_tips.xml" value="0.2710926694329184" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/dialog_check_pass.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/dialog_choice_more.xml" value="0.466529351184346" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/dialog_privacy_policy.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/dialog_risk_tips.xml" value="0.29257246376811596" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_apply_send_certificate.xml" value="0.2572463768115942" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_backup_private_key.xml" value="0.3683559950556242" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_backup_private_key_index.xml" value="0.1018867924528302" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_backup_words_confirm.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_backup_words_index.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_backup_words_look.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_certificate_detail.xml" value="0.31675392670157065" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_certificate_manager.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_certificate_request_detail.xml" value="0.22" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_common_form.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_create.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_document_detail.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_find.xml" value="0.22" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_find_submit.xml" value="0.21331521739130435" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_home.xml" value="0.67" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_index.xml" value="0.22" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_main.xml" value="0.16438703140830802" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_mine.xml" value="0.15151515151515152" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_other_auth.xml" value="0.5" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_other_login.xml" value="0.23876404494382023" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_recover.xml" value="0.5279937791601866" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_scan_qr_code.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/fragment_splash.xml" value="0.2" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/include_line_text_h.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/include_line_text_v.xml" value="0.2667572463768116" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/include_single_bt.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_auth_record.xml" value="0.5" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_authentication_none.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_certificate_manager.xml" value="0.34814814814814815" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_form_file.xml" value="0.33" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_form_image.xml" value="0.5" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_form_phone.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_form_text.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_form_time.xml" value="0.1458966565349544" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_message.xml" value="0.34977578475336324" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_technical_support.xml" value="0.2" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_technical_supporte.xml" value="0.24320652173913043" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_words.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_words_choice.xml" value="0.125" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_words_choiceed.xml" value="0.12719298245614036" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/layout/item_words_selected.xml" value="0.7106076210092688" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/didapp/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/drawable/item_coustom_divider.xml" value="0.1755" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_asset.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_create_address.xml" value="0.10185185185185185" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_register.xml" value="0.362962962962963" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_reset_loginpass.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/fragment_result_status.xml" value="0.14108409321175278" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengapp/src/main/res/layout/view_choice_goods_bottom.xml" value="0.18" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/jiuzhengcommon/src/main/res/layout/dialog_confirm_pass.xml" value="0.3380208333333333" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/netApi/src/main/res/layout/item_choice_host.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/netApi/src/main/res/layout/view_switchover_host.xml" value="0.15185185185185185" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/drawable/bg_detail_gradient.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/drawable/splash_bg.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/activity_main.xml" value="0.14488348530901723" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/fragment_goods_detail.xml" value="0.10833333333333334" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/fragment_mine_invite.xml" value="0.21979166666666666" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/fragment_register.xml" value="0.2710926694329184" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyunapp/src/main/res/layout/view_single_edit_text.xml" value="0.16168478260869565" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyuncommon/src/main/res/layout/include_line_text_h.xml" value="0.17198581560283688" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyuncommon/src/main/res/layout/include_single_bt.xml" value="0.16438703140830802" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/shiyuncommon/src/main/res/layout/include_view_single_bt.xml" value="0.16438703140830802" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/test/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/test/src/main/res/layout/activity_main_1.xml" value="0.18885869565217392" />
+        <entry key="..\:/work/AndriodSys/bzlAndroidProject/test/src/main/res/layout/activity_test.xml" value="0.17198581560283688" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.5" />
+      </ProjectState>
+    </option>
+  </component>
+</project>

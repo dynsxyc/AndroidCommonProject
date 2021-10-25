@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+//apply from: '../publishAndroidLib.gradle'
+apply plugin: 'com.github.dcendents.android-maven'
+group="com.dyn.netapi"
+
+def app_android = rootProject.ext.app_android
+def app_dependencies = rootProject.ext.app_dependencies
+
+android {
+    compileSdkVersion app_android.compileSdkVersion
+    buildToolsVersion app_android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion app_android.minSdkVersion
+        targetSdkVersion app_android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        buildFeatures {
+            dataBinding = true
+        }
+
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+apply plugin: "kotlin-allopen"
+apply plugin: "kotlin-noarg"
+
+allOpen {
+    annotation("com.dyn.net.api.beans.annotation.PoKo")
+    annotation("com.dyn.net.api.beans.annotation.AllOpen")
+}
+noArg {
+    annotation("com.dyn.net.api.beans.annotation.PoKo")
+    annotation("com.dyn.net.api.beans.annotation.NoArg")
+}
+
+dependencies {
+    implementation app_dependencies.core_ktx
+    kapt app_dependencies.databinding_compiler
+    api app_dependencies.retrofit
+    api app_dependencies.retrofit_converter_gson
+    api app_dependencies.retrofit_adapter_rxjava
+    api app_dependencies.gson
+    api app_dependencies.okhttp_interceptor
+    api app_dependencies.rxAndroid
+    api app_dependencies.rxJava
+    api app_dependencies.utilCode
+    api project(":baseLib")
+
+}

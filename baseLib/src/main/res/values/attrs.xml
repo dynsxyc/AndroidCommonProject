@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bgColor" format="color"/>
+
+    <declare-styleable name="MessageCountTextView">
+        <attr name="isMessageStatus" format="boolean" />
+        <attr name="maxCount" format="integer" />
+        <attr name="messageCount" format="integer" />
+        <attr name="bgColor" />
+        <attr name="textColor" format="color" />
+        <attr name="mCountMinSize" format="dimension" />
+        <attr name="mStatusMinSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="CommonHeaderButton">
+        <attr name="h_drawableStart" format="reference"/>
+        <attr name="h_drawableTop" format="reference"/>
+        <attr name="h_drawableEnd" format="reference"/>
+        <attr name="h_drawableBottom" format="reference"/>
+        <attr name="h_text" format="string"/>
+        <attr name="h_textSize" format="dimension"/>
+        <attr name="h_textColor" format="color"/>
+        <attr name="h_messageCount" format="integer"/>
+        <attr name="h_isMessageStatus" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="AutoFlowLayout">
+        <attr name="singleLine" format="boolean"></attr>
+        <attr name="maxLines" format="integer"></attr>
+        <attr name="multiChecked" format="boolean"></attr>
+        <attr name="horizontalSpace" format="dimension"></attr>
+        <attr name="verticalSpace" format="dimension"></attr>
+        <attr name="columnNumbers" format="integer"></attr>
+        <attr name="rowNumbers" format="integer"></attr>
+        <attr name="cutLineWidth" format="dimension"></attr>
+        <attr name="cutLineColor" format="color"></attr>
+        <attr name="cutLine" format="boolean"></attr>
+        <attr name="lineCenter" format="boolean"></attr>
+    </declare-styleable>
+    <declare-styleable name="ClearEditText">
+        <!-- 清除按钮的图标 -->
+        <attr name="iconClear" format="reference"/>
+        <attr name="iconLook" format="reference"/>
+        <attr name="iconNoLook" format="reference"/>
+        <attr name="isShowHidePassMode" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="FixedHeightNestedScrollView">
+        <attr name="topOffset" format="dimension"/>
+        <attr name="contentTopMargin" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="AddNumberView">
+        <attr name="min_number" format="integer"/>
+        <attr name="max_number" format="integer"/>
+        <attr name="isEditable" format="boolean"/>
+    </declare-styleable>
+    <attr name="triangleColor" format="color"/>
+    <attr name="triangleWidth" format="dimension"/>
+    <declare-styleable name="TriangleView">
+        <attr name="triangleIsArrowDown" format="boolean"/>
+        <attr name="triangleWidth"/>
+        <attr name="triangleColor"/>
+    </declare-styleable>
+    <declare-styleable name="StartTriangleView">
+        <attr name="triangleIsArrowEnd" format="boolean"/>
+        <attr name="triangleWidth"/>
+        <attr name="triangleColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="PasswordEditText">
+        <!-- 密码的个数 -->
+        <attr name="passwordNumber" format="integer"/>
+        <!-- 密码圆点的半径 -->
+        <attr name="passwordRadius" format="dimension" />
+        <!-- 密码圆点的颜色 -->
+        <attr name="passwordColor" format="color" />
+        <!-- 分割线的颜色 -->
+        <attr name="divisionLineColor" format="color" />
+        <!-- 分割线的大小 -->
+        <attr name="divisionLineSize" format="dimension" />
+        <!-- 背景边框的颜色 -->
+        <attr name="bgColor"/>
+        <!-- 背景边框的大小 -->
+        <attr name="bgSize" format="dimension" />
+        <!-- 背景边框的圆角大小 -->
+        <attr name="bgCorner" format="dimension"/>
+        <!-- 是否隐藏密码 -->
+        <attr name="isHide" format="boolean"/>
+        <!-- 输入类型为默认类型 -->
+        <attr name="inputTypeIsDefault" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundConstraintLayout"><attr name="rv_backgroundColor"/><attr name="rv_backgroundPressColor"/><attr name="rv_cornerRadius"/><attr name="rv_strokeWidth"/><attr name="rv_strokeColor"/><attr name="rv_strokePressColor"/><attr name="rv_isRadiusHalfHeight"/><attr name="rv_isWidthHeightEqual"/><attr name="rv_cornerRadius_TL"/><attr name="rv_cornerRadius_TR"/><attr name="rv_cornerRadius_BL"/><attr name="rv_cornerRadius_BR"/><attr name="rv_isRippleEnable"/></declare-styleable>
+</resources>

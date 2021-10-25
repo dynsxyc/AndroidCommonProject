@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <!-- 主题样式 -->
+    <style name="BaseTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <!--不能用带透明度的背景色  系统兼容性问题-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--应用主题-->
+    <style name="AppTheme" parent="BaseTheme">
+        <item name="android:textSize">@dimen/sp_15</item>
+        <item name="android:textColor">@color/text_color_33</item>
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+        <item name="android:windowBackground">@color/common_bg</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowSoftInputMode">stateHidden|adjustPan</item>
+    </style>
+    <style name="PermissionsThemeDialog" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <!--activity左右滑动进入动画-->
+    <style name="AnimationActivity" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/in_from_right</item>
+        //当打开一个新的活动时，这是在下一个活动（正在进入屏幕）中运行的动画。
+        <item name="android:activityOpenExitAnimation">@anim/out_to_left</item>
+        //当打开一个新的活动时，这是在上一个活动（正在退出屏幕）上运行的动画。
+        <item name="android:activityCloseEnterAnimation">@anim/in_from_left</item>
+        //当关闭当前活动时，这是在下一个活动（正在进入屏幕）中运行的动画。
+        <item name="android:activityCloseExitAnimation">@anim/out_to_right</item>
+        //当关闭当前活动时，这是在当前活动（正在退出屏幕）上运行的动画。
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/common_bg</item>
+    </style>
+    <!-- 加载弹框样式 -->
+    <style name="LightDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan
+        </item>
+    </style>
+    <style name="LightProgressDialog" parent="@style/LightDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="GrayRightArrow">
+        <item name="android:id">@id/GrayRightArrow</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:src">@drawable/ic_arrow</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">right|center_vertical</item>
+    </style>
+    <style name="LineDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_0_5</item>
+        <item name="android:background">@color/common_divider</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+    <style name="LineDivider.Margin">
+        <item name="android:layout_marginStart">@dimen/common_margin</item>
+        <item name="android:layout_marginEnd">@dimen/common_margin</item>
+    </style>
+    <style name="LineDivider.Margin.Middle">
+        <item name="android:layout_marginStart">@dimen/common_margin_middle</item>
+        <item name="android:layout_marginEnd">@dimen/common_margin_middle</item>
+    </style>
+    <style name="LineImg">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_0_5</item>
+        <item name="android:src">@drawable/bg_line_img</item>
+    </style>
+
+    <style name="ThemeOverlay.Catalog.MaterialCalendar.Custom" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">?attr/colorSecondary</item>
+        <item name="colorOnPrimary">?attr/colorOnSecondary</item>
+        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+</resources>

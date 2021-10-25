@@ -1,0 +1,19 @@
+package com.dyn.base.ui.weight.datepicker
+
+import androidx.annotation.IntDef
+
+const val VALIDATION_CHOICE_DEFAULT = 0
+const val VALIDATION_CHOICE_TODAY_ONWARD = 1
+const val VALIDATION_CHOICE_WEEKDAYS = 2
+const val VALIDATION_CHOICE_LAST_2_WEEKS = 3
+const val VALIDATION_CHOICE_MULTIPLE_RANGE = 4
+
+@IntDef(
+    VALIDATION_CHOICE_DEFAULT,
+    VALIDATION_CHOICE_TODAY_ONWARD,
+    VALIDATION_CHOICE_WEEKDAYS,
+    VALIDATION_CHOICE_LAST_2_WEEKS,
+    VALIDATION_CHOICE_MULTIPLE_RANGE
+)
+annotation class PickerValidationChoiceMode {
+}

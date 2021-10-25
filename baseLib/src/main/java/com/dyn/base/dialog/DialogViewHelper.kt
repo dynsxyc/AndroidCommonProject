@@ -1,0 +1,108 @@
+package com.dyn.base.dialog
+
+import android.content.Context
+import android.util.SparseArray
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
+
+import java.lang.ref.WeakReference
+
+/**
+ * Email 240336124@qq.com
+ * Created by Darren on 2017/2/21.
+ * Version 1.0
+ * Description: Dialog View的辅助处理类
+ */
+internal class DialogViewHelper() {
+
+    /**
+     * 设置布局View
+     *
+     * @param contentView
+     */
+    var contentView: View? = null
+    // 防止霸气侧漏
+    private val mViews: SparseArray<WeakReference<View>> = SparseArray()
+
+    constructor(context: Context, layoutResId: Int) : this() {
+        contentView = LayoutInflater.from(context).inflate(layoutResId, null)
+    }
+
+
+    /**
+     * 设置文本
+     *
+     * @param viewId
+     * @param text
+     */
+    fun setText(viewId: Int, text: CharSequence) {
+        // 每次都 findViewById   减少findViewById的次数
+        val tv = getView<TextView>(viewId)
+        if (tv != null) {
+            tv.text = text
+        }
+    }
+    /**
+     * 设置文本
+     *
+     * @param viewId
+     * @param resId
+     */
+    fun setImageResource(viewId: Int, resId: Int) {
+        // 每次都 findViewById   减少findViewById的次数
+        val view = getView<ImageView>(viewId)
+        view?.let {
+            it.setImageResource(resId)
+        }
+
+    }
+    fun setVisibilityView(viewId: Int){
+        val view = getView<View>(viewId)
+        view?.let {
+            it.visibility = View.VISIBLE
+        }
+    }
+    fun setInVisibilityView(viewId: Int){
+        val view = getView<View>(viewId)
+        view?.let {
+            it.visibility = View.INVISIBLE
+        }
+    }
+    fun setGoneView(viewId: Int){
+        val view = getView<View>(viewId)
+        view?.let {
+            it.visibility = View.GONE
+        }
+    }
+
+    fun <T : View> getView(viewId: Int): T? {
+        val viewReference = mViews.get(viewId)
+        // 侧漏的问题  到时候到这个系统优化的时候再去介绍
+        var view: View? = null
+        if (viewReference != null) {
+            view = viewReference.get()
+        }
+
+        if (view == null) {
+            view = contentView?.findViewById(viewId)
+            if (view != null) {
+                mViews.put(viewId, WeakReference(view))
+            }
+        }
+        return view as T
+    }
+
+    /**
+     * 设置点击事件
+     *
+     * @param viewId
+     * @param listener
+     */
+    fun setOnclickListener(viewId: Int, listener: View.OnClickListener) {
+        val view = getView<View>(viewId)
+        view?.setOnClickListener(listener)
+    }
+}

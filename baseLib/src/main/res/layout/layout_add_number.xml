@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.dyn.base.utils.BaseActionConstant"/>
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.addnumber.AddNumberModel" />
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_24">
+
+        <com.flyco.roundview.RoundFrameLayout
+            android:id="@+id/mAddNumberViewMinusRl"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="match_parent"
+            app:rv_backgroundColor="@color/common_white"
+            app:rv_backgroundPressColor="@color/common_white_press"
+            app:rv_cornerRadius_BL="@dimen/dp_4"
+            app:rv_cornerRadius_TL="@dimen/dp_4"
+            app:rv_strokeColor="@color/common_divider"
+            app:rv_strokeWidth="@dimen/common_divider_height"
+            android:clickable="@{vm.count == vm.minCount}"
+            onClickWithDebouncing="@{(view)->action.onAction(view,BaseActionConstant.ACTION_ADD_NUMBER_SUB,vm)}"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mAddNumberViewMinusImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@{(vm.count == vm.minCount)?@drawable/reduce_white:@drawable/reduce_black}" />
+        </com.flyco.roundview.RoundFrameLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp_37"
+            android:layout_height="match_parent"
+            android:background="@color/common_white"
+            onClickWithDebouncing="@{(view)->action.onAction(view,BaseActionConstant.ACTION_ADD_NUMBER_CONTENT,vm)}"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/mAddNumberViewEt"
+                style="@style/WrapWrapTextSize14.33.medium"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:text="@{vm.count.toString()}" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:background="@color/common_divider" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_1"
+                android:layout_alignParentBottom="true"
+                android:background="@color/common_divider" />
+
+            <View
+                android:id="@+id/mAddNumberViewEtRl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </RelativeLayout>
+
+        <com.flyco.roundview.RoundFrameLayout
+            android:id="@+id/mAddNumberViewPlusRl"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="match_parent"
+            app:rv_backgroundColor="@color/common_white"
+            app:rv_backgroundPressColor="@color/common_white_press"
+            app:rv_cornerRadius_BR="@dimen/dp_4"
+            app:rv_cornerRadius_TR="@dimen/dp_4"
+            app:rv_strokeColor="@color/common_divider"
+            android:clickable="@{vm.count >= vm.maxCount}"
+            onClickWithDebouncing="@{(view)->action.onAction(view,BaseActionConstant.ACTION_ADD_NUMBER_PLUS,vm)}"
+            app:rv_strokeWidth="@dimen/common_divider_height">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mAddNumberViewPlusImg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@{(vm.count >= vm.maxCount)?@drawable/plus_white:@drawable/plus_black}" /> />
+        </com.flyco.roundview.RoundFrameLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

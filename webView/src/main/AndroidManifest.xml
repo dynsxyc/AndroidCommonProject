@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.dyn.webview">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:usesCleartextTraffic="true">
+        <!--这个服务是webView进程和APP主进程进行通信的  主进程的service-->
+        <service android:name=".mainprocess.MainProHandleRemoteService"/>
+        <!-- 这个服务是优化webView加载速度使用的-->
+        <service android:name=".command.base.OptimizationService"
+            android:process=":remoteweb"
+            />
+        <activity android:name=".WebViewActivity"
+            android:screenOrientation="portrait"
+            android:process=":remoteweb"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+    </application>
+
+</manifest>
