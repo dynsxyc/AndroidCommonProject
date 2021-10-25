@@ -11,6 +11,7 @@ object BuglyApi {
      * @param processName 进程名
      * @param appId bugLy APPID
      * @param isDebug 是否debug模式
+     * 
      *  */
     private fun init(
         context: Context,
