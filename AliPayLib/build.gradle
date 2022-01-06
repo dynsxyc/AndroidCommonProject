@@ -1,6 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+//apply from: 'gradle-mvn-push.gradle'
+
 def app_android = rootProject.ext.app_android
 def app_dependencies = rootProject.ext.app_dependencies
 
@@ -31,10 +33,38 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+//    sourceSets {
+//        main {
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
+
 }
 
 dependencies {
     api (name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
+//    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation app_dependencies.rxAndroid
     implementation app_dependencies.rxJava
 }
+
+// 使用插件上传 gradle-maven-publish-plugin  打包
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
+
+apply plugin: "com.vanniktech.maven.publish"
+

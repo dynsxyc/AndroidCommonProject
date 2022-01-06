@@ -1,4 +1,4 @@
-package com.zhenpinji.lib.base.utils.recyclerdivider
+package com.dyn.base.ui.recyclerdivider
 
 import android.graphics.Rect
 import android.view.View

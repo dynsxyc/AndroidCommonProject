@@ -1,7 +1,6 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
 def app_android = rootProject.ext.app_android
 def app_dependencies = rootProject.ext.app_dependencies
 
@@ -18,9 +17,9 @@ android {
         consumerProguardFiles "consumer-rules.pro"
 
         //友盟统计
-        manifestPlaceholders = [UMENG_APPKEY: UMENG_APP_KEY]
+//        manifestPlaceholders = [UMENG_APPKEY: UMENG_APP_KEY]
 //        manifestPlaceholders = [UMENG_CHANNEL_VALUE: "c0"]
-        buildConfigField("boolean", "IS_INIT_UMENG_STATISTICS", IS_INIT_UMENG_STATISTICS)
+//        buildConfigField("boolean", "IS_INIT_UMENG_STATISTICS", IS_INIT_UMENG_STATISTICS)
 //        flavorDimensions "versionCode"
         //解决 All flavors must now belong to a named flavor dimension. 问题
     }
@@ -62,11 +61,31 @@ dependencies {
     /**
      * 友盟统计 step 2
      * */
-    api  app_dependencies.umeng_common // (必选)版本号
-    api  app_dependencies.umeng_asms
-    api  app_dependencies.umeng_crash
-    api  app_dependencies.umeng_oaid_lenovo
-    api  app_dependencies.umeng_oaid_mi
-    api  app_dependencies.umeng_oaid_oppo
-    api  app_dependencies.umeng_oaid_vivo
+    api app_dependencies.umeng_common // (必选)版本号
+    api app_dependencies.umeng_asms
+    api app_dependencies.umeng_crash
+    api app_dependencies.umeng_oaid_lenovo
+    api app_dependencies.umeng_oaid_mi
+    api app_dependencies.umeng_oaid_oppo
+    api app_dependencies.umeng_oaid_vivo
 }
+
+// 使用插件上传 gradle-maven-publish-plugin  打包
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
+
+apply plugin: "com.vanniktech.maven.publish"

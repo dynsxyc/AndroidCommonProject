@@ -1,7 +1,5 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-}
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 
 def app_android = rootProject.ext.app_android
 def app_dependencies = rootProject.ext.app_dependencies
@@ -37,3 +35,23 @@ dependencies {
     api app_dependencies.bugLy_crash
     api app_dependencies.tinker
 }
+
+// 使用插件上传 gradle-maven-publish-plugin  打包
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
+
+apply plugin: "com.vanniktech.maven.publish"

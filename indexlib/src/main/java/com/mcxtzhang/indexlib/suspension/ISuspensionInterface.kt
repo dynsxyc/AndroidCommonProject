@@ -1,4 +1,4 @@
-package com.mcxtzhang.indexlib.suspension;
+package com.mcxtzhang.indexlib.suspension
 
 /**
  * 介绍：分类悬停的接口
@@ -7,12 +7,10 @@ package com.mcxtzhang.indexlib.suspension;
  * 主页：http://blog.csdn.net/zxt0601
  * 时间： 2016/11/7.
  */
-
-public interface ISuspensionInterface {
+interface ISuspensionInterface {
     //是否需要显示悬停title
-    boolean isShowSuspension();
+    val isShowSuspension: Boolean
 
     //悬停的title
-    String getSuspensionTag();
-
+    val suspensionTag: String?
 }

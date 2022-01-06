@@ -1,13 +1,15 @@
+//plugins {
+//    id("org.jetbrains.dokka") version ("1.4.32")
+//}
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-//apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-parcelize'
 apply plugin: 'kotlin-kapt'
-//apply plugin: 'androidx.navigation.safeargs.kotlin'
 
-//apply from: '../publishAndroidLib.gradle'
-apply plugin: 'com.github.dcendents.android-maven'
-group = "com.dyn.base"
+
+//maven central step 1
+//apply plugin: 'maven-publish'
+//apply plugin: 'signing'
 
 //设计借鉴  https://github.com/KunMinX/Jetpack-MVVM-Best-Practice
 
@@ -31,18 +33,18 @@ android {
             dataBinding = true
         }
 
-        manifestPlaceholders = [UMENG_APPKEY: UMENG_APP_KEY,
-                                AUTO_SIZE_DESIGN_WIDTH: AUTO_SIZE_WIDTH,
-                                AUTO_SIZE_DESIGN_HEIGHT: AUTO_SIZE_HEIGHT]
+//        manifestPlaceholders = [
+//                                AUTO_SIZE_DESIGN_WIDTH : AUTO_SIZE_WIDTH,
+//                                AUTO_SIZE_DESIGN_HEIGHT: AUTO_SIZE_HEIGHT]
     }
     buildTypes {
         debug {
-            manifestPlaceholders = [IS_DEBUG:true]
+            manifestPlaceholders = [IS_DEBUG: true]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
-            manifestPlaceholders = [IS_DEBUG:false]
+            manifestPlaceholders = [IS_DEBUG: false]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -55,16 +57,112 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-
+//    task sourcesJar(type: Jar) {
+//        classifier = 'sources'
+//        from sourceSets.main.java.srcDirs
+//    }
 }
 
+
+//tasks.named("dokkaJavadoc") {
+//    outputDirectory.set(new File("$rootDir/javadoc"))
+//}
+//
+//dokkaJavadoc {
+//    dokkaSourceSets {
+//        configureEach { // Or source set name, for single-platform the default source sets are `main` and `test`
+//            // Disable linking to online kotlin-stdlib documentation
+//            noStdlibLink.set(true)
+//            // Disable linking to online JDK documentation
+//            noJdkLink.set(true)
+//            // Disable linking to online Android documentation (only applicable for Android projects)
+//            noAndroidSdkLink.set(true)
+//        }
+//    }
+//}
+
+//task generateJavadoc(type: Jar, dependsOn: dokkaJavadoc) {
+//    group = 'jar'
+//    archiveClassifier.set('javadoc')
+//    from "$rootDir/javadoc"
+//}
+
+//maven central step 2  start
+//publishing {
+//    publications {
+//        maven(MavenPublication) {
+////                from components.release
+//            groupId 'io.github.dynsxyc' //开通maven central时候定义的
+//            artifactId 'baselib' //资源名称
+//            version '0.0.3' //版本名称
+//            pom {
+//                name = 'baselib'
+//                description = 'base lib'
+//                url = 'https://github.com/dynsxyc/AndroidCommonProject'
+//                inceptionYear = '2021'
+//
+//                scm {
+//                    url = 'https://github.com/dynsxyc/AndroidCommonProject'
+//                    connection = 'scm:git@https://github.com/dynsxyc/AndroidCommonProject.git'
+//                    developerConnection = 'scm:git@https://github.com/dynsxyc/AndroidCommonProject.git'
+//                }
+//
+//                licenses {
+//                    license {
+//                        name = 'The Apache Software License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                        distribution = 'repo'
+//                        comments = 'A business-friendly OSS license'
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id = 'dongyn'
+//                        name = 'dyn'
+//                        email = 'dynsxyc@163.com'
+//                        url = 'https://github.com/dynsxyc/AndroidCommonProject'
+//                    }
+//                }
+//
+//                issueManagement {
+//                    system = 'Github'
+//                    url = 'https://github.com/dynsxyc/AndroidCommonProject'
+//                }
+//            }
+////            artifact generateSourcesJar //需要上传的source jar
+////            artifact generateJavadoc //需要上传的java doc
+////            artifact makeJar //需要上传的资源jar路径或者是aar路径，这边可以填写一个生成jar的task，如makeJar方法就是一个生成jar的task
+//
+//            artifact sourcesJar
+//            artifact generateJavadoc
+//            artifact "build/outputs/aar/baseLib-release.aar"//生产AAR的一个task
+//        }
+//    }
+//    repositories {
+//        maven {
+//            // 指定要上传的maven仓库
+//            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+//            //Maven仓库用户名和密码
+//            credentials {
+//                username 'dyn'
+//                password 'Dongyn@fld199001'
+//            }
+//        }
+//    }
+//}
+//signing {
+//    sign publishing.publications.maven //签名配置
+//}
+//maven central step 2  end
+
+
 dependencies {
-    api project(":umengLib")
+    api 'io.github.dynsxyc:umenglib:0.0.1'
 
     api app_dependencies.kotlin_stdlib
-    api app_dependencies.kotlinx_coroutines
     api app_dependencies.core_ktx
+    api app_dependencies.kotlinx_coroutines
     api app_dependencies.collection_ktx
     api app_dependencies.appcompat
     api app_dependencies.constraintlayout
@@ -127,6 +225,7 @@ dependencies {
     api app_dependencies.WheelPicker
     api app_dependencies.xPopup
     api app_dependencies.customactivityoncrash
+//    dokkaPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.4.32")
 
     //    bugly  2/3 start   添加依赖库  application初始化  Proguard配置文件
 //    api 'com.tencent.bugly:nativecrashreport:latest.release'   //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
@@ -135,3 +234,23 @@ dependencies {
 //    bugly  2/3 end
 
 }
+
+// 使用插件上传 gradle-maven-publish-plugin  打包
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+    }
+}
+
+allprojects {
+    plugins.withId("com.vanniktech.maven.publish") {
+        mavenPublish {
+            sonatypeHost = "S01"
+        }
+    }
+}
+
+apply plugin: "com.vanniktech.maven.publish"

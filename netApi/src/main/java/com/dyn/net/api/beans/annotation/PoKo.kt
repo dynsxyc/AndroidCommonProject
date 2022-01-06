@@ -3,7 +3,6 @@ package com.dyn.net.api.beans.annotation
 /**
  *
  * @ProjectName:    HotelProject
- * @Package:        com.zhenpinji.lib.base.annotation
  * @ClassName:      PoKo
  * @Description:     java类作用描述
  * @Author:         dyn

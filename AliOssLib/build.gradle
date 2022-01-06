@@ -38,5 +38,4 @@ android {
 
 dependencies {
     implementation app_dependencies.ali_oss
-    implementation project(":baseLib")
 }

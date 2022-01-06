@@ -1,6 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    ext.kotlin_version = '1.6.0-RC'
     apply from: file("../config/config.gradle")
     ext {
         rootProject.ext.kotlin_version = '1.5.0'
@@ -53,6 +54,7 @@ buildscript {
         //        第二步  在项目中添加tinker依赖
         // tinkersupport插件, 其中lastest.release指拉取最新版本，也可以指定明确版本号，例如1.0.4
         classpath 'com.tencent.bugly:tinker-support:1.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

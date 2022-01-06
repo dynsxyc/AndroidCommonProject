@@ -12,7 +12,6 @@ import kotlin.reflect.typeOf
 /**
  * @author dyn
  * @date on 2019/10/24  18:00
- * @packagename com.zhenpinji.lib.base.utils
  * @fileName PreferenceExt
  * @describe 添加描述
  * @email 583454199@qq.com

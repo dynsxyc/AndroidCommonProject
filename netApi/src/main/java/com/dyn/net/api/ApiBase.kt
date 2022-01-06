@@ -6,7 +6,6 @@ import com.dyn.net.api.errorhandler.ApiDataHandler
 import com.dyn.net.api.errorhandler.HttpErrorHandler
 import com.dyn.net.api.interceptor.RequestInterceptor
 import com.dyn.net.api.utils.GsonFactory
-import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableSource
