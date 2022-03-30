@@ -1,0 +1,163 @@
+ext {
+    //    isRelease false 模块可以单独运行 true 模块以lib的形式打包APP
+    isRelease = false
+
+    kotlin_version = '1.4.20'
+    room_version = "2.2.5"
+    androidx_version = '1.1.3'
+    navigationVersion = "2.3.1"
+
+    app_dependencies = [
+
+            "lefecycle_viewmodel"            : 'androidx.lifecycle:lifecycle-viewmodel:2.2.0',
+            "lefecycle_viewmodel_ktx"        : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
+            "lifecycle_livedata_ktx"         : 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0',
+            "lifecycle_common_java8"         : 'androidx.lifecycle:lifecycle-common-java8:2.2.0',
+            "constraintlayout"               : "androidx.constraintlayout:constraintlayout:2.0.0-beta1",
+            "appcompat"                      : "androidx.appcompat:appcompat:1.3.0",
+            "core_ktx"                       : "androidx.core:core-ktx:1.6.0",
+            "collection_ktx"                 : "androidx.collection:collection-ktx:1.1.0",//Collection 扩展程序包含在 Android 的节省内存的集合库中使用的实用函数，包括 ArrayMap、LongSparseArray、LruCache 等等。
+            "kotlin_stdlib"                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            "kotlinx_coroutines"             : "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9",//kotlin  携程
+            "retrofit"                       : 'com.squareup.retrofit2:retrofit:2.9.0',
+            "retrofit_converter_gson"        : 'com.squareup.retrofit2:converter-gson:2.9.0',
+            "retrofit_adapter_rxjava"        : 'com.squareup.retrofit2:adapter-rxjava3:2.9.0',
+            "okhttp"                         : 'com.squareup.okhttp3:okhttp:4.9.1',
+            "gson"                           : 'com.google.code.gson:gson:2.8.6',
+            "okhttp_interceptor"             : "com.squareup.okhttp3:logging-interceptor:4.9.1",
+            //引入rxandroid
+            "rxAndroid"                      : 'io.reactivex.rxjava3:rxandroid:3.0.0',
+            "rxAndroid2"                     : 'io.reactivex.rxjava2:rxandroid:2.1.1',
+            "rxJava"                         : 'io.reactivex.rxjava3:rxjava:3.0.5',
+            "autodispose"                    : 'com.uber.autodispose2:autodispose:2.0.0',
+            "autodispose_android"            : 'com.uber.autodispose2:autodispose-android:2.0.0',
+            "autodispose_lifecycle"          : 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.0.0',
+            "android_multidex"               : "com.android.support:multidex:1.0.3",
+            "autoService"                    : "com.google.auto.service:auto-service:1.0-rc7",
+            "google_material"                : "com.google.android.material:material:1.5.0",
+
+
+            // 基础依赖包，必须要依赖  https://github.com/gyf-dev/ImmersionBar
+            "immersionbar"                   : 'com.gyf.immersionbar:immersionbar:3.0.0',
+            // fragment快速实现（可选）
+            "immersionbar_components"        : 'com.gyf.immersionbar:immersionbar-components:3.0.0',
+            // kotlin扩展（可选）
+            "immersionbar_ktx"               : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
+
+
+            "navigation_fragment"            : "androidx.navigation:navigation-fragment:$navigationVersion",
+            "navigation_fragment_ktx"        : "androidx.navigation:navigation-fragment-ktx:$navigationVersion",
+            "fragment_ktx"                   : "androidx.fragment:fragment-ktx:1.3.5",
+            "navigation_ui"                  : "androidx.navigation:navigation-ui:$navigationVersion",
+            "navigation_ui_ktx"              : "androidx.navigation:navigation-ui-ktx:$navigationVersion",
+            "navigation_runtime"             : "androidx.navigation:navigation-runtime:$navigationVersion",
+
+            "vectordrawable"                 : "androidx.vectordrawable:vectordrawable:1.1.0",
+            "ViewPagerBanner"                : "com.youth.banner:banner:2.1.0",
+
+            //glide
+            "glide"                          : "com.github.bumptech.glide:glide:4.11.0",
+            "glide_compiler"                 : "com.github.bumptech.glide:compiler:4.11.0",
+
+            "databinding_compiler"           : "com.android.databinding:compiler:4.1.1",
+            "loadSir"                        : "com.kingja.loadsir:loadsir:1.3.8",
+            "lottie"                         : "com.airbnb.android:lottie:3.4.1",
+            "viewPager2"                     : "androidx.viewpager2:viewpager2:1.0.0",
+            "utilCode"                       : 'com.blankj:utilcodex:1.30.5',
+
+            "smartRefreshLayout"             : "com.scwang.smart:refresh-layout-kernel:2.0.1",
+            "smartRefreshHeader"             : "com.scwang.smart:refresh-header-classics:2.0.1",
+            "smartRefreshFooter"             : "com.scwang.smart:refresh-footer-classics:2.0.1",
+
+            /*********权限请求*****/
+
+            "yzjPermission"                  : 'com.yanzhenjie:permission:2.0.3',
+            "permissionsdispatcher"          : "org.permissionsdispatcher:permissionsdispatcher:4.7.0",
+            "permissionsdispatcher-processor": "org.permissionsdispatcher:permissionsdispatcher-processor:4.7.0",
+            "rxPermissions"                  : 'com.github.tbruyelle:rxpermissions:0.12',
+
+            /**RecyclerView Adapter*/
+            "BaseRecyclerViewAdapterHelper"  : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+
+            /**rxbinding start*/
+            "rxbinding4"                     : 'com.jakewharton.rxbinding4:rxbinding:4.0.0',
+
+            "rxbinding4_core"                : 'com.jakewharton.rxbinding4:rxbinding-core:4.0.0',
+            "rxbinding4_appcompat"           : 'com.jakewharton.rxbinding4:rxbinding-appcompat:4.0.0',
+            "rxbinding4_drawerlayout"        : 'com.jakewharton.rxbinding4:rxbinding-drawerlayout:4.0.0',
+            "rxbinding4_leanback"            : 'com.jakewharton.rxbinding4:rxbinding-leanback:4.0.0',
+            "rxbinding4_recyclerview"        : 'com.jakewharton.rxbinding4:rxbinding-recyclerview:4.0.0',
+            "rxbinding4_slidingpanelayout"   : 'com.jakewharton.rxbinding4:rxbinding-slidingpanelayout:4.0.0',
+            "rxbinding4_swiperefreshlayout"  : 'com.jakewharton.rxbinding4:rxbinding-swiperefreshlayout:4.0.0',
+            "rxbinding4_viewpager"           : 'com.jakewharton.rxbinding4:rxbinding-viewpager:4.0.0',
+            "rxbinding4_viewpager2"          : 'com.jakewharton.rxbinding4:rxbinding-viewpager2:4.0.0',
+
+            "rxbinding4_material"            : 'com.jakewharton.rxbinding4:rxbinding-material:4.0.0',
+            /**rxbinding end*/
+
+            /**room*/
+            "room_runtime"                   : "androidx.room:room-runtime:$room_version",
+            // For Kotlin use kapt instead of annotationProcessor
+            "room_compiler"                  : "androidx.room:room-compiler:$room_version",
+            // optional - Kotlin Extensions and Coroutines support for Room
+            "room_ktx"                       : "androidx.room:room-ktx:$room_version",
+            // optional - RxJava support for Room
+            "room_rxjava"                    : "androidx.room:room-rxjava2:$room_version",
+
+
+            "PictureSelector"                : "com.github.LuckSiege.PictureSelector:picture_library:v2.6.0",
+            "FlycoRoundView_Lib"             : "com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar",
+            "CheckVersionLib"                : "com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx",//版本检测  https://github.com/AlexLiuSheng/CheckVersionLib
+            "easypermissions"                : "pub.devrel:easypermissions:3.0.0",
+            "leakcanary_android"             : "com.squareup.leakcanary:leakcanary-android:2.4",
+            "lifecycle_extensions"           : 'androidx.lifecycle:lifecycle-extensions:2.2.0',
+            //捕捉crash
+            "customactivityoncrash"          : 'cat.ereza:customactivityoncrash:2.2.0',//https://github.com/Ereza/CustomActivityOnCrash
+            "MagicIndicator"                 : 'com.github.hackware1993:MagicIndicator:1.7.0',//https://github.com/hackware1993/MagicIndicator
+            "zxing_android"                  : 'cn.yipianfengye.android:zxing-library:2.2',//https://github.com/yipianfengye/android-zxingLibrary
+            "ali_oss"                        : 'com.aliyun.dpa:oss-android-sdk:+',
+            "logger"                         : 'com.orhanobut:logger:2.2.0',
+            "circleimageview"                : 'de.hdodenhof:circleimageview:3.1.0',
+            "roundedimageview"               : 'com.makeramen:roundedimageview:2.3.0',
+
+
+            // 下面各SDK根据宿主App是否使用相关业务按需引入。
+            // OAID目前为目前国内市场主流的Android Q设备标识，可根据需要选择。
+            // 友盟统计SDK
+            "umeng_common"                   : 'com.umeng.umsdk:common:9.4.0', // (必选)版本号
+            "umeng_game"                     : 'com.umeng.umsdk:game:9.x.x+G',// 游戏统计SDK依赖(可选)
+            "umeng_asms"                     : 'com.umeng.umsdk:asms:1.2.3',// asms包依赖(必选)
+            "umeng_crash"                    : 'com.umeng.umsdk:apm:1.3.1',// native crash包依赖(必选)
+
+            "umeng_oaid_lenovo"              : 'com.umeng.umsdk:oaid_lenovo:1.0.0',// (可选)
+            "umeng_oaid_mi"                  : 'com.umeng.umsdk:oaid_mi:1.0.0',// (可选)
+            "umeng_oaid_oppo"                : 'com.umeng.umsdk:oaid_oppo:1.0.4',// (可选)
+            "umeng_oaid_vivo"                : 'com.umeng.umsdk:oaid_vivo:1.0.0.1',// (可选)
+
+
+            "AutoSize"                       : "me.jessyan:autosize:1.1.2",
+            "GSYVideoPlayer"                 : "com.shuyu:GSYVideoPlayer:8.0.0",
+            "SwipeDelMenuLayout"             : "com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0",
+//            "switchbutton"                   : "com.kyleduo.switchbutton:library:2.0.2",
+            "switchbutton"                   : "com.github.zcweng:switch-button:0.0.3@aar",
+            "WheelPicker"                    : "cn.aigestudio.wheelpicker:WheelPicker:1.1.3",
+            "xPopup"                         : "com.lxj:xpopup:2.2.12",
+            "wechatSdk"                      : "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+",
+            "SuspensionIndexBar"             : "com.github.mcxtzhang:SuspensionIndexBar:V1.0.0",
+
+            "bugLy_upgrade"                  : "com.tencent.bugly:crashreport_upgrade:latest.release",
+            "bugLy_crash"                    : "com.tencent.bugly:nativecrashreport:latest.release",
+            // 指定tinker依赖版本（注：应用升级1.3.5版本起，不再内置tinker）
+            "tinker"                         : 'com.tencent.tinker:tinker-android-lib:1.9.9',
+            "mmkv"                           : 'com.tencent:mmkv-static:1.2.10'
+
+    ]
+    app_android = [
+            buildToolsVersion: "30.0.3",
+            compileSdkVersion: 30,
+            minSdkVersion    : 21,
+            targetSdkVersion : 30,
+    ]
+
+
+}

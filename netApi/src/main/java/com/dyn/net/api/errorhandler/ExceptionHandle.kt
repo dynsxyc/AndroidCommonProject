@@ -22,7 +22,7 @@ object ExceptionHandle {
     fun handleException(e: Throwable): Throwable {
         e.printStackTrace()
         return if (e is HttpException) {
-            val ex = ResponseThrowable(e, ERROR.HTTP_ERROR);
+            val ex = ResponseThrowable(e, ERROR.HTTP_ERROR,e.code());
             when (e.code()) {
                 UNAUTHORIZED,
                 FORBIDDEN,
@@ -43,17 +43,17 @@ object ExceptionHandle {
         }  else if (e is JsonParseException
                 || e is JSONException
                 || e is ParseException) {
-            ResponseThrowable(e, ERROR.PARSE_ERROR, "Json 解析错误");
+            ResponseThrowable(e, ERROR.PARSE_ERROR,e.hashCode(), "Json 解析错误");
         } else if (e is ConnectException) {
-            ResponseThrowable(e, ERROR.NETWORD_ERROR, "连接失败")
+            ResponseThrowable(e, ERROR.NETWORK_ERROR,e.hashCode(), "连接失败")
         } else if (e is javax.net.ssl.SSLHandshakeException) {
-            ResponseThrowable(e, ERROR.SSL_ERROR, "证书验证失败");
+            ResponseThrowable(e, ERROR.SSL_ERROR,e.hashCode(), "证书验证失败");
         } else if (e is ConnectTimeoutException) {
-            ResponseThrowable(e, ERROR.TIMEOUT_ERROR, "连接超时");
+            ResponseThrowable(e, ERROR.TIMEOUT_ERROR,e.hashCode(), "连接超时");
         } else if (e is java.net.SocketTimeoutException) {
-            ResponseThrowable(e, ERROR.TIMEOUT_ERROR, "连接超时");
+            ResponseThrowable(e, ERROR.TIMEOUT_ERROR,e.hashCode(), "连接超时");
         } else {
-            ResponseThrowable(e, ERROR.UNKNOWN, "未知错误");
+            ResponseThrowable(e, ERROR.UNKNOWN,e.hashCode(), "未知错误");
         }
     }
 
@@ -77,7 +77,7 @@ object ExceptionHandle {
         /**
          * 网络错误
          */
-        const val NETWORD_ERROR = 1002
+        const val NETWORK_ERROR = 1002
 
         /**
          * 协议出错

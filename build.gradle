@@ -2,7 +2,7 @@
 
 buildscript {
     ext.kotlin_version = '1.6.0-RC'
-    apply from: file("../config/config.gradle")
+    apply from: file("config/config.gradle")
     ext {
         rootProject.ext.kotlin_version = '1.5.0'
         objectboxVersion = '2.9.1'
