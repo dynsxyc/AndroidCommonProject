@@ -37,7 +37,7 @@ buildscript {
 //        classpath "com.android.tools.build:gradle:3.4.2"
         classpath 'com.android.tools.build:gradle:4.2.1'
 
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21'
         classpath "org.jetbrains.kotlin:kotlin-allopen:${rootProject.ext.kotlin_version}"
         classpath "org.jetbrains.kotlin:kotlin-noarg:${rootProject.ext.kotlin_version}"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${rootProject.ext.navigationVersion}"
