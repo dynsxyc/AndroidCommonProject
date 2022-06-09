@@ -7,7 +7,6 @@ object WebConstants {
 
     const val CONTENT_SCHEME = "file:///android_asset/"
 
-    const val SCHEME_SMS = "web_url"
     const val REQUEST_CODE_LOLIPOP = 1
     const val INTENT_TAG_URL = "web_url"
     const val INTENT_INTERFACE_NAME = "interface_name"

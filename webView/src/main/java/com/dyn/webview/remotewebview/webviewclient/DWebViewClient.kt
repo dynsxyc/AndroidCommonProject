@@ -76,7 +76,6 @@ class DWebViewClient(
      */
     private fun handleLinked(url: String): Boolean {
         if (url.startsWith(WebView.SCHEME_TEL)
-            || url.startsWith(WebConstants.SCHEME_SMS)
             || url.startsWith(WebView.SCHEME_MAILTO)
             || url.startsWith(WebView.SCHEME_GEO)
         ) {
