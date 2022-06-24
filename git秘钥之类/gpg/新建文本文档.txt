@@ -1,0 +1,19 @@
+出处：https://mp.weixin.qq.com/s/FVR6_zMp5DxO5N4ptVuA6g
+
+
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 2C0692D391733C25 marked as ultimately trusted
+gpg: revocation certificate stored as 'C:\\Users\\76556\\AppData\\Roaming\\gnupg\\openpgp-revocs.d\\5EC5AF7A482FF0F34106542F2C0692D391733C25.rev'
+public and secret key created and signed.
+
+pub   ed25519 2021-10-26 [SC]
+      5EC5AF7A482FF0F34106542F2C0692D391733C25
+uid                      dynsxyc (use maven central userName:dynsxyc email address:dynsxyc@163.com pass :a11111111) <dynsxyc@163.com>
+sub   cv25519 2021-10-26 [E]
