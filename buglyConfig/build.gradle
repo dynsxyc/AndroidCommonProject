@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdkVersion app_android.minSdkVersion
         targetSdkVersion app_android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
     }
 
@@ -25,9 +23,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+//    kotlinOptions {
+//        jvmTarget = '1.8'
+//    }
 }
 
 dependencies {
@@ -42,7 +40,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0'
     }
 }
 

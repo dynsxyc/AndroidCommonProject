@@ -42,7 +42,7 @@ object BindingScrollViewAdapter {
         newValue: Int
     ) {
         if (sBt.scrollY != newValue)
-            sBt.scrollTo(0, newValue)
+            sBt.scrollTo(newValue, 0)
     }
 
     @JvmStatic

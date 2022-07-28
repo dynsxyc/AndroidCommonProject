@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.annotation.NonNull
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -256,14 +257,14 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
      * 初始化toast 操作监听
      * */
     private fun initToast() {
-        mViewModel.mShortToastStr.observe(this, Observer<Any?> { data ->
+        mViewModel.mShortToastStr.observe(this.viewLifecycleOwner, Observer<Any?> { data ->
             when (data) {
                 is String? -> {
                     data?.let {
-                        showToast(data, Toast.LENGTH_SHORT)
+                        showToast(data, duration = Toast.LENGTH_SHORT)
                     }
                 }
-                is @androidx.annotation.StringRes Int -> {
+                is Int -> {
                     data?.let {
                         showToast(data, Toast.LENGTH_SHORT)
                     }
@@ -285,14 +286,14 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
                 }
             }
         })
-        mViewModel.mLongToastStr.observe(this, Observer<Any?> { data ->
+        mViewModel.mLongToastStr.observe(this.viewLifecycleOwner, Observer<Any?> { data ->
             when (data) {
                 is String? -> {
                     data?.let {
-                        showToast(data, Toast.LENGTH_LONG)
+                        showToast(data, duration = Toast.LENGTH_LONG)
                     }
                 }
-                is @androidx.annotation.StringRes Int -> {
+                is Int -> {
                     data?.let {
                         showToast(data, Toast.LENGTH_LONG)
                     }

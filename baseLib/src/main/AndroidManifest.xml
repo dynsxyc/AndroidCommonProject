@@ -21,7 +21,7 @@
         android:networkSecurityConfig="@xml/network_config"
         android:usesCleartextTraffic="true">
         <!-- 文件读取处理 -->
-        <provider
+<!--        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
@@ -29,7 +29,7 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
+        </provider>-->
 
         <!-- 屏幕适配 start-->
         <meta-data

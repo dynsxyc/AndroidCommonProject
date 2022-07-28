@@ -1,0 +1,129 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+//plugins {
+//    id 'com.android.library'
+//    id 'org.jetbrains.kotlin.android'
+//}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+}
+//
+//// 使用插件上传 gradle-maven-publish-plugin  打包
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0'
+//    }
+//}
+//
+//allprojects {
+//    plugins.withId("com.vanniktech.maven.publish") {
+//        mavenPublish {
+//            sonatypeHost = "S01"
+//            artifact './libs/alipaysdk-15.8.08.220217103129.aar'
+//        }
+//    }
+//}
+//
+//apply plugin: "com.vanniktech.maven.publish"
+//
+////mavenPublishing {
+//////    artifact  './libs/alipaysdk-15.8.08.220217103129.aar'
+////}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId GROUP //开通maven central时候定义的
+            artifactId 'alipaysdk' //资源名称
+            version '0.0.1' //版本名称
+            pom {
+                name = 'alipaysdk'
+                description = 'alipaysdk'
+                url = POM_DEVELOPER_URL
+                inceptionYear = '2021'
+
+                scm {
+                    url = POM_SCM_URL
+                    connection = POM_SCM_CONNECTION
+                    developerConnection = POM_SCM_DEV_CONNECTION
+                }
+
+                licenses {
+                    license {
+                        name = 'The Apache Software License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution = 'repo'
+                        comments = 'A business-friendly OSS license'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'dyn'
+                        name = 'dyn'
+                        email = 'dynsxyc@163.com'
+                        url = POM_DEVELOPER_URL
+                    }
+                }
+
+                issueManagement {
+                    system = 'Github'
+                    url = POM_SCM_URL
+                }
+                artifact './libs/alipaysdk-15.8.08.220217103129.aar'
+//            artifact generateSourcesJar //需要上传的source jar
+//            artifact generateJavadoc //需要上传的java doc
+//            artifact makeJar //需要上传的资源jar路径或者是aar路径，这边可以填写一个生成jar的task，如makeJar方法就是一个生成jar的task
+
+            }
+        }
+    }
+    repositories {
+        maven {
+            // 指定要上传的maven仓库
+            url = 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+            //Maven仓库用户名和密码
+            credentials {
+                username mavenCentralUsername
+                password mavenCentralPassword
+            }
+        }
+    }
+}
+signing {
+    sign publishing.publications.maven //签名配置
+}

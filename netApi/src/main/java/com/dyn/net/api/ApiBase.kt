@@ -1,7 +1,6 @@
 package com.dyn.net.api
 
 import com.blankj.utilcode.util.NetworkUtils
-import com.dyn.base.utils.ServerException
 import com.dyn.net.api.errorhandler.ApiDataHandler
 import com.dyn.net.api.errorhandler.HttpErrorHandler
 import com.dyn.net.api.interceptor.RequestInterceptor
@@ -57,6 +56,10 @@ abstract class ApiBase<S> {
             clientBuilder.addInterceptor(it)
         }
 
+        getNetInterceptor()?.let {
+            clientBuilder.addNetworkInterceptor(it)
+        }
+
         /**  socketFactory  start*/
         var trustManagerFactory: TrustManagerFactory? = TrustManagerFactory.getInstance(
             TrustManagerFactory.getDefaultAlgorithm()
@@ -108,6 +111,10 @@ abstract class ApiBase<S> {
     }
 
     protected open fun getRequestInterceptor(): RequestInterceptor? {
+        return null
+    }
+
+    protected open fun getNetInterceptor(): Interceptor? {
         return null
     }
 

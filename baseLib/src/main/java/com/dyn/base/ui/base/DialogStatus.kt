@@ -13,6 +13,7 @@ class DialogStatus {
         const val LOADING_DIALOG_STATUS_HIDE = 2
     }
 
+    @Target(AnnotationTarget.TYPE)
     @IntDef(value = [LOADING_DIALOG_STATUS_SHOW_CANCEL, LOADING_DIALOG_STATUS_SHOW_UNCANCEL, LOADING_DIALOG_STATUS_HIDE])
     @Retention(RetentionPolicy.SOURCE)
     annotation class EnumDialogStatus

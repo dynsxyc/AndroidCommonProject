@@ -317,15 +317,15 @@ object BindingCommonAdapter {
         view.setupWithViewPager(viewPager)
     }
 
-    @JvmStatic
-    fun findStartDestination(graph: NavGraph?): NavDestination? {
-        var startDestination: NavDestination? = graph
-        while (startDestination is NavGraph) {
-            val parent = startDestination
-            startDestination = parent?.findNode(parent?.startDestination)
-        }
-        return startDestination
-    }
+//    @JvmStatic
+//    fun findStartDestination(graph: NavGraph?): NavDestination? {
+//        var startDestination: NavDestination? = graph
+//        while (startDestination is NavGraph) {
+//            val parent = startDestination
+//            startDestination = parent?.findNode(parent?.startDestination)
+//        }
+//        return startDestination
+//    }
 
     @BindingAdapter(
         value = ["android:drawableStart", "android:drawableTop", "android:drawableEnd", "android:drawableBottom"],

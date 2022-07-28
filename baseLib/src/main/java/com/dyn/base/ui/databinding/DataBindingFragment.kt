@@ -111,7 +111,7 @@ abstract class DataBindingFragment : Fragment() {
             null
         }
         if (str.isNullOrBlank().not()) {
-            showToast(str!!, duration)
+            showToast(str!!, duration = duration)
         }
     }
 

@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.StringUtils
 import com.dyn.base.R
 import com.dyn.base.binding_adapter.BindingLoadSirAdapter
-import com.dyn.base.utils.ServerException
 import com.kingja.loadsir.callback.Callback
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
@@ -64,24 +63,9 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
 
     open fun showPageFail(exception: Throwable? = null) {
         pageStatus.value = BindingLoadSirAdapter.LoadPageStatus.EMPTY
-        if (exception is ServerException) {
-            when (exception.code) {
-                -1 -> {
-                    emptyTitleStr.value = StringUtils.getString(R.string.netErrorTitleStr)
-                    emptyDesStr.value = StringUtils.getString(R.string.netErrorDesStr)
-                    emptyImgDrawable.value = R.drawable.img_data_nonet_error
-                }
-                else -> {
-                    emptyTitleStr.value = StringUtils.getString(R.string.customErrorTitleStr)
-                    emptyDesStr.value = StringUtils.getString(R.string.customErrorDesStr)
-                    emptyImgDrawable.value = R.drawable.img_data_nonet_error
-                }
-            }
-        } else {
             emptyTitleStr.value = StringUtils.getString(R.string.customErrorTitleStr)
             emptyDesStr.value = StringUtils.getString(R.string.customErrorDesStr)
             emptyImgDrawable.value = R.drawable.img_data_nonet_error
-        }
     }
 
     open fun showPageEmpty() {

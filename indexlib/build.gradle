@@ -12,8 +12,6 @@ android {
 
         minSdkVersion app_android.minSdkVersion
         targetSdkVersion app_android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
 
     }
@@ -39,7 +37,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0'
     }
 }
 

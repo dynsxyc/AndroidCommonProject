@@ -2,9 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
-//apply from: '../publishAndroidLib.gradle'
-apply plugin: 'com.github.dcendents.android-maven'
-group="com.dyn.netapi"
 
 def app_android = rootProject.ext.app_android
 def app_dependencies = rootProject.ext.app_dependencies
@@ -16,8 +13,6 @@ android {
     defaultConfig {
         minSdkVersion app_android.minSdkVersion
         targetSdkVersion app_android.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
 
         buildFeatures {
             dataBinding = true
@@ -57,7 +52,7 @@ dependencies {
     api app_dependencies.rxAndroid
     api app_dependencies.rxJava
     api app_dependencies.utilCode
-    api project(":baseLib")
+//    api 'io.github.dynsxyc:baselib:0.0.4' 解耦 不要依赖base
 
 }
 
@@ -67,7 +62,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.18.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.20.0'
     }
 }
 
