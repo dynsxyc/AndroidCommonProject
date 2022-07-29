@@ -42,6 +42,7 @@ dependencies {
 
     kapt app_dependencies.autoService
     implementation app_dependencies.autoService
+    api 'com.tencent.tbs:tbssdk:44216'
 
     api app_dependencies.gson
     api 'io.github.dynsxyc:baselib:0.0.4'

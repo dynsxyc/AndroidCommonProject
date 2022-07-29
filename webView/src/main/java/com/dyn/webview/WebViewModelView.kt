@@ -16,7 +16,9 @@ class WebViewModelView : BaseLoadSirAndRefreshViewModel() {
             canGoBack.postValue(isGoBack)
         }
     }
+    //webView 回调监听
     lateinit var webCallback:WebCallback
+    //分发给H5 的页面生命周期回调
     var dispatchEvent = MutableLiveData<DispatchWebEvent?>()
     init {
         isReLoad.value = false

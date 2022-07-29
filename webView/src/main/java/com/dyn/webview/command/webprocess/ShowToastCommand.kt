@@ -10,7 +10,7 @@ import com.google.auto.service.AutoService
 @AutoService(value = [Command::class])
 class ShowToastCommand : Command {
     override fun name(): String {
-        return WebConstants.COMMAND_ACTION.SHOWTOAST
+        return WebConstants.CommandAction.SHOWTOAST
     }
 
     override fun exec(context: Context, params: Map<String, String>?, resultBack: ResultBack?) {

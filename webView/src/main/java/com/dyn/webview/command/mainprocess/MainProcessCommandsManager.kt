@@ -25,16 +25,16 @@ class MainProcessCommandsManager {
         }
     }
     init {
-        MainLooper.runOnUiThread(Runnable {
+        MainLooper.runOnUiThread {
             val services = ServiceLoaderUtils.loadServices(Command::class.java)
             Logger.i("注册命令->${services.hasNext()}")
             services.forEach {
                 Logger.i("注册命令->${it.name()}")
-                if (WebConstants.LEVEL_BASE == it.level()){
+                if (WebConstants.LEVEL_BASE == it.level()) {
                     accountLevelCommands[it.name()] = it
                 }
             }
-        })
+        }
     }
 
     /**

@@ -17,6 +17,11 @@
             android:process=":remoteweb"
             android:theme="@style/AppTheme.NoActionBar"
             />
+        <service
+            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
+            android:label="dexopt"
+            android:process=":dexopt" >
+        </service>
     </application>
 
 </manifest>

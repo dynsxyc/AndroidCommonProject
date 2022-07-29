@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
+import com.clock.app.mainprocess.MainProcessService
 import com.dyn.webview.IBinderPool
 import com.orhanobut.logger.Logger
 import java.util.concurrent.CountDownLatch
@@ -27,13 +28,13 @@ class RemoteWebBinderPool private constructor(private val mContext: Context) {
 
     companion object {
         const val BINDER_WEB_AIDL = 1
+
+        @Volatile
         private var instance: RemoteWebBinderPool? = null
-        fun newInstance(context: Context) = lazy {
-            if (instance == null) {
-                instance = RemoteWebBinderPool(context)
+        fun newInstance(context: Context) =
+            instance ?: synchronized(this) {
+                instance ?: RemoteWebBinderPool(context).also { instance = it }
             }
-            instance!!
-        }.value
     }
 
     init {
@@ -114,7 +115,7 @@ class RemoteWebBinderPool private constructor(private val mContext: Context) {
             Logger.i("queryBinder------------$binderCode------")
             when (binderCode) {
                 BINDER_WEB_AIDL -> {
-                    return MainProcessServiceManager.getInstance(mContext)
+                    return MainProcessService.getInstance(mContext)
                 }
             }
             return null

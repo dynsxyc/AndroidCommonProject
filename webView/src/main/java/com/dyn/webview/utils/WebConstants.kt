@@ -7,6 +7,7 @@ object WebConstants {
 
     const val CONTENT_SCHEME = "file:///android_asset/"
 
+    const val SCHEME_SMS = "web_url"
     const val REQUEST_CODE_LOLIPOP = 1
     const val INTENT_TAG_URL = "web_url"
     const val INTENT_INTERFACE_NAME = "interface_name"
@@ -39,7 +40,10 @@ object WebConstants {
         const val ERROR_EXCEPTION = "未知异常"
     }
 
-    object COMMAND_ACTION {
+    /**
+     * js中的 操作类型
+     * */
+    object CommandAction {
         const val SHOWDIALOG = "showDialog"
         const val SHOWTOAST = "showToast"
         const val APPLOGIN = "appLogin"

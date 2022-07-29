@@ -2,11 +2,12 @@ package com.dyn.webview.remotewebview.javascriptinterface
 
 import android.content.Context
 import android.os.Handler
+import android.os.Looper
 import android.webkit.JavascriptInterface
 
 class WebViewJavaScriptInterface(private val mContext: Context,private val mJavascriptCommand:JavascriptCommand) {
     private val mHandler by lazy {
-        Handler()
+        Handler(Looper.getMainLooper())
     }
     @JavascriptInterface
     open fun post(cmd: String?, param: String?) {

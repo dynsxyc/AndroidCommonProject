@@ -3,13 +3,13 @@ package com.dyn.webview.utils
 import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
-import android.webkit.WebView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import com.dyn.webview.BaseWebView
 import com.dyn.webview.DispatchWebEvent
 import com.dyn.webview.WebCallback
 import com.orhanobut.logger.Logger
+import com.tencent.smtt.sdk.WebView
 
 object WebViewBindingAdapter {
     @BindingAdapter(value = ["loadWebUrl", "webHeader"], requireAll = false)
@@ -66,6 +66,7 @@ object WebViewBindingAdapter {
                 clearWebView(web)
                 web.dispatchEvent("pageDestroy")
             }
+            else -> {}
         }
     }
 

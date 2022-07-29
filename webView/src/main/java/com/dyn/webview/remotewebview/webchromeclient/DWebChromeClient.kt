@@ -6,11 +6,16 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
-import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.dyn.webview.WebCallback
 import com.orhanobut.logger.Logger
+import com.tencent.smtt.export.external.interfaces.ConsoleMessage
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback
+import com.tencent.smtt.export.external.interfaces.JsResult
+import com.tencent.smtt.sdk.ValueCallback
+import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebView
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -38,7 +43,7 @@ class DWebChromeClient(private val mWebCallback: WebCallback) : WebChromeClient(
                 .setTitle(R.string.dialog_alert_title)
                 .setMessage(message)
                 .setPositiveButton(R.string.ok
-                ) { dialoginterface, i -> //按钮事件
+                ) { _, _ -> //按钮事件
                     Toast.makeText(view.context, view.context.getString(R.string.ok) + " clicked.", Toast.LENGTH_LONG).show()
                 }.show()
         result.confirm();// 不加这行代码，会造成Alert劫持：Alert只会弹出一次，并且WebView会卡死

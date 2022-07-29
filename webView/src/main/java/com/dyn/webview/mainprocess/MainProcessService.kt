@@ -1,4 +1,4 @@
-package com.dyn.webview.mainprocess
+package com.clock.app.mainprocess
 
 import android.content.Context
 import android.os.Process
@@ -9,18 +9,19 @@ import com.dyn.webview.IWebToMain
 import com.dyn.webview.command.base.ResultBack
 import com.dyn.webview.command.mainprocess.MainProcessCommandsManager
 import com.google.gson.Gson
+import java.lang.Compiler.command
 
 /**
  * 主进程 提供给子进程服务实现
  * */
-class MainProcessServiceManager private constructor(private val mContext: Context) : IWebToMain.Stub() {
+class MainProcessService private constructor(private val mContext: Context) : IWebToMain.Stub() {
 
     companion object {
-        private var instance: MainProcessServiceManager? = null
+        private var instance: MainProcessService? = null
         private val mMainProcessCommandsManager = MainProcessCommandsManager.instance
         fun getInstance(context: Context) = lazy {
             if (instance == null) {
-                instance = MainProcessServiceManager(context)
+                instance = MainProcessService(context)
             }
             instance
         }.value
@@ -41,7 +42,8 @@ class MainProcessServiceManager private constructor(private val mContext: Contex
     }
 
     private fun handleRemoteAction(level: Int, actionName: String?, paramMap: Map<String, String>, callback: ICallbackFromMainToWeb?) {
-        mMainProcessCommandsManager.findAndExecRemoteCommand(mContext, level, actionName, paramMap, object : ResultBack {
+        mMainProcessCommandsManager.findAndExecRemoteCommand(mContext, level, actionName, paramMap, object :
+            ResultBack {
             override fun onResult(status: Int, action: String?, result: Any) {
                 try {
                     callback?.onResult(status, actionName, GsonUtils.toJson(result))

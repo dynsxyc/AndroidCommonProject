@@ -5,14 +5,15 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.webkit.WebView
 import com.dyn.webview.remotewebview.javascriptinterface.WebViewJavaScriptInterface
 import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
 import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
 import com.google.gson.Gson
-import java.util.*
+import com.orhanobut.logger.Logger
+import com.tencent.smtt.sdk.WebView
+import java.security.AccessController.getContext
 
 open class BaseWebView(
     context: Context,
@@ -35,14 +36,14 @@ open class BaseWebView(
         val jsInterFace = WebViewJavaScriptInterface(getContext(),
             object : WebViewJavaScriptInterface.JavascriptCommand {
                 override fun exec(context: Context, cmd: String, params: String?) {
-                    val levle = when (cmd) {
-                        WebConstants.COMMAND_ACTION.SHOWDIALOG,
-                        WebConstants.COMMAND_ACTION.SHOWTOAST ->
+                    val level = when (cmd) {
+                        WebConstants.CommandAction.SHOWDIALOG,
+                        WebConstants.CommandAction.SHOWTOAST ->
                             WebConstants.LEVEL_LOCAL
                         else ->
                             WebConstants.LEVEL_BASE
                     }
-                    mWebCallback?.exec(context, levle, cmd, params, this@BaseWebView)
+                    mWebCallback?.exec(context, level, cmd, params, this@BaseWebView)
                 }
 
             })
@@ -64,7 +65,9 @@ open class BaseWebView(
         return mWebCallback
     }
 
-    //native 通知js 事件回调
+    /**
+     * 给H5 页面分发native生命周期事件
+     * */
     fun dispatchEvent(name: String) {
         val param: MutableMap<String, String> = HashMap(1)
         param["name"] = name
@@ -72,16 +75,20 @@ open class BaseWebView(
         callbackJs(trigger)
     }
 
-    //native 调用js
+    /**
+     * JavaScript请求完native方法后  native方法对js的回调
+     * */
     fun handleCallback(response: String) {
         if (!TextUtils.isEmpty(response)) {
-            val trigger = "javascript:dj.callback($response)"
+            val trigger = "javascript:jieshou(${response})"
+//            val trigger = "javascript:jieshou(\"${Html.fromHtml(response)}\")"
+//            val trigger = "javascript:jieshou(\"555\")"
             callbackJs(trigger)
         }
     }
 
     /**
-     * native 给js的回调
+     * 执行JavaScript方法   给H5的回调
      * */
     private fun callbackJs(trigger: String) {
         try {
@@ -98,14 +105,14 @@ open class BaseWebView(
         } else {
             super.loadUrl(url, mHeader!!)
         }
-        Log.e(Companion.TAG, "WebView load url : $url")
+        Log.e(TAG, "WebView load url : $url")
         resetAllStateInternal(url)
 
     }
 
     override fun loadUrl(url: String, additionalHttpHeaders: MutableMap<String, String>) {
         super.loadUrl(url, additionalHttpHeaders)
-        Log.e(Companion.TAG, "WebView load url : $url")
+        Log.e(TAG, "WebView load url : $url")
         resetAllStateInternal(url)
     }
 

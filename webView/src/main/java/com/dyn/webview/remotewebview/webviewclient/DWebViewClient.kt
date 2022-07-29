@@ -6,14 +6,19 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.net.http.SslError
+import android.net.http.SslError.*
 import android.os.Build
 import android.text.TextUtils
-import android.webkit.*
 import androidx.annotation.RequiresApi
 import com.dyn.webview.R
 import com.dyn.webview.WebCallback
 import com.dyn.webview.utils.WebConstants
+import com.tencent.smtt.export.external.interfaces.SslError
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler
+import com.tencent.smtt.export.external.interfaces.WebResourceError
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 
 class DWebViewClient(
     private val mWebView: WebView,
@@ -76,6 +81,7 @@ class DWebViewClient(
      */
     private fun handleLinked(url: String): Boolean {
         if (url.startsWith(WebView.SCHEME_TEL)
+            || url.startsWith(WebConstants.SCHEME_SMS)
             || url.startsWith(WebView.SCHEME_MAILTO)
             || url.startsWith(WebView.SCHEME_GEO)
         ) {
@@ -93,12 +99,12 @@ class DWebViewClient(
 
     override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
         super.onPageStarted(view, url, favicon)
-        mWebCallback.pageStarted(url)
+        mWebCallback.onPageStarted(url)
     }
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        mWebCallback.pageFinished(url)
+        mWebCallback.onPageFinished(url)
     }
 
     override fun onReceivedError(
@@ -107,7 +113,7 @@ class DWebViewClient(
         error: WebResourceError?
     ) {
         super.onReceivedError(view, request, error)
-        mWebCallback.onError()
+        mWebCallback.onPageError()
     }
 
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler, error: SslError) {
@@ -115,16 +121,16 @@ class DWebViewClient(
         if (!TextUtils.isEmpty(channel) && channel == "play.google.com") {
             val builder = AlertDialog.Builder(mWebView.context)
             var message = mWebView.context.getString(R.string.ssl_error)
-            when (error.primaryError) {
-                SslError.SSL_UNTRUSTED -> message =
-                    mWebView.context.getString(R.string.ssl_error_not_trust)
-                SslError.SSL_EXPIRED -> message =
-                    mWebView.context.getString(R.string.ssl_error_expired)
-                SslError.SSL_IDMISMATCH -> message =
-                    mWebView.context.getString(R.string.ssl_error_mismatch)
-                SslError.SSL_NOTYETVALID -> message =
-                    mWebView.context.getString(R.string.ssl_error_not_valid)
-            }
+//            when (error.primaryError) {
+//                SslError.SSL_UNTRUSTED -> message =
+//                    mWebView.context.getString(R.string.ssl_error_not_trust)
+//                SslError.SSL_EXPIRED -> message =
+//                    mWebView.context.getString(R.string.ssl_error_expired)
+//                SslError.SSL_IDMISMATCH -> message =
+//                    mWebView.context.getString(R.string.ssl_error_mismatch)
+//                SslError.SSL_NOTYETVALID -> message =
+//                    mWebView.context.getString(R.string.ssl_error_not_valid)
+//            }
             message += mWebView.context.getString(R.string.ssl_error_continue_open)
             builder.setTitle(R.string.ssl_error)
             builder.setMessage(message)

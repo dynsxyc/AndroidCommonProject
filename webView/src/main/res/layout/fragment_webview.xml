@@ -27,7 +27,6 @@
             enableLoadMore="@{false}"
             enableRefresh="@{vm.enableRefresh}"
             finishLoadMore="@{vm.finishLoadMore}"
-
             finishRefresh="@{vm.finishRefresh}"
             refreshListener="@{vm.MOnRefreshLoadMoreListener}"
             registerPage="@{vm.onReloadListener}"

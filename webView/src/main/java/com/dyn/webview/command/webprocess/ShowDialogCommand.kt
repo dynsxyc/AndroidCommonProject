@@ -12,7 +12,7 @@ import com.google.auto.service.AutoService
 @AutoService(value = [Command::class])
 class ShowDialogCommand : Command{
     override fun name(): String {
-        return WebConstants.COMMAND_ACTION.SHOWDIALOG
+        return WebConstants.CommandAction.SHOWDIALOG
     }
 
     override fun exec(context: Context, params: Map<String, String>?, resultBack: ResultBack?) {
@@ -25,7 +25,7 @@ class ShowDialogCommand : Command{
                     canceledOutside = (params["canceledOutside"] as Double).toInt()
                 }
                 val buttons = params["buttons"] as List<MutableMap<String, String?>>?
-                val callbackName = params[WebConstants.WEB2NATIVE_CALLBACk] as String?
+                val callbackName = params[WebConstants.WEB2NATIVE_CALLBACk]
                 if (!TextUtils.isEmpty(content)) {
                     val dialog = AlertDialog.Builder(context!!)
                             .setTitle(title)
@@ -34,12 +34,12 @@ class ShowDialogCommand : Command{
                     dialog.setCanceledOnTouchOutside(canceledOutside == 1)
                     if (buttons.isNullOrEmpty().not()) {
                         for (i in buttons!!.indices) {
-                            val button = buttons!![i]
+                            val resultData = buttons!![i]
                             val buttonWhich = getDialogButtonWhich(i)
                             if (buttonWhich == 0) return
-                            dialog.setButton(buttonWhich, button["title"]) { dialog, which ->
-                                button[WebConstants.NATIVE2WEB_CALLBACK] = callbackName
-                                resultBack?.onResult(WebConstants.SUCCESS, name(), button)
+                            dialog.setButton(buttonWhich, resultData["title"]) { dialog, which ->
+                                resultData[WebConstants.NATIVE2WEB_CALLBACK] = callbackName
+                                resultBack?.onResult(WebConstants.SUCCESS, name(), resultData)
                             }
                         }
                     }

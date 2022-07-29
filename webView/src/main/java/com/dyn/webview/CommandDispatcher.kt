@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.RemoteException
 import android.text.TextUtils
 import android.util.Log
-import android.webkit.WebView
 import com.dyn.webview.command.base.ResultBack
 import com.dyn.webview.command.webprocess.WebViewProcessCommandsManager
 import com.dyn.webview.mainprocess.RemoteWebBinderPool
@@ -12,6 +11,7 @@ import com.dyn.webview.utils.MainLooper
 import com.dyn.webview.utils.WebConstants
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
+import com.tencent.smtt.sdk.WebView
 
 /**
  * 这个类主要用来处理子进程和主进程之间通信的
@@ -24,7 +24,10 @@ import com.orhanobut.logger.Logger
  * */
 class CommandDispatcher {
 
-    private var mWebAidlInterface: IWebToMain? = null //这个可以看做是绑定服务的copy
+    private var mMainProcessService: IWebToMain? = null //这个可以看做是绑定服务的copy
+    /**
+     * web端 进程的命令管理器
+     * */
     private var mWebViewProcessCommandsManager:WebViewProcessCommandsManager = WebViewProcessCommandsManager.instance
     private val gSon by lazy {
         Gson()
@@ -43,19 +46,20 @@ class CommandDispatcher {
      * 子进程绑定主进程服务
      * */
     fun initAidlConnect(context: Context) {
-        if (mWebAidlInterface != null) {
+        if (mMainProcessService != null) {
             return
         }
-        Thread(Runnable {
+        Thread {
             val iBinder = RemoteWebBinderPool.newInstance(context).queryBinder(RemoteWebBinderPool.BINDER_WEB_AIDL)
-            mWebAidlInterface = IWebToMain.Stub.asInterface(iBinder)
-            Logger.i("mWebAidlInterface------$iBinder------$mWebAidlInterface------")
-        }).start()
+            mMainProcessService = IWebToMain.Stub.asInterface(iBinder)
+            Logger.i("mWebAidlInterface------$iBinder------$mMainProcessService------")
+        }.start()
     }
 
     /**
-     * 子进程执行一条命令
+     * WebView进程开始  执行一条命令
      * js 调用native 方法
+     *
      * */
     fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, webView: WebView, dispatcherCallBack: DispatcherCallBack?) {
         try {
@@ -95,7 +99,7 @@ class CommandDispatcher {
      * 跨进程命令的执行
      * */
     private fun execRemoteCommand(level: Int, action: String?, params: String?, webView: WebView, dispatcherCallBack: DispatcherCallBack?) {
-        mWebAidlInterface?.handleWebAction(level,action,params,object :ICallbackFromMainToWeb.Stub(){
+        mMainProcessService?.handleWebAction(level,action,params,object :ICallbackFromMainToWeb.Stub(){
             override fun onResult(responseCode: Int, actionName: String?, response: String?) {
                 handleCallback(responseCode, actionName!!, response!!, webView, dispatcherCallBack)
             }

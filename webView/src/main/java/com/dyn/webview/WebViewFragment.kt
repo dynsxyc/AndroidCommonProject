@@ -7,15 +7,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.webkit.CookieManager
-import android.webkit.ValueCallback
-import android.webkit.WebView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.dyn.base.mvvm.view.BaseFragment
 import com.dyn.base.ui.databinding.DataBindingConfig
 import com.dyn.webview.utils.WebConstants
 import com.dyn.webview.utils.WebConstants.REQUEST_CODE_LOLIPOP
+import com.tencent.smtt.sdk.CookieManager
+import com.tencent.smtt.sdk.ValueCallback
+import com.tencent.smtt.sdk.WebView
 
 class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     private var mIsError = false //判断页面是否加载成功
@@ -36,21 +36,35 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
 
     override fun onLazyAfterView() {
         super.onLazyAfterView()
-        arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
-            mViewModel.webUrl.value = b.loadUrl
-            mViewModel.interfaceName.value = b.interfaceName
-            mViewModel.mCommonHeaderModel.title.set(b.title)
-            mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(ContextCompat.getDrawable(requireActivity(), R.drawable.ic_nav_close))
-            val isShowActionBar = b.isShowActionBar
-            val isSyncCookie = b.isSyncCookie
-            val header = b.header
-            header?.let {
-                if (isSyncCookie) {
-                    syncCookie(mViewModel.webUrl.value, it)
-                }
+	//arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
+//        val b = WebViewArgs("http://121.28.104.30:8390/aidl.html","webview","打卡", isSyncCookie = false, isShowActionBar = true,null)
+        val b = WebViewArgs(
+            "http://121.28.104.30:8398/#/home",
+            "webview",
+            "",
+            isSyncCookie = false,
+            isShowActionBar = false,
+            null
+        )
+        mViewModel.webUrl.value = b.loadUrl
+        mViewModel.interfaceName.value = b.interfaceName
+        mViewModel.mCommonHeaderModel.title.set(b.title)
+        mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                R.drawable.ic_nav_close
+            )
+        )
+//        mViewModel.isShowActionBar.value = b.isShowActionBar
+        val isSyncCookie = b.isSyncCookie
+        val header = b.header
+        header?.let {
+            if (isSyncCookie) {
+                syncCookie(mViewModel.webUrl.value, it)
             }
-            mViewModel.header.value = header
         }
+        mViewModel.header.value = header
+//        }
         mViewModel.webCallback = this
     }
 
@@ -64,10 +78,6 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
                 mViewModel.mCommonHeaderModel.hasFinish.set(true)
             }
         })
-    }
-
-    override fun getDataBindingConfig(): DataBindingConfig {
-        return DataBindingConfig(BR.vm, mViewModel)
     }
 
     override fun getLayoutId(): Int {
@@ -98,7 +108,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         mViewModel.mCommonHeaderModel.title.set(title)
     }
 
-    override fun pageStarted(url: String?) {
+    override fun onPageStarted(url: String?) {
         mViewModel.finishRefresh.value?.let {
             if (it.not()) {
                 mViewModel.showPageLoading()
@@ -107,7 +117,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
 
     }
 
-    override fun pageFinished(url: String?) {
+    override fun onPageFinished(url: String?) {
         if (mIsError) {
             mViewModel.showPageFail()
             mViewModel.enableRefresh.value = true
@@ -118,7 +128,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         mIsError = false
     }
 
-    override fun onError() {
+    override fun onPageError() {
         mIsError = true
     }
 
@@ -160,7 +170,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
 
 
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
-    private val mCameraPhotoPath: String? = null
+    private var mCameraPhotoPath: String? = null
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -171,7 +181,6 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
                     if (data == null) {
                         // If there is not data, then we may have taken a photo
                         if (mCameraPhotoPath != null) {
-                            Log.d("AppChooserFragment", mCameraPhotoPath)
                             results = arrayOf(Uri.parse(mCameraPhotoPath))
                         }
                     } else {
@@ -214,6 +223,10 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         startActivityForResult(chooserIntent, REQUEST_CODE_LOLIPOP)
     }
 
+
+    /**
+     * js 调用native 开始的地方
+     * */
     override fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, webView: WebView) {
         CommandDispatcher.instance.exec(context, commandLevel, cmd, params, webView, getCommandDispatcher())
     }
