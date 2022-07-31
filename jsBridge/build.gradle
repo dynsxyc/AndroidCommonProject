@@ -28,7 +28,7 @@ android {
 dependencies {
     implementation app_dependencies.appcompat
     implementation app_dependencies.gson
-    implementation app_dependencies.jsBridge
+//    implementation app_dependencies.jsBridge
 }
 
 

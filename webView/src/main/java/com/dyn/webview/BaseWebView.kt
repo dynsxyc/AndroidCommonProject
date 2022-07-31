@@ -10,6 +10,10 @@ import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
 import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
+import com.github.lzyzsd.jsbridge.BridgeHandler
+import com.github.lzyzsd.jsbridge.BridgeHelper
+import com.github.lzyzsd.jsbridge.CallBackFunction
+import com.github.lzyzsd.jsbridge.IWebView
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.WebView
 
@@ -18,7 +22,7 @@ open class BaseWebView(
     attrs: AttributeSet?,
     defStyleAttr: Int,
     defStyleRes: Int
-) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener
+) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener,IWebView
      {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -149,56 +153,56 @@ open class BaseWebView(
 
     /******************jsBridge   start **************************/
 
-//    private lateinit var bridgeHelper: BridgeHelper
-//
-//    /**
-//     * @param handler default handler,handle messages send by js without assigned handler name,
-//     *                if js message has handler name, it will be handled by named handlers registered by native
-//     */
-//    fun setDefaultHandler(handler: BridgeHandler) {
-//        bridgeHelper.setDefaultHandler(handler);
-//    }
-//
-//    override fun send(data: String) {
-//        send(data, null);
-//    }
-//
-//    override fun send(data: String, responseCallback: CallBackFunction?) {
-//        bridgeHelper.send(data, responseCallback);
-//    }
-//
-//
-//    /**
-//     * register handler,so that javascript can call it
-//     * 注册处理程序,以便javascript调用它
-//     *
-//     * @param handlerName handlerName
-//     * @param handler     BridgeHandler
-//     */
-//    fun registerHandler(handlerName: String, handler: BridgeHandler) {
-//        bridgeHelper.registerHandler(handlerName, handler);
-//    }
-//
-//    /**
-//     * unregister handler
-//     *
-//     * @param handlerName
-//     */
-//    public fun unregisterHandler(handlerName: String) {
-//        bridgeHelper.unregisterHandler(handlerName);
-//    }
-//
-//    /**
-//     * call javascript registered handler
-//     * 调用javascript处理程序注册
-//     *
-//     * @param handlerName handlerName
-//     * @param data        data
-//     * @param callBack    CallBackFunction
-//     */
-//    fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
-//        bridgeHelper.callHandler(handlerName, data, callBack);
-//    }
+    private lateinit var bridgeHelper: BridgeHelper
+
+    /**
+     * @param handler default handler,handle messages send by js without assigned handler name,
+     *                if js message has handler name, it will be handled by named handlers registered by native
+     */
+    fun setDefaultHandler(handler: BridgeHandler) {
+        bridgeHelper.defaultHandler = handler
+    }
+
+    fun send(data: String) {
+        send(data, null);
+    }
+
+    fun send(data: String, responseCallback: CallBackFunction?) {
+        bridgeHelper.send(data, responseCallback);
+    }
+
+
+    /**
+     * register handler,so that javascript can call it
+     * 注册处理程序,以便javascript调用它
+     *
+     * @param handlerName handlerName
+     * @param handler     BridgeHandler
+     */
+    fun registerHandler(handlerName: String, handler: BridgeHandler) {
+        bridgeHelper.registerHandler(handlerName, handler);
+    }
+
+    /**
+     * unregister handler
+     *
+     * @param handlerName
+     */
+    public fun unregisterHandler(handlerName: String) {
+        bridgeHelper.unregisterHandler(handlerName);
+    }
+
+    /**
+     * call javascript registered handler
+     * 调用javascript处理程序注册
+     *
+     * @param handlerName handlerName
+     * @param data        data
+     * @param callBack    CallBackFunction
+     */
+    fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
+        bridgeHelper.callHandler(handlerName, data, callBack);
+    }
 
     /******************jsBridge   end   **************************/
 

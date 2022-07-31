@@ -46,8 +46,7 @@ dependencies {
 
     api app_dependencies.gson
     api app_dependencies.jsBridge
-    api 'io.github.dynsxyc:baselib:0.0.4'
-//    api project(':jsBridge')
+    api project(':jsBridge')
 }
 
 // 使用插件上传 gradle-maven-publish-plugin  打包
