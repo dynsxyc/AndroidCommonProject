@@ -1,12 +1,9 @@
 package com.dyn.webview.remotewebview.settings
 
-import android.content.Context
 import android.os.Build
-import android.util.Log
 import com.dyn.webview.utils.WebUtils
 import com.tencent.smtt.sdk.WebSettings
 import com.tencent.smtt.sdk.WebView
-import com.orhanobut.logger.Logger
 
 /**
  *

@@ -45,7 +45,8 @@ dependencies {
     api 'com.tencent.tbs:tbssdk:44216'
 
     api app_dependencies.gson
-    api app_dependencies.jsBridge
+//    api app_dependencies.jsBridge
+    api 'io.github.dynsxyc:baselib:0.0.4'
     api project(':jsBridge')
 }
 

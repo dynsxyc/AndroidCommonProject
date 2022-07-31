@@ -10,10 +10,9 @@ import androidx.core.view.NestedScrollingChildHelper
 import androidx.core.view.ViewCompat
 import com.orhanobut.logger.Logger
 
-class NestedScrollBaseWebView(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : BaseWebView(context, attrs, defStyleAttr,defStyleRes), NestedScrollingChild3{
+class NestedScrollBaseWebView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : BaseWebView(context, attrs, defStyleAttr), NestedScrollingChild3{
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(context, attrs, defStyleAttr, 0)
 
     private var mLastMotionY = 0
 

@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge
+package com.github.jsbridge
 
 interface WebViewJavascriptBridge {
     fun send(data: String?)

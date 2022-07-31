@@ -10,28 +10,20 @@ import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
 import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
-import com.github.lzyzsd.jsbridge.BridgeHandler
-import com.github.lzyzsd.jsbridge.BridgeHelper
-import com.github.lzyzsd.jsbridge.CallBackFunction
-import com.github.lzyzsd.jsbridge.IWebView
+import com.github.jsbridge.BridgeHandler
+import com.github.jsbridge.BridgeHelper
+import com.github.jsbridge.CallBackFunction
+import com.github.jsbridge.IWebView
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.WebView
 
 open class BaseWebView(
     context: Context,
     attrs: AttributeSet?,
-    defStyleAttr: Int,
-    defStyleRes: Int
-) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener,IWebView
-     {
+    defStyleAttr: Int
+) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener, IWebView {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
-        context,
-        attrs,
-        defStyleAttr,
-        0
-    )
 
     private var mWebCallback: WebCallback? = null
     var mHeader: Map<String, String>? = null //加载网页同步的请求头
@@ -53,11 +45,24 @@ open class BaseWebView(
         jsInterFace
     }
 
+    private var bridgeHelper: BridgeHelper
+    init {
+        WebViewDefaultSettings.toSetting(this)
+        bridgeHelper = BridgeHelper(this)
+        callHandler("functionInJs", Gson().toJson(mutableMapOf("name" to "张三")), object :
+            CallBackFunction {
+            override fun onCallBack(data: String?) {
+                Log.d(TAG, "onCallBack: $data")
+            }
+        })
+
+        send("hello")
+    }
+
     fun registerWebViewCallBack(webCallback: WebCallback) {
         mWebCallback = webCallback
-        webViewClient = DWebViewClient(this, mHeader, webCallback, this)
+        webViewClient = DWebViewClient(this, mHeader, webCallback,bridgeHelper, this)
         webChromeClient = DWebChromeClient(webCallback)
-        WebViewDefaultSettings.toSetting(this)
     }
 
     fun addJavascriptInterface(interfaceName: String) {
@@ -152,8 +157,6 @@ open class BaseWebView(
 
 
     /******************jsBridge   start **************************/
-
-    private lateinit var bridgeHelper: BridgeHelper
 
     /**
      * @param handler default handler,handle messages send by js without assigned handler name,

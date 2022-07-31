@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge
+package com.github.jsbridge
 
 class DefaultHandler : BridgeHandler {
     override fun handler(data: String?, function: CallBackFunction?) {

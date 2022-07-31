@@ -63,7 +63,8 @@ class MainActivity : BaseActivity<MainActivity.MainActivityViewModel>() {
             mWebService?.startWebActivity(this@MainActivity, title = "百度", url = "http://www.baidu.com",header = accountInfo)
         }
         findViewById<View>(R.id.alert_issue).setOnClickListener {
-            mWebService?.startWebActivity(this@MainActivity, title = "Alert问题",url = WebConstants.CONTENT_SCHEME + "alert_issue.html")
+//            mWebService?.startWebActivity(this@MainActivity, title = "Alert问题",url = WebConstants.CONTENT_SCHEME + "alert_issue.html")
+            mWebService?.startWebActivity(this@MainActivity, title = "bridge测试",url = WebConstants.CONTENT_SCHEME + "demo.html")
         }
 
         findViewById<View>(R.id.auto_zoom).setOnClickListener {

@@ -1,6 +1,5 @@
-package com.github.lzyzsd.jsbridge
+package com.github.jsbridge
 
-import android.graphics.Bitmap
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import java.io.UnsupportedEncodingException

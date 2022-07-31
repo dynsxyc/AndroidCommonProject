@@ -6,13 +6,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.net.http.SslError.*
 import android.os.Build
 import android.text.TextUtils
 import androidx.annotation.RequiresApi
 import com.dyn.webview.R
 import com.dyn.webview.WebCallback
 import com.dyn.webview.utils.WebConstants
+import com.github.jsbridge.BridgeHelper
 import com.tencent.smtt.export.external.interfaces.SslError
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler
 import com.tencent.smtt.export.external.interfaces.WebResourceError
@@ -24,6 +24,7 @@ class DWebViewClient(
     private val mWebView: WebView,
     private val mHeader: Map<String, String>? = null,
     private val mWebCallback: WebCallback,
+    private val bridgeHelper:BridgeHelper,
     private val mTouchListener: WebViewTouchListener
 ) : WebViewClient() {
     interface WebViewTouchListener {
@@ -45,6 +46,9 @@ class DWebViewClient(
             return true
         }
         // 控制页面中点开新的链接在当前webView中打开
+        if (bridgeHelper.shouldOverrideUrlLoading(url)){
+            return true
+        }
         if (mHeader != null) {
             view?.loadUrl(url,mHeader)
         } else {
@@ -68,6 +72,9 @@ class DWebViewClient(
             return true
         }
         // 控制页面中点开新的链接在当前webView中打开
+        if (bridgeHelper.shouldOverrideUrlLoading(request.url.toString())){
+            return true
+        }
         if (mHeader != null) {
             view.loadUrl(request.url.toString(),mHeader)
         } else {
@@ -104,6 +111,7 @@ class DWebViewClient(
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
+        bridgeHelper.onPageFinished()
         mWebCallback.onPageFinished(url)
     }
 

@@ -1,4 +1,4 @@
-package com.github.lzyzsd.jsbridge
+package com.github.jsbridge
 
 import android.webkit.WebView
 

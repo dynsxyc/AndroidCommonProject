@@ -1,9 +1,8 @@
-package com.github.lzyzsd.jsbridge
+package com.github.jsbridge
 
 import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
-import android.webkit.WebView
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
@@ -193,7 +192,7 @@ open class BridgeHelper(val webView: IWebView) : WebViewJavascriptBridge {
         doSend(handlerName, data, callBack)
     }
 
-    fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
+    fun shouldOverrideUrlLoading(url: String): Boolean {
         var url = url
         try {
             url = URLDecoder.decode(url, "UTF-8")
