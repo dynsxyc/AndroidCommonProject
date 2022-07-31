@@ -11,16 +11,15 @@ import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
 import com.google.gson.Gson
-import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.WebView
-import java.security.AccessController.getContext
 
 open class BaseWebView(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int,
     defStyleRes: Int
-) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener {
+) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener
+     {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : this(
@@ -57,7 +56,7 @@ open class BaseWebView(
         WebViewDefaultSettings.toSetting(this)
     }
 
-    fun addJavascriptInterface(interfaceName: String){
+    fun addJavascriptInterface(interfaceName: String) {
         addJavascriptInterface(mRemoteInterface, interfaceName)
     }
 
@@ -146,4 +145,61 @@ open class BaseWebView(
 //    将src作为参数传给java代码
 //java回调js代码，不要忘了@JavascriptInterface这个注解，不然点击事件不起作用
 // mWebView.addJavascriptInterface(new JsCallJavaObj() { @JavascriptInterface @Override public void showBigImg(String url) { Toast.makeText(mContext, "圖片路勁"+url, Toast.LENGTH_SHORT).show(); Intent intent = new Intent(mContext, BigImageActivity.class); intent.putExtra(Constants.IMG_URL,url); startActivity(intent); } },"jsCallJavaObj"); mWebView.setWebViewClient(new WebViewClient(){ @Override public void onPageFinished(WebView view, String url) { super.onPageFinished(view, url); setWebImageClick(view); } }); /** * 設置網頁中圖片的點擊事件 * @param view */ private void setWebImageClick(WebView view) { String jsCode="javascript:(function(){" + "var imgs=document.getElementsByTagName(\"img\");" + "for(var i=0;i<imgs.length;i++){" + "imgs[i].onclick=function(){" + "window.jsCallJavaObj.showBigImg(this.src);" + "}}})()"; mWebView.loadUrl(jsCode); } /** * Js調用Java接口 */ private interface JsCallJavaObj{ void showBigImg(String url); }
+
+
+    /******************jsBridge   start **************************/
+
+//    private lateinit var bridgeHelper: BridgeHelper
+//
+//    /**
+//     * @param handler default handler,handle messages send by js without assigned handler name,
+//     *                if js message has handler name, it will be handled by named handlers registered by native
+//     */
+//    fun setDefaultHandler(handler: BridgeHandler) {
+//        bridgeHelper.setDefaultHandler(handler);
+//    }
+//
+//    override fun send(data: String) {
+//        send(data, null);
+//    }
+//
+//    override fun send(data: String, responseCallback: CallBackFunction?) {
+//        bridgeHelper.send(data, responseCallback);
+//    }
+//
+//
+//    /**
+//     * register handler,so that javascript can call it
+//     * 注册处理程序,以便javascript调用它
+//     *
+//     * @param handlerName handlerName
+//     * @param handler     BridgeHandler
+//     */
+//    fun registerHandler(handlerName: String, handler: BridgeHandler) {
+//        bridgeHelper.registerHandler(handlerName, handler);
+//    }
+//
+//    /**
+//     * unregister handler
+//     *
+//     * @param handlerName
+//     */
+//    public fun unregisterHandler(handlerName: String) {
+//        bridgeHelper.unregisterHandler(handlerName);
+//    }
+//
+//    /**
+//     * call javascript registered handler
+//     * 调用javascript处理程序注册
+//     *
+//     * @param handlerName handlerName
+//     * @param data        data
+//     * @param callBack    CallBackFunction
+//     */
+//    fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
+//        bridgeHelper.callHandler(handlerName, data, callBack);
+//    }
+
+    /******************jsBridge   end   **************************/
+
 }

@@ -197,14 +197,11 @@
         <com.dyn.base.ui.weight.header.CommonHeaderView
             viewBindAction="@{vm.MCustomViewActionListener}"
             viewBindData = "@{vm.mCommonHeaderModel}"
-            hHasFinish="@{true}"
             finishText='@{"关闭"}'
             finishMessageCount="@{5}"
-            hHasRight="@{true}"
             finishTextSize="@{12}"
             rightText='@{"收藏"}'
             rightMessageCount="@{6}"
-            hHasLastRight="@{true}"
             rightTextSize="@{14}"
             rightLastText='@{"分享"}'
             rightLastMessageCount="@{100}"

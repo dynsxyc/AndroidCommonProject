@@ -13,7 +13,6 @@ def app_dependencies = rootProject.ext.app_dependencies
 
 android {
     compileSdkVersion app_android.compileSdkVersion
-    buildToolsVersion app_android.buildToolsVersion
 
     defaultConfig {
 

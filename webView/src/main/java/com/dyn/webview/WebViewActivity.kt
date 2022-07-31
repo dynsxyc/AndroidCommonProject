@@ -18,14 +18,14 @@ class WebViewActivity : BaseActivity<BaseViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val loadUrl = intent.getStringExtra(WebConstants.INTENT_TAG_URL)
-//        val interfaceName = intent.getStringExtra(WebConstants.INTENT_INTERFACE_NAME)
-//        val title = intent.getStringExtra(WebConstants.INTENT_TAG_TITLE)
-//        val isShowActionBar = intent.getBooleanExtra(WebConstants.WEB_IS_SHOW_ACTION_BAR, true)
-//        val isSyncCookie = intent.getBooleanExtra(WebConstants.WEB_IS_SYNC_COOKIE, false)
-//        val header = intent.getSerializableExtra(WebConstants.INTENT_TAG_HEADERS)?.let {
-//            it as HashMap<String, String>
-//        }
+        val loadUrl = intent.getStringExtra(WebConstants.INTENT_TAG_URL)
+        val interfaceName = intent.getStringExtra(WebConstants.INTENT_INTERFACE_NAME)
+        val title = intent.getStringExtra(WebConstants.INTENT_TAG_TITLE)
+        val isShowActionBar = intent.getBooleanExtra(WebConstants.WEB_IS_SHOW_ACTION_BAR, true)
+        val isSyncCookie = intent.getBooleanExtra(WebConstants.WEB_IS_SYNC_COOKIE, false)
+        val header = intent.getSerializableExtra(WebConstants.INTENT_TAG_HEADERS)?.let {
+            it as HashMap<String, String>
+        }
 
         QbSdk.initX5Environment(this,  object : QbSdk.PreInitCallback {
             override fun onCoreInitFinished() {
@@ -50,11 +50,10 @@ class WebViewActivity : BaseActivity<BaseViewModel>() {
         QbSdk.initTbsSettings(map.toMap())
 
 
-//        val bundle = Bundle()
-//        bundle.putParcelable("args",WebViewArgs("http://121.28.104.30:8390/aidl.html","webview","打卡", isSyncCookie = false, isShowActionBar = true,null))
-////        bundle.putParcelable("args",WebViewArgs("http://121.28.104.30:8398/#/home","webview","", isSyncCookie = false, isShowActionBar = false,null))
-//        val findNavController = Navigation.findNavController(this, R.id.web_host_fragment)
-//        findNavController.setGraph(R.navigation.web_navigation,bundle)
+        val bundle = Bundle()
+        bundle.putParcelable("args",WebViewArgs(loadUrl,interfaceName,title, isSyncCookie = isSyncCookie, isShowActionBar = isShowActionBar,header))
+        val findNavController = Navigation.findNavController(this, R.id.web_host_fragment)
+        findNavController.setGraph(R.navigation.web_navigation,bundle)
     }
 
 

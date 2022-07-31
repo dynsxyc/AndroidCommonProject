@@ -1,7 +1,6 @@
 package com.dyn.webview.utils
 
 object WebConstants {
-    const val LOCAL_COMMAND_PARAMS = "command_params"
     const val LEVEL_LOCAL = 0 // 不需要跨进程的 local command, that is to say, this command execution does not require app.
     const val LEVEL_BASE = 1 // 需要跨进程的  基础level 涉及到账号相关的level
 

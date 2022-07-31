@@ -1,21 +1,18 @@
-﻿<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+﻿<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-    </data>
+    <data></data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/common_bg"
-        android:orientation="vertical"
-        >
+        android:layout_height="match_parent">
+
         <fragment
             android:id="@+id/web_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:defaultNavHost="true"
-            />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            app:defaultNavHost="true" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

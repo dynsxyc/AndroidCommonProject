@@ -19,9 +19,16 @@ import com.tencent.smtt.sdk.WebView
 
 class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     private var mIsError = false //判断页面是否加载成功
-//    private val fragmentArgs: WebViewFragmentArgs by navArgs()
+
+    //    private val fragmentArgs: WebViewFragmentArgs by navArgs()
     companion object {
-        fun newInstance(url: String, title: String, isSyncCookie: Boolean = false, isShowActionBar: Boolean = true, header: HashMap<String, String>? = null): WebViewFragment {
+        fun newInstance(
+            url: String,
+            title: String,
+            isSyncCookie: Boolean = false,
+            isShowActionBar: Boolean = true,
+            header: HashMap<String, String>? = null
+        ): WebViewFragment {
             val fragment = WebViewFragment()
             val bundle = Bundle()
             bundle.putBoolean(WebConstants.WEB_IS_SHOW_ACTION_BAR, isShowActionBar)
@@ -36,36 +43,37 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
 
     override fun onLazyAfterView() {
         super.onLazyAfterView()
-	//arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
+        arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
 //        val b = WebViewArgs("http://121.28.104.30:8390/aidl.html","webview","打卡", isSyncCookie = false, isShowActionBar = true,null)
-        val b = WebViewArgs(
-            "http://121.28.104.30:8398/#/home",
-            "webview",
-            "",
-            isSyncCookie = false,
-            isShowActionBar = false,
-            null
-        )
-        mViewModel.webUrl.value = b.loadUrl
-        mViewModel.interfaceName.value = b.interfaceName
-        mViewModel.mCommonHeaderModel.title.set(b.title)
-        mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
-            ContextCompat.getDrawable(
-                requireActivity(),
-                R.drawable.ic_nav_close
+//        val b = WebViewArgs(
+//            "http://121.28.104.30:8398/#/home",
+//            "webview",
+//            "",
+//            isSyncCookie = false,
+//            isShowActionBar = false,
+//            null
+//        )
+            mViewModel.webUrl.value = b.loadUrl
+            mViewModel.interfaceName.value = b.interfaceName
+            mViewModel.mCommonHeaderModel.title.set(b.title)
+            mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
+                ContextCompat.getDrawable(
+                    requireActivity(),
+                    R.drawable.ic_nav_close
+                )
             )
-        )
 //        mViewModel.isShowActionBar.value = b.isShowActionBar
-        val isSyncCookie = b.isSyncCookie
-        val header = b.header
-        header?.let {
-            if (isSyncCookie) {
-                syncCookie(mViewModel.webUrl.value, it)
+            val isSyncCookie = b.isSyncCookie
+            val header = b.header
+            header?.let {
+                if (isSyncCookie) {
+                    syncCookie(mViewModel.webUrl.value, it)
+                }
             }
-        }
-        mViewModel.header.value = header
+            mViewModel.header.value = header
 //        }
-        mViewModel.webCallback = this
+            mViewModel.webCallback = this
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -83,6 +91,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     override fun getLayoutId(): Int {
         return R.layout.fragment_webview
     }
+
     /**
      * 判断是否是web回退
      * */
@@ -99,7 +108,7 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     }
 
     override fun onClickHeaderFinish() {
-        if (pop().not() && requireActivity() is WebViewActivity){
+        if (pop().not() && requireActivity() is WebViewActivity) {
             requireActivity().finish()
         }
     }
@@ -199,7 +208,10 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     /**
      * web选择文件
      * */
-    override fun onShowFileChooser(cameraIntent: Intent?, filePathCallback: ValueCallback<Array<Uri>>?) {
+    override fun onShowFileChooser(
+        cameraIntent: Intent?,
+        filePathCallback: ValueCallback<Array<Uri>>?
+    ) {
         //整个弹出框为:相机、相册、文件管理
         //如果安装了其他的相机、文件管理程序，也有可能会弹出
         //selectionIntent(相册、文件管理)
@@ -227,14 +239,34 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     /**
      * js 调用native 开始的地方
      * */
-    override fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, webView: WebView) {
-        CommandDispatcher.instance.exec(context, commandLevel, cmd, params, webView, getCommandDispatcher())
+    override fun exec(
+        context: Context,
+        commandLevel: Int,
+        cmd: String,
+        params: String?,
+        webView: WebView
+    ) {
+        CommandDispatcher.instance.exec(
+            context,
+            commandLevel,
+            cmd,
+            params,
+            webView,
+            getCommandDispatcher()
+        )
     }
 
     private fun getCommandDispatcher(): CommandDispatcher.DispatcherCallBack? {
         return object : CommandDispatcher.DispatcherCallBack {
-            override fun preHandleBeforeCallback(responseCode: Int, actionName: String?, response: String?): Boolean {
-                Log.d("dyn", "preHandleBeforeCallback  responseCode->$responseCode  actionName->$actionName  response->$response")
+            override fun preHandleBeforeCallback(
+                responseCode: Int,
+                actionName: String?,
+                response: String?
+            ): Boolean {
+                Log.d(
+                    "dyn",
+                    "preHandleBeforeCallback  responseCode->$responseCode  actionName->$actionName  response->$response"
+                )
                 return true
             }
 
