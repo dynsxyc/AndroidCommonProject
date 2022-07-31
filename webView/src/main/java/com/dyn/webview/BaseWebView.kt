@@ -10,10 +10,10 @@ import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
 import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
-import com.github.jsbridge.BridgeHandler
-import com.github.jsbridge.BridgeHelper
-import com.github.jsbridge.CallBackFunction
-import com.github.jsbridge.IWebView
+import com.dyn.webview.jsbridge.BridgeHandler
+import com.dyn.webview.jsbridge.BridgeHelper
+import com.dyn.webview.jsbridge.CallBackFunction
+import com.dyn.webview.jsbridge.IWebView
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.WebView
 
@@ -54,6 +54,12 @@ open class BaseWebView(
             override fun onCallBack(data: String?) {
                 Log.d(TAG, "onCallBack: $data")
             }
+        })
+        registerHandler("functionInJs",object :BridgeHandler{
+            override fun handler(data: String?, function: CallBackFunction?) {
+                Log.d(TAG, "handler: $data")
+            }
+
         })
 
         send("hello")

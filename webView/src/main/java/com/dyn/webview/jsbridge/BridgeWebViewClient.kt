@@ -1,12 +1,12 @@
-package com.github.jsbridge
+package com.dyn.webview.jsbridge
 
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import com.github.jsbridge.BridgeHelper.Companion.BRIDGE_JS
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
 class BridgeWebViewClient(private val webView: BridgeWebView) : WebViewClient() {
+
     override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         var url = url
         try {
@@ -27,7 +27,7 @@ class BridgeWebViewClient(private val webView: BridgeWebView) : WebViewClient() 
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        BridgeUtil.webViewLoadLocalJs(view!!, BRIDGE_JS)
+        BridgeUtil.webViewLoadLocalJs(view!!, BridgeUtil.BRIDGE_JS)
 
         if (webView.getStartupMessage() != null) {
             for (m in webView.getStartupMessage()!!) {

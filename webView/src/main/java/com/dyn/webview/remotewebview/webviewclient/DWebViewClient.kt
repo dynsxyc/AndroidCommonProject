@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import com.dyn.webview.R
 import com.dyn.webview.WebCallback
 import com.dyn.webview.utils.WebConstants
-import com.github.jsbridge.BridgeHelper
+import com.dyn.webview.jsbridge.BridgeHelper
 import com.tencent.smtt.export.external.interfaces.SslError
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler
 import com.tencent.smtt.export.external.interfaces.WebResourceError
@@ -24,7 +24,7 @@ class DWebViewClient(
     private val mWebView: WebView,
     private val mHeader: Map<String, String>? = null,
     private val mWebCallback: WebCallback,
-    private val bridgeHelper:BridgeHelper,
+    private val bridgeHelper: BridgeHelper,
     private val mTouchListener: WebViewTouchListener
 ) : WebViewClient() {
     interface WebViewTouchListener {
