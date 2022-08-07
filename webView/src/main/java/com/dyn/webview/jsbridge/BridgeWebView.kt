@@ -54,7 +54,6 @@ open class BridgeWebView(context: Context, attrs: AttributeSet?, defStyle: Int) 
             return
         }
     }
-
     override fun send(data: String?) {
         send(data, null)
     }

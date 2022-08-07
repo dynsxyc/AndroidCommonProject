@@ -8,23 +8,30 @@ import androidx.databinding.InverseBindingAdapter
 import com.dyn.webview.BaseWebView
 import com.dyn.webview.DispatchWebEvent
 import com.dyn.webview.WebCallback
+import com.dyn.webview.jsbridge.BridgeHandler
 import com.orhanobut.logger.Logger
 import com.tencent.smtt.sdk.WebView
 
 object WebViewBindingAdapter {
-    @BindingAdapter(value = ["loadWebUrl", "webHeader"], requireAll = false)
+    @BindingAdapter(value = ["loadWebUrl"], requireAll = false)
     @JvmStatic
-    fun loadWebUrl(web: BaseWebView, url: String?, webHeader: HashMap<String, String>?) {
-        web.mHeader = webHeader
+    fun loadWebUrl(web: BaseWebView, url: String?) {
         url?.let {
             web.loadUrl(it)
         }
     }
-    @BindingAdapter(value = ["loadDataWithBaseURL"], requireAll = false)
+
+    @BindingAdapter(value = ["webHeader"], requireAll = false)
     @JvmStatic
-    fun loadDataWithBaseURL(web: BaseWebView, data: String?) {
+    fun webHeader(web: BaseWebView, webHeader: HashMap<String, String>?) {
+        web.mHeader = webHeader
+    }
+
+    @BindingAdapter(value = ["loadDataWithBaseURL", "loadDataBaseurl"], requireAll = true)
+    @JvmStatic
+    fun loadDataWithBaseURL(web: BaseWebView, data: String?, baseUrl: String?) {
         data?.let {
-            web.loadDataWithBaseURL(null,data,"text/html", "utf-8", null)
+            web.loadDataWithBaseURL(baseUrl, data, "text/html", "utf-8", null)
         }
     }
 
@@ -33,6 +40,7 @@ object WebViewBindingAdapter {
     fun initWebView(web: BaseWebView, webCallback: WebCallback) {
         web.registerWebViewCallBack(webCallback)
     }
+
     @BindingAdapter(value = ["interfaceName"], requireAll = false)
     @JvmStatic
     fun addJavascriptInterface(web: BaseWebView, interfaceName: String) {
@@ -63,28 +71,31 @@ object WebViewBindingAdapter {
                 web.dispatchEvent("pagePause")
             }
             DispatchWebEvent.ONDESTROYVIEW -> {
-                clearWebView(web)
                 web.dispatchEvent("pageDestroy")
             }
             else -> {}
         }
     }
 
-    private fun clearWebView(mWebView: WebView) {
-        if (Looper.myLooper() != Looper.getMainLooper()) return
-        mWebView.let { web ->
-            web.stopLoading()
-            web.handler?.let {
-                it.removeCallbacksAndMessages(null)
+    @BindingAdapter(value = ["clearWebView"])
+    @JvmStatic
+    fun clearWebView(mWebView: WebView, isClear: Boolean?) {
+        if (isClear == true) {
+            if (Looper.myLooper() != Looper.getMainLooper()) return
+            mWebView.let { web ->
+                web.stopLoading()
+                web.handler?.let {
+                    it.removeCallbacksAndMessages(null)
+                }
+                web.removeAllViews()
+                (web.parent as ViewGroup?)?.let {
+                    it.removeView(web)
+                }
+                web.webChromeClient = null
+                web.tag = null
+                web.clearHistory()
+                web.destroy()
             }
-            web.removeAllViews()
-            (web.parent as ViewGroup?)?.let {
-                it.removeView(web)
-            }
-            web.webChromeClient = null
-            web.tag = null
-            web.clearHistory()
-            web.destroy()
         }
     }
 
@@ -103,6 +114,14 @@ object WebViewBindingAdapter {
                     it.onBack(false)
                 }
             }
+        }
+    }
+
+    @BindingAdapter(value = ["bridgeHandlerName", "bridgeHandler"], requireAll = true)
+    @JvmStatic
+    fun registerBridgeHandler(web: BaseWebView, handlerName: String?, handler: BridgeHandler?) {
+        if (handlerName.isNullOrEmpty().not() && handler != null) {
+            web.registerHandler(handlerName!!, handler)
         }
     }
 

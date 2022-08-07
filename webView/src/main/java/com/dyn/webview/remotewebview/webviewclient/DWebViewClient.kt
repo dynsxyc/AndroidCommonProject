@@ -8,7 +8,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import androidx.annotation.RequiresApi
+import com.dyn.webview.BaseWebView
 import com.dyn.webview.R
 import com.dyn.webview.WebCallback
 import com.dyn.webview.utils.WebConstants
@@ -24,7 +26,7 @@ class DWebViewClient(
     private val mWebView: WebView,
     private val mHeader: Map<String, String>? = null,
     private val mWebCallback: WebCallback,
-    private val bridgeHelper: BridgeHelper,
+    private val bridgeHelper: BridgeHelper? = null,
     private val mTouchListener: WebViewTouchListener
 ) : WebViewClient() {
     interface WebViewTouchListener {
@@ -39,16 +41,20 @@ class DWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         // 当前链接的重定向, 通过是否发生过点击行为来判断
         // 如果链接跟当前链接一样，表示刷新
+        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------1-----------------")
         if (mTouchListener.isTouchByUser || mWebView.url == url) {
             return super.shouldOverrideUrlLoading(view, url)
         }
+        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------2-----------------")
         if (url.isNullOrEmpty().not() && handleLinked(url)) {
             return true
         }
+        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------3-----------------")
         // 控制页面中点开新的链接在当前webView中打开
-        if (bridgeHelper.shouldOverrideUrlLoading(url)){
+        if (bridgeHelper?.shouldOverrideUrlLoading(url) == true){
             return true
         }
+        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------4-----------------")
         if (mHeader != null) {
             view?.loadUrl(url,mHeader)
         } else {
@@ -72,7 +78,7 @@ class DWebViewClient(
             return true
         }
         // 控制页面中点开新的链接在当前webView中打开
-        if (bridgeHelper.shouldOverrideUrlLoading(request.url.toString())){
+        if (bridgeHelper?.shouldOverrideUrlLoading(request.url.toString()) == true){
             return true
         }
         if (mHeader != null) {
@@ -111,7 +117,7 @@ class DWebViewClient(
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        bridgeHelper.onPageFinished()
+        bridgeHelper?.onPageFinished()
         mWebCallback.onPageFinished(url)
     }
 

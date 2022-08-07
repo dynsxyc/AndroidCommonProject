@@ -5,23 +5,21 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import com.dyn.webview.jsbridge.*
 import com.dyn.webview.remotewebview.javascriptinterface.WebViewJavaScriptInterface
 import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
 import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
-import com.dyn.webview.jsbridge.BridgeHandler
-import com.dyn.webview.jsbridge.BridgeHelper
-import com.dyn.webview.jsbridge.CallBackFunction
-import com.dyn.webview.jsbridge.IWebView
 import com.google.gson.Gson
 import com.tencent.smtt.sdk.WebView
+import java.security.AccessController.getContext
 
 open class BaseWebView(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int
-) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener, IWebView {
+) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener,WebViewJavascriptBridge, IWebView {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
@@ -46,29 +44,40 @@ open class BaseWebView(
     }
 
     private var bridgeHelper: BridgeHelper
+
     init {
         WebViewDefaultSettings.toSetting(this)
         bridgeHelper = BridgeHelper(this)
-        callHandler("functionInJs", Gson().toJson(mutableMapOf("name" to "张三")), object :
-            CallBackFunction {
-            override fun onCallBack(data: String?) {
-                Log.d(TAG, "onCallBack: $data")
-            }
-        })
-        registerHandler("functionInJs",object :BridgeHandler{
-            override fun handler(data: String?, function: CallBackFunction?) {
-                Log.d(TAG, "handler: $data")
-            }
-
-        })
-
-        send("hello")
     }
 
     fun registerWebViewCallBack(webCallback: WebCallback) {
         mWebCallback = webCallback
-        webViewClient = DWebViewClient(this, mHeader, webCallback,bridgeHelper, this)
+        webViewClient = DWebViewClient(this, mHeader, webCallback, bridgeHelper, this)
         webChromeClient = DWebChromeClient(webCallback)
+
+//        callHandler("functionInJs", Gson().toJson(mutableMapOf("name" to "张三")), object :
+//            CallBackFunction {
+//            override fun onCallBack(data: String?) {
+//                Log.d(TAG, "onCallBack: $data")
+//            }
+//        })
+//
+//        registerHandler("submitFromWeb", handler = object :BridgeHandler{
+//            override fun handler(data: String?, function: CallBackFunction?) {
+//                Log.d(TAG, "handler: $data")
+//                val level = when (cmd) {
+//                    WebConstants.CommandAction.SHOWDIALOG,
+//                    WebConstants.CommandAction.SHOWTOAST ->
+//                        WebConstants.LEVEL_LOCAL
+//                    else ->
+//                        WebConstants.LEVEL_BASE
+//                }
+//                mWebCallback?.exec(context, level, cmd, params, function)
+//            }
+//        })
+//
+//        send("hello")
+
     }
 
     fun addJavascriptInterface(interfaceName: String) {
@@ -119,14 +128,14 @@ open class BaseWebView(
         } else {
             super.loadUrl(url, mHeader!!)
         }
-        Log.e(TAG, "WebView load url : $url")
+        Log.i(TAG, "WebView load url 1: $url")
         resetAllStateInternal(url)
 
     }
 
     override fun loadUrl(url: String, additionalHttpHeaders: MutableMap<String, String>) {
         super.loadUrl(url, additionalHttpHeaders)
-        Log.e(TAG, "WebView load url : $url")
+        Log.i(TAG, "WebView load url 2: $url")
         resetAllStateInternal(url)
     }
 
@@ -152,7 +161,7 @@ open class BaseWebView(
     override var isTouchByUser = false
 
     companion object {
-        private const val TAG = "BaseWebView"
+        const val TAG = "BaseWebView"
     }
     /**
      * webView 点击图片 响应
@@ -172,11 +181,11 @@ open class BaseWebView(
         bridgeHelper.defaultHandler = handler
     }
 
-    fun send(data: String) {
+    override fun send(data: String?) {
         send(data, null);
     }
 
-    fun send(data: String, responseCallback: CallBackFunction?) {
+    override fun send(data: String?, responseCallback: CallBackFunction?) {
         bridgeHelper.send(data, responseCallback);
     }
 
@@ -197,7 +206,7 @@ open class BaseWebView(
      *
      * @param handlerName
      */
-    public fun unregisterHandler(handlerName: String) {
+    public fun unregisterHandler(handlerName: String?) {
         bridgeHelper.unregisterHandler(handlerName);
     }
 
@@ -209,7 +218,7 @@ open class BaseWebView(
      * @param data        data
      * @param callBack    CallBackFunction
      */
-    fun callHandler(handlerName: String, data: String, callBack: CallBackFunction) {
+    fun callHandler(handlerName: String?, data: String?, callBack: CallBackFunction?) {
         bridgeHelper.callHandler(handlerName, data, callBack);
     }
 

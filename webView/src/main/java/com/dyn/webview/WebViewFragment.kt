@@ -9,13 +9,18 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.GsonUtils
 import com.dyn.base.mvvm.view.BaseFragment
 import com.dyn.base.ui.databinding.DataBindingConfig
+import com.dyn.webview.jsbridge.BridgeHandler
+import com.dyn.webview.jsbridge.CallBackFunction
 import com.dyn.webview.utils.WebConstants
 import com.dyn.webview.utils.WebConstants.REQUEST_CODE_LOLIPOP
 import com.tencent.smtt.sdk.CookieManager
 import com.tencent.smtt.sdk.ValueCallback
 import com.tencent.smtt.sdk.WebView
+import com.umeng.vt.diff.V
+import org.checkerframework.checker.units.qual.K
 
 class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     private var mIsError = false //判断页面是否加载成功
@@ -44,16 +49,8 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     override fun onLazyAfterView() {
         super.onLazyAfterView()
         arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
-//        val b = WebViewArgs("http://121.28.104.30:8390/aidl.html","webview","打卡", isSyncCookie = false, isShowActionBar = true,null)
-//        val b = WebViewArgs(
-//            "http://121.28.104.30:8398/#/home",
-//            "webview",
-//            "",
-//            isSyncCookie = false,
-//            isShowActionBar = false,
-//            null
-//        )
-            mViewModel.webUrl.value = b.loadUrl
+            mViewModel.webUrl.postValue(b.loadUrl)
+            mViewModel.mHasTitle.value = b.isShowActionBar?:true
             mViewModel.interfaceName.value = b.interfaceName
             mViewModel.mCommonHeaderModel.title.set(b.title)
             mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
@@ -62,7 +59,6 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
                     R.drawable.ic_nav_close
                 )
             )
-//        mViewModel.isShowActionBar.value = b.isShowActionBar
             val isSyncCookie = b.isSyncCookie
             val header = b.header
             header?.let {
@@ -73,6 +69,26 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
             mViewModel.header.value = header
 //        }
             mViewModel.webCallback = this
+        }
+        mViewModel.bridgeHandler.value = object :BridgeHandler{
+            override fun handler(data: String?, function: CallBackFunction?) {
+                if (data.isNullOrEmpty()){
+                    return
+                }
+                try {
+                    val map = GsonUtils.fromJson(data, MutableMap::class.java)
+                    if (map.isNullOrEmpty().not() && map.containsKey("cmd")){
+                        val key = map["cmd"].toString()
+                        exec(requireContext(),
+                            WebConstants.LEVEL_LOCAL,key, mutableMapOf("jsData" to "js").toString(),function)
+                    }
+
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+            }
+
         }
     }
 
@@ -254,6 +270,22 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
             webView,
             getCommandDispatcher()
         )
+    }
+
+    override fun exec(
+        context: Context,
+        commandLevel: Int,
+        cmd: String,
+        params: String?,
+        callback: CallBackFunction?
+    ) {
+        CommandDispatcher.instance.exec(
+            context,
+            commandLevel,
+            cmd,
+            params,
+            callback,
+            getCommandDispatcher())
     }
 
     private fun getCommandDispatcher(): CommandDispatcher.DispatcherCallBack? {

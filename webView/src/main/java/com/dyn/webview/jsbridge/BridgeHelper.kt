@@ -3,6 +3,9 @@ package com.dyn.webview.jsbridge
 import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
+import android.util.Log
+import com.dyn.webview.BaseWebView
+import com.tencent.smtt.sdk.ValueCallback
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
@@ -211,6 +214,7 @@ open class BridgeHelper(val webView: IWebView) : WebViewJavascriptBridge {
     }
 
     private fun loadUrl(url: String){
+//        webView.evaluateJavascript(url,null)
         webView.loadUrl(url)
     }
 

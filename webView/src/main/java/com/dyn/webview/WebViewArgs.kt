@@ -3,14 +3,22 @@ package com.dyn.webview
 import android.os.Parcel
 import android.os.Parcelable
 
-class WebViewArgs(val loadUrl : String?,val interfaceName:String?, val title :String?, val isSyncCookie:Boolean, val isShowActionBar:Boolean, val header:HashMap<String,String>?):Parcelable {
+class WebViewArgs(
+    val loadUrl: String?,
+    val interfaceName: String?,
+    val title: String?,
+    val isSyncCookie: Boolean,
+    val isShowActionBar: Boolean?,
+    val header: HashMap<String, String>?
+) : Parcelable {
     constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readByte() != 0.toByte(),
-            parcel.readSerializable() as HashMap<String, String>) {
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readByte() != 0.toByte(),
+        parcel.readSerializable() as HashMap<String, String>
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -18,7 +26,7 @@ class WebViewArgs(val loadUrl : String?,val interfaceName:String?, val title :St
         parcel.writeString(interfaceName)
         parcel.writeString(title)
         parcel.writeByte(if (isSyncCookie) 1 else 0)
-        parcel.writeByte(if (isShowActionBar) 1 else 0)
+        parcel.writeByte(if (isShowActionBar == true) 1 else 0)
         parcel.writeSerializable(header)
     }
 

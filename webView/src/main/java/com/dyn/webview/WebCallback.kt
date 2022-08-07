@@ -3,6 +3,7 @@ package com.dyn.webview
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import com.dyn.webview.jsbridge.CallBackFunction
 import com.tencent.smtt.sdk.ValueCallback
 import com.tencent.smtt.sdk.WebView
 
@@ -23,5 +24,6 @@ interface WebCallback {
      *
      * */
     fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, webView: WebView)
+    fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, callback: CallBackFunction?)
     fun onReceivedTitle(title: String)
 }

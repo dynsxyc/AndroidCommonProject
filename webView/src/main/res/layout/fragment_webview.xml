@@ -17,7 +17,9 @@
             viewBindAction="@{vm.MCustomViewActionListener}"
             viewBindData="@{vm.MCommonHeaderModel}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            visible="@{vm.MHasTitle}"
+            />
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/webContentParent"
@@ -41,9 +43,11 @@
                 dispatchEvent="@{vm.dispatchEvent}"
                 initWebView="@{vm.webCallback}"
                 interfaceName="@{vm.interfaceName}"
-                loadWebUrl="@{vm.webUrl}"
                 reloadWeb="@{vm.isReLoad}"
                 webHeader="@{vm.header}"
+                loadWebUrl="@{vm.webUrl}"
+                bridgeHandlerName="@{vm.interfaceName}"
+                bridgeHandler="@{vm.bridgeHandler}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>

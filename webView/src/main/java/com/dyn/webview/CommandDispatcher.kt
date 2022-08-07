@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.dyn.webview.command.base.ResultBack
 import com.dyn.webview.command.webprocess.WebViewProcessCommandsManager
+import com.dyn.webview.jsbridge.CallBackFunction
 import com.dyn.webview.mainprocess.RemoteWebBinderPool
 import com.dyn.webview.utils.MainLooper
 import com.dyn.webview.utils.WebConstants
@@ -73,6 +74,18 @@ class CommandDispatcher {
             e.printStackTrace()
         }
     }
+    fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, callback: CallBackFunction?, dispatcherCallBack: DispatcherCallBack?) {
+        try {
+            Logger.i( "exec: level->$commandLevel cmd->$cmd params->$params ")
+            if (mWebViewProcessCommandsManager.checkHitLocalCommand(commandLevel, cmd)) {
+                execLocalCommand(context, commandLevel, cmd, params, callback, dispatcherCallBack)
+            } else {
+                execRemoteCommand(commandLevel, cmd, params, callback, dispatcherCallBack)
+            }
+        } catch (e: RemoteException) {
+            e.printStackTrace()
+        }
+    }
     /**
      * 执行本地命令
      * 当前web进程的
@@ -94,6 +107,23 @@ class CommandDispatcher {
 
         })
     }
+    private fun execLocalCommand(context: Context, commandLevel: Int, cmd: String, params: String?, callback: CallBackFunction?, dispatcherCallBack: CommandDispatcher.DispatcherCallBack?) {
+        val mapParams = gSon.fromJson<Map<String,String>>(params,Map::class.java)
+        mWebViewProcessCommandsManager.findAndExecCommand(context,commandLevel,cmd,mapParams,object : ResultBack {
+            override fun onResult(status: Int, action: String?, data: Any) {
+                try {
+                    if (status == WebConstants.CONTINUE) {
+                        execRemoteCommand(commandLevel, action, gSon.toJson(data), callback, dispatcherCallBack)
+                    } else {
+                        handleCallback(status, action, gSon.toJson(data), callback, dispatcherCallBack)
+                    }
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
+
+        })
+    }
 
     /**
      * 跨进程命令的执行
@@ -102,6 +132,14 @@ class CommandDispatcher {
         mMainProcessService?.handleWebAction(level,action,params,object :ICallbackFromMainToWeb.Stub(){
             override fun onResult(responseCode: Int, actionName: String?, response: String?) {
                 handleCallback(responseCode, actionName!!, response!!, webView, dispatcherCallBack)
+            }
+
+        })
+    }
+    private fun execRemoteCommand(level: Int, action: String?, params: String?, callback: CallBackFunction?, dispatcherCallBack: DispatcherCallBack?) {
+        mMainProcessService?.handleWebAction(level,action,params,object :ICallbackFromMainToWeb.Stub(){
+            override fun onResult(responseCode: Int, actionName: String?, response: String?) {
+                handleCallback(responseCode, actionName!!, response!!, callback, dispatcherCallBack)
             }
 
         })
@@ -123,6 +161,19 @@ class CommandDispatcher {
                     webView.handleCallback(response)
                 }
             }
+        })
+    }
+    private fun handleCallback(responseCode: Int,actionName: String?, response: String,
+                               callback: CallBackFunction?,dispatcherCallBack: DispatcherCallBack?) {
+        Log.d("CommandDispatcher", String.format("Callback result: action= %s, result= %s", actionName, response))
+
+        MainLooper.runOnUiThread(Runnable {
+            dispatcherCallBack?.preHandleBeforeCallback(responseCode, actionName, response)
+            Logger.i("response ->$response")
+            val params = gSon.fromJson<MutableMap<String, String>>(response, MutableMap::class.java)
+//            if (params.containsKey(WebConstants.NATIVE2WEB_CALLBACK) && params[WebConstants.NATIVE2WEB_CALLBACK].isNullOrEmpty().not()) {
+                callback?.onCallBack(response)
+//            }
         })
     }
 

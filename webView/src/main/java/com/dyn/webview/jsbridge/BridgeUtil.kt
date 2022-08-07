@@ -79,7 +79,7 @@ object BridgeUtil {
             val sb = StringBuilder()
             do {
                 line = bufferedReader.readLine()
-                if (line != null && !line.matches(Regex("^\\s*\\/\\/.*"))) {
+                if (line != null && !line.matches("^\\s*\\/\\/.*".toRegex())) {
                     sb.append(line)
                 }
             } while (line != null)

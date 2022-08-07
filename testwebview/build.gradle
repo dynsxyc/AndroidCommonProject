@@ -46,6 +46,7 @@ dependencies {
 
     kapt app_dependencies.autoService
     implementation app_dependencies.autoService
+//    api app_dependencies.jsBridge
 
 //    implementation 'com.gitee.dyn_pure_land:androidProject:v1.0.2'
 

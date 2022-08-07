@@ -42,11 +42,11 @@ class MainActivity : BaseActivity<MainActivity.MainActivityViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val services = ServiceLoaderUtils.loadServices(Command::class.java)
-        while (services.hasNext()){
-            val next = services.next()
-            Log.i("dyn","注册命令->${next.name()}")
-        }
+//        val services = ServiceLoaderUtils.loadServices(Command::class.java)
+//        while (services.hasNext()){
+//            val next = services.next()
+//            Log.i("dyn","注册命令->${next.name()}")
+//        }
         findViewById<View>(R.id.openWeb1).setOnClickListener {
             mWebService?.startWebActivity(this, url = "https://xw.qq.com/?f=qqcom", title = "腾讯网")
         }
@@ -64,7 +64,7 @@ class MainActivity : BaseActivity<MainActivity.MainActivityViewModel>() {
         }
         findViewById<View>(R.id.alert_issue).setOnClickListener {
 //            mWebService?.startWebActivity(this@MainActivity, title = "Alert问题",url = WebConstants.CONTENT_SCHEME + "alert_issue.html")
-            mWebService?.startWebActivity(this@MainActivity, title = "bridge测试",url = WebConstants.CONTENT_SCHEME + "demo.html")
+            mWebService?.startWebActivity(this@MainActivity, title = "bridge测试", interfaceName = "submitFromWeb", url = WebConstants.CONTENT_SCHEME + "demo.html")
         }
 
         findViewById<View>(R.id.auto_zoom).setOnClickListener {
