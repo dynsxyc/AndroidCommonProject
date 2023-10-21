@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.RemoteException
 import android.text.TextUtils
 import android.util.Log
+import android.webkit.WebView
 import com.dyn.webview.command.base.ResultBack
 import com.dyn.webview.command.webprocess.WebViewProcessCommandsManager
 import com.dyn.webview.jsbridge.CallBackFunction
@@ -12,7 +13,6 @@ import com.dyn.webview.utils.MainLooper
 import com.dyn.webview.utils.WebConstants
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.tencent.smtt.sdk.WebView
 
 /**
  * 这个类主要用来处理子进程和主进程之间通信的
@@ -148,8 +148,8 @@ class CommandDispatcher {
     /**
      * js 调用完native 后 native对js的回调
      * */
-    private fun handleCallback(responseCode: Int,actionName: String?, response: String,
-                               webView: WebView,dispatcherCallBack: DispatcherCallBack?) {
+    private fun handleCallback(responseCode: Int, actionName: String?, response: String,
+                               webView: WebView, dispatcherCallBack: DispatcherCallBack?) {
         Log.d("CommandDispatcher", String.format("Callback result: action= %s, result= %s", actionName, response))
 
         MainLooper.runOnUiThread(Runnable {

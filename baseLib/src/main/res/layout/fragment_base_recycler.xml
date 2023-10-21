@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="position"
             type="Integer" />
+
         <variable
             name="isFirst"
             type="Boolean" />
+
         <variable
             name="isLast"
             type="Boolean" />
+
         <variable
             name="adapter"
             type="com.chad.library.adapter.base.BaseQuickAdapter" />
@@ -23,12 +27,18 @@
         <variable
             name="vm"
             type="com.dyn.base.mvvm.viewmodel.BaseRecyclerViewModel" />
+
         <variable
             name="view"
+            type="android.view.View" />
+
+        <variable
+            name="topView"
             type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        backgroundColor="@{vm.bgColor}"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -42,51 +52,53 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <FrameLayout
+            android:id="@+id/mRecyclerFragmentTopFl"
+            resetAddView="@{topView}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/mCommonHeaderView" />
+
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/mRecyclerFragmentRefresh"
             autoRefresh="@{vm.autoRefresh}"
+            changePage="@{vm.pageStatus}"
+            emptyDesText="@{vm.emptyDesStr}"
+            emptyImg="@{vm.emptyImgDrawable}"
+            emptyTitleText="@{vm.emptyTitleStr}"
             enableAutoLoadMore="@{vm.enableAutoLoadMore}"
             enableLoadMore="@{vm.enableLoadMore}"
             enableRefresh="@{vm.enableRefresh}"
             finishLoadMore="@{vm.finishLoadMore}"
             finishRefresh="@{vm.finishRefresh}"
+            isUnRegisterPage="@{vm.isUnRegisterPage}"
             refreshListener="@{vm.mOnRefreshLoadMoreListener}"
-            changePage="@{vm.pageStatus}"
             registerPage="@{vm.onReloadListener}"
-            emptyTitleText="@{vm.emptyTitleStr}"
-            emptyDesText="@{vm.emptyDesStr}"
-            emptyImg="@{vm.emptyImgDrawable}"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/mRecyclerFragmentBottomFl"
-            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mRecyclerFragmentTopFl">
 
             <androidx.recyclerview.widget.RecyclerView
-                layoutManager="@{layoutManager}"
                 adapter="@{adapter}"
-                hasFixedSize="@{vm.MHasFixedSize}"
+                addMoreData="@{vm.addDataList}"
                 itemData="@{vm.dataList}"
                 itemDecoration="@{vm.mItemDecoration}"
+                layoutManager="@{layoutManager}"
                 removeItemByData="@{vm.MRemoveItemData}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-        <!--<FrameLayout
-            android:id="@+id/mRecyclerFragmentRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/mRecyclerFragmentBottomFl"
-            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView"/>-->
+
         <FrameLayout
             android:id="@+id/mRecyclerFragmentBottomFl"
+            createAddView="@{vm::createRecyclerBottomView}"
+            createAddViewModel="@{vm}"
+            resetAddView="@{view}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            resetAddView="@{view}"
-            createAddViewModel="@{vm}"
-            createAddView="@{vm::createRecyclerBottomView}"
             app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@id/mRecyclerFragmentRefresh" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

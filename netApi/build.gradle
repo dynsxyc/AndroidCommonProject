@@ -8,7 +8,6 @@ def app_dependencies = rootProject.ext.app_dependencies
 
 android {
     compileSdkVersion app_android.compileSdkVersion
-    buildToolsVersion app_android.buildToolsVersion
 
     defaultConfig {
         minSdkVersion app_android.minSdkVersion
@@ -27,6 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    namespace 'com.dyn.net.api'
 }
 
 apply plugin: "kotlin-allopen"
@@ -52,7 +52,6 @@ dependencies {
     api app_dependencies.rxAndroid
     api app_dependencies.rxJava
     api app_dependencies.utilCode
-//    api 'io.github.dynsxyc:baselib:0.0.4' 解耦 不要依赖base
 
 }
 

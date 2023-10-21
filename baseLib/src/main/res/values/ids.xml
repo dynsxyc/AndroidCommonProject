@@ -6,4 +6,8 @@
     <item name="loadSir_bind_service" type="id"/>
     <item name="GrayRightArrow" type="id" />
     <item name="FixedHeightNestedRecyclerView" type="id" />
+
+    <item type="id" name="expandable_text"/>
+    <item type="id" name="expand_collapse"/>
+    <item type="id" name="tabLayoutBindViewPager2Id"/>
 </resources>

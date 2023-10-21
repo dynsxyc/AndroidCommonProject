@@ -12,4 +12,5 @@ include ':behavior'
 include ':alipaysdk'
 include ':scanCodeLib'
 include ':jsBridge'
+include ':qqkj_library'//https://www.jianshu.com/p/808b8a81606a
 include ':testwebview'

@@ -21,14 +21,6 @@
         android:layout_height="@dimen/common_header_bar_height"
         tools:layout_height="@dimen/dp_45"
         >
-<!--        <View
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            viewHeight="@{vm.height}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />-->
         <View
             style="@style/LineDivider"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +29,7 @@
             />
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/mHeaderBackTv"
-            inVisible="@{vm.hasBack}"
+            visible="@{vm.hasBack}"
             android:onClick="@{ (view)->action.onAction(view,BaseActionConstant.ACTION_BACK,vm) }"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,12 +46,14 @@
             android:text="@{vm.backStyle.text}"
             android:textColor="@{vm.backStyle.textColor}"
             android:textSize="@{vm.backStyle.textSize}"
+            textIsBold="@{vm.backStyle.isBold()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:drawableTint="@color/common_yellow"
+            tools:text="返回前一页"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -73,6 +67,7 @@
             android:drawableTop="@{vm.finishStyle.drawableTop}"
             android:drawableEnd="@{vm.finishStyle.drawableEnd}"
             android:drawableBottom="@{vm.finishStyle.drawableBottom}"
+            drawableTint="@{vm.finishStyle.drawableTint}"
             android:gravity="center"
             android:minWidth="@dimen/dp_25"
             android:minHeight="@dimen/dp_20"
@@ -109,6 +104,7 @@
             android:textColor="@{vm.titleColor}"
             android:textSize="@{vm.titleSize}"
             android:fontFamily="@font/medium"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_weight="1"
@@ -128,6 +124,7 @@
             android:drawableTop="@{vm.rightStyle.drawableTop}"
             android:drawableEnd="@{vm.rightStyle.drawableEnd}"
             android:drawableBottom="@{vm.rightStyle.drawableBottom}"
+            drawableTint="@{vm.rightStyle.drawableTint}"
             android:gravity="center"
             android:minWidth="@dimen/dp_25"
             android:minHeight="@dimen/dp_20"
@@ -152,6 +149,8 @@
             android:drawableTop="@{vm.rightLastStyle.drawableTop}"
             android:drawableEnd="@{vm.rightLastStyle.drawableEnd}"
             android:drawableBottom="@{vm.rightLastStyle.drawableBottom}"
+            drawableTint="@{vm.rightLastStyle.drawableTint}"
+            drawablePadding="@{vm.rightLastStyle.drawablePadding}"
             android:gravity="center"
             android:minWidth="@dimen/dp_25"
             android:minHeight="@dimen/dp_20"

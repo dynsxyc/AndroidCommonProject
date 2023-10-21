@@ -9,5 +9,5 @@ import android.content.Context
 interface Command {
     fun name(): String
     fun level():Int
-    fun exec(context: Context,params: Map<String, String>?, resultBack: ResultBack?)
+    fun exec(context: Context,params: Map<String, Any>?, resultBack: ResultBack?)
 }

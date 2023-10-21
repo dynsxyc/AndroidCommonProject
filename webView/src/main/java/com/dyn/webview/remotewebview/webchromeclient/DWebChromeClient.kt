@@ -6,16 +6,11 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.webkit.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.dyn.webview.WebCallback
 import com.orhanobut.logger.Logger
-import com.tencent.smtt.export.external.interfaces.ConsoleMessage
-import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback
-import com.tencent.smtt.export.external.interfaces.JsResult
-import com.tencent.smtt.sdk.ValueCallback
-import com.tencent.smtt.sdk.WebChromeClient
-import com.tencent.smtt.sdk.WebView
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -59,26 +54,26 @@ class DWebChromeClient(private val mWebCallback: WebCallback) : WebChromeClient(
             }
         }
         mFilePathCallback = filePathCallback
-        var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent!!.resolveActivity(webView?.context?.packageManager!!) != null) {
-            // Create the File where the photo should go
-            var photoFile: File? = null
-            try {
-                photoFile = createImageFile()
-                takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath)
-            } catch (ex: IOException) {
-                ex.printStackTrace()
-            }
-
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                mCameraPhotoPath = "file:" + photoFile.absolutePath
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
-            } else {
-                takePictureIntent = null
-            }
-        }
-        mWebCallback.onShowFileChooser(takePictureIntent, mFilePathCallback)
+//        var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        if (takePictureIntent!!.resolveActivity(webView?.context?.packageManager!!) != null) {
+//            // Create the File where the photo should go
+//            var photoFile: File? = null
+//            try {
+//                photoFile = createImageFile()
+//                takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath)
+//            } catch (ex: IOException) {
+//                ex.printStackTrace()
+//            }
+//
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+//                mCameraPhotoPath = "file:" + photoFile.absolutePath
+//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile))
+//            } else {
+//                takePictureIntent = null
+//            }
+//        }
+        mWebCallback.onShowFileChooser(fileChooserParams, mFilePathCallback)
         return true
     }
 

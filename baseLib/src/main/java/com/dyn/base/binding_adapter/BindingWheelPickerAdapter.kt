@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.aigestudio.wheelpicker.WheelPicker
+import com.dyn.base.ui.flowlayout.ISingleContent
 import com.dyn.base.ui.flowlayout.IStringContent
 
 object BindingWheelPickerAdapter {
@@ -69,10 +70,13 @@ object BindingWheelPickerAdapter {
     ) {
         mutableList?.let { data ->
             val set = data.map {
-                if (it is IStringContent)
-                    it.content
-                else
-                    ""
+                when (it) {
+                    is ISingleContent -> {
+                        it.getShowText()
+                    }
+                    is IStringContent -> it.content
+                    else -> ""
+                }
             }
             picker.data = set
         }

@@ -9,89 +9,98 @@ import android.widget.FrameLayout
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.dyn.base.BR
 import com.dyn.base.common.throttleFirstClick
+import com.orhanobut.logger.Logger
 import java.lang.ClassCastException
 
-abstract class BaseCustomView<DB : ViewDataBinding, DATA : BaseCustomModel>(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : FrameLayout(context, attrs, defStyleAttr), ICustomView<DATA>,ICustomViewActionListener {
+abstract class BaseCustomView<DB : ViewDataBinding, DATA : BaseCustomModel>(
+    context: Context,
+    attrs: AttributeSet?,
+    defStyleAttr: Int
+) : FrameLayout(context, attrs, defStyleAttr), ICustomView<DATA>, ICustomViewActionListener {
 
-    private var mVariableData = lazy { mutableMapOf<Int,Any>()}.value
+    private var mVariableData = lazy { mutableMapOf<Int, Any>() }.value
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
-    var mActionListener:ICustomViewActionListener? = null
+    var mActionListener: ICustomViewActionListener? = null
     protected open lateinit var mDataBinding: DB
-    lateinit var mViewModel: DATA
+    var mViewModel: DATA? = null
 
     init {
         if (getViewLayoutId() != 0) {
-            val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            mDataBinding = DataBindingUtil.inflate(inflater,getViewLayoutId(),this,false)
+            val inflater =
+                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            mDataBinding = DataBindingUtil.inflate(inflater, getViewLayoutId(), this, false)
             if (rootClickable()) {
                 mDataBinding.root.throttleFirstClick {
-                    onAction(this, ICustomViewActionListener.ACTION_ROOT_VIEW_CLICKED, mViewModel)
+                    onAction(
+                        this,
+                        ICustomViewActionListener.ACTION_ROOT_VIEW_CLICKED,
+                        mViewModel as BaseCustomModel
+                    )
                 }
             }
             addView(mDataBinding.root)
         }
     }
 
-    fun setNothingData(nothing: Any){
+    fun setNothingData(nothing: Any) {
         try {
             setData(nothing as DATA)
-        }catch (e:ClassCastException){
+        } catch (e: ClassCastException) {
             e.printStackTrace()
         }
     }
 
     override fun setData(data: DATA) {
-        Log.i("dyn","setData-------------$this")
+        Log.i("dyn", "setData-------------$this")
         mViewModel = data
-        mDataBinding.setVariable(getDataVariableId(),data)
-        mDataBinding.setVariable(getClickVariableId(),this)
         getVariableData()?.let { map ->
             map.forEach {
-                mDataBinding.setVariable(it.key,it.value)
+                mDataBinding.setVariable(it.key, it.value)
             }
         }
+        mDataBinding.setVariable(getDataVariableId(), data)
+        mDataBinding.setVariable(getClickVariableId(), this)
         mDataBinding.executePendingBindings()
     }
 
-    fun invalidateAll(){
+    fun invalidateAll() {
         mDataBinding?.invalidateAll()
     }
 
-    override fun onAction(view:View,action: String, viewModel: BaseCustomModel) {
-        mActionListener?.onAction(view,action,viewModel)
+    override fun onAction(view: View, action: String, viewModel: BaseCustomModel) {
+        mActionListener?.onAction(view, action, viewModel)
     }
 
-//    override fun onDetachedFromWindow() {
-//        Log.i("dyn","onDetachedFromWindow-------------$this")
-//        if (isDetachedUnBind()){
-//            mDataBinding.unbind()
-//        }
-//        super.onDetachedFromWindow()
-//    }
+    override fun onAttachedToWindow() {
+        Logger.i("customView ${this}->onAttachedToWindow-------------$this")
+        super.onAttachedToWindow()
+    }
+
+    override fun onDetachedFromWindow() {
+        Logger.i("customView ${this}->onDetachedFromWindow-------------$this")
+        super.onDetachedFromWindow()
+    }
 //    protected open fun isDetachedUnBind():Boolean{
 //        return true
 //    }
-//    override fun onAttachedToWindow() {
-//        Log.e("dyn","onAttachedToWindow-------------$this")
-//        mDataBinding.executePendingBindings()
-//        super.onAttachedToWindow()
-//    }
+
     @LayoutRes
     protected abstract fun getViewLayoutId(): Int
 
-    protected abstract fun getDataVariableId():Int
+    protected open fun getDataVariableId(): Int = BR.vm
 
-    protected abstract fun getClickVariableId():Int
+    protected open fun getClickVariableId(): Int = BR.action
 
-    protected open fun rootClickable():Boolean{
+    protected open fun rootClickable(): Boolean {
         return true
     }
 
-    protected open fun getVariableData(): MutableMap<Int, Any>?{
+    protected open fun getVariableData(): MutableMap<Int, Any>? {
         return null
     }
 

@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.suke.widget.SwitchButton
+import com.suke.widget.SwitchButton.OnCheckedChangeListener
 
 object BindingSwitchButtonAdapter {
 
@@ -54,5 +55,18 @@ object BindingSwitchButtonAdapter {
             swipeRefreshLayout.setOnCheckedChangeListener { view, isChecked ->
                 bindingListener.onChange()
             }
+    }
+
+    @JvmStatic
+    @BindingAdapter(
+        "switchListener",
+        requireAll = false
+    )
+    fun setSwitchListener(
+        swipeRefreshLayout: SwitchButton,
+        bindingListener: OnCheckedChangeListener?
+    ) {
+        if (bindingListener != null)
+            swipeRefreshLayout.setOnCheckedChangeListener(bindingListener)
     }
 }

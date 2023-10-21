@@ -1,6 +1,7 @@
 ﻿package com.dyn.base.mvvm.viewmodel
 
 import android.graphics.Color
+import android.util.Log
 import androidx.annotation.FloatRange
 import androidx.annotation.StringRes
 import androidx.databinding.ObservableField
@@ -16,6 +17,7 @@ import com.dyn.base.ui.base.AutoDisposeLifecycleScopeProvider
 import com.dyn.base.ui.base.DialogStatus
 import com.dyn.base.ui.weight.CustomToastView
 import com.dyn.base.ui.weight.header.CommonHeaderModel
+import com.gyf.immersionbar.ImmersionBar
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
@@ -32,6 +34,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
     val mHasTitle = MutableLiveData<Boolean>(true)
     val mLifeCycle = MutableLiveData<LifecycleOwner>()
     val mBackAction = MutableLiveData(false)
+    val headerStatusBarHeight = MutableLiveData(0)
     open val mBannerIndicatorType = 0
     val mContentScrollYSize = MutableLiveData<Int>()
     open val mCommonHeaderModel = CommonHeaderModel()
@@ -52,6 +55,12 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
         return Observable.intervalRange(0, count, 0, 1, TimeUnit.SECONDS).handlerThread()
             .autoDispose(autoDisposeLifecycleScopeProvider).subscribe {
                 data.set((count - it - 1).toInt())
+            }
+    }
+    fun startMillisecondsTimer(count: Long, data: ObservableField<Long>): Disposable {
+        return Observable.intervalRange(1, count, 0, 1000, TimeUnit.MILLISECONDS).handlerThread()
+            .autoDispose(autoDisposeLifecycleScopeProvider).subscribe {
+                data.set((count - it*1000))
             }
     }
 
@@ -89,7 +98,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
         if (scrollOffset >= 0.5) {
             //offset 0.5-1  alpha 0->1
             val offset = scrollOffset * 2f - 1
-            mCommonHeaderModel.titleAlpha.set(offset)
+            mCommonHeaderModel.titleAlpha.set(scrollOffset)
             mCommonHeaderModel.backStyle.drawableTint.set(
                 Color.argb(
                     (255 * offset).toInt(),
@@ -101,7 +110,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
         } else if (scrollOffset in 0f..0.5f) {
             //offset 0->0.5  alpha  1->0
             val offset = 1 - scrollOffset * 2f
-            mCommonHeaderModel.titleAlpha.set(offset)
+            mCommonHeaderModel.titleAlpha.set(scrollOffset)
             mCommonHeaderModel.backStyle.drawableTint.set(
                 Color.argb(
                     (255 * offset).toInt(),
@@ -117,28 +126,28 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
         str: String,
         @CustomToastView.ToastType type: Int = CustomToastView.TYPE_TIPS
     ) {
-        mShortToastStr.value = CustomToastView.CustomToastBean(str, -1, type)
+        mShortToastStr.value = CustomToastView.CustomToastBean(str, -1, type =type)
     }
 
     fun showShortToast(
         @StringRes str: Int,
         @CustomToastView.ToastType type: Int = CustomToastView.TYPE_TIPS
     ) {
-        mShortToastStr.value = CustomToastView.CustomToastBean(null, str, type)
+        mShortToastStr.value = CustomToastView.CustomToastBean(null, str, type = type)
     }
 
     fun showLongToast(
         str: String,
         @CustomToastView.ToastType type: Int = CustomToastView.TYPE_TIPS
     ) {
-        mLongToastStr.value = CustomToastView.CustomToastBean(str, -1, type)
+        mLongToastStr.value = CustomToastView.CustomToastBean(str, -1, type =type)
     }
 
     fun showLongToast(
         @StringRes str: Int,
         @CustomToastView.ToastType type: Int = CustomToastView.TYPE_TIPS
     ) {
-        mLongToastStr.value = CustomToastView.CustomToastBean(null, str, type)
+        mLongToastStr.value = CustomToastView.CustomToastBean(null, str, type =type)
     }
 
     fun showDialogCancel() {

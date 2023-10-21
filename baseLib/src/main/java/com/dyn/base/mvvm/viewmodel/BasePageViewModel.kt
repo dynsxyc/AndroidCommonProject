@@ -54,7 +54,7 @@ abstract class BasePageViewModel<PAGE_MODEL : BaseModel<*, PAGE_DATA>, PAGE_DATA
                     pageInfo: ResultPageInfo?
                 ) {
                     showPageSuccess()
-                        data.postValue(resultData)
+                    data.value = resultData
                     finishSmartRefreshStatus()
                     onPageSuccess(model, resultData, pageInfo)
                 }
@@ -81,10 +81,12 @@ abstract class BasePageViewModel<PAGE_MODEL : BaseModel<*, PAGE_DATA>, PAGE_DATA
             )
         }
     }
-    fun getCurrentPageModel():PAGE_MODEL{
+
+    fun getCurrentPageModel(): PAGE_MODEL {
         createAndRegisterPageModel()
         return mPageModel!!
     }
+
     /**
      * 没有更多数据
      * */

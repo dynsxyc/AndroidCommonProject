@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:rv_backgroundColor="@color/common_white"
+        app:rv_backgroundColor="@color/white"
         app:rv_cornerRadius="@dimen/dp_12">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -85,7 +85,7 @@
                 android:text="取消"
                 android:textColor="@color/text_color_33"
                 android:textSize="@dimen/sp_15"
-                app:rv_backgroundColor="@color/common_white"
+                app:rv_backgroundColor="@color/white"
                 app:rv_backgroundPressColor="@color/common_white_press"
                 app:rv_cornerRadius_BL="@dimen/dp_12"
                 tools:visibility="visible" />
@@ -100,7 +100,7 @@
                 android:text="确定"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/sp_15"
-                app:rv_backgroundColor="@color/common_white"
+                app:rv_backgroundColor="@color/white"
                 app:rv_backgroundPressColor="@color/common_white_press"
                 app:rv_cornerRadius_BR="@dimen/dp_12" />
         </androidx.appcompat.widget.LinearLayoutCompat>

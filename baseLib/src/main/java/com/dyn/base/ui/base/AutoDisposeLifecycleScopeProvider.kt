@@ -29,6 +29,9 @@ class AutoDisposeLifecycleScopeProvider : LifecycleScopeProvider<AutoDisposeLife
      fun onCleared() {
         lifecycleEvents.onNext(ViewModelEvent.CLEARED)
     }
+    fun onBind(){
+        lifecycleEvents.onNext(ViewModelEvent.CREATED)
+    }
     override fun lifecycle(): Observable<ViewModelEvent> {
         return lifecycleEvents.hide()
     }

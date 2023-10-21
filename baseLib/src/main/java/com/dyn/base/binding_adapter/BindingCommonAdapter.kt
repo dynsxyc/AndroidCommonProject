@@ -19,11 +19,14 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.ScaleDrawable
+import android.graphics.drawable.ShapeDrawable
 import android.os.Build
+import android.text.Html
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
@@ -31,46 +34,62 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.method.ScrollingMovementMethod
+import android.text.util.Linkify
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewOutlineProvider
 import android.view.animation.LinearInterpolator
 import android.view.inputmethod.EditorInfo
 import android.webkit.WebView
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
+import androidx.annotation.IdRes
 import androidx.appcompat.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph
+import androidx.recyclerview.widget.RecyclerView
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.SpanUtils
+import com.bumptech.glide.request.RequestListener
 import com.dyn.base.R
+import com.dyn.base.common.findViewByParent
+import com.dyn.base.customview.BaseCustomModel
+import com.dyn.base.customview.BaseCustomView
 import com.dyn.base.customview.ICustomViewActionListener
+import com.dyn.base.ui.HIndicator
+import com.dyn.base.ui.base.recycler.BasePager2Adapter
+import com.dyn.base.ui.base.recycler.BaseRecyclerAdapter
+import com.dyn.base.ui.magicindicator.IMagicItem
 import com.dyn.base.ui.navigationbar.DefaultNavigationBar
 import com.dyn.base.ui.weight.ClearEditText
+import com.dyn.base.ui.weight.ExpandableTextView
 import com.dyn.base.ui.weight.MessageCountTextView
 import com.dyn.base.ui.weight.header.CommonHeaderModel
 import com.dyn.base.ui.weight.header.CommonHeaderView
 import com.dyn.base.ui.weight.passedit.PasswordEditText
 import com.dyn.base.utils.ImageLoaderManager
+import com.dyn.base.utils.LinkSpanUtils
+import com.dyn.base.utils.OnOpenWebUrlListener
 import com.dyn.base.utils.StarTransformationMethod
 import com.google.android.material.shape.MaterialShapeDrawable
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.gyf.immersionbar.ImmersionBar
 import com.jakewharton.rxbinding4.view.clicks
 import com.jakewharton.rxbinding4.view.scrollChangeEvents
@@ -81,15 +100,34 @@ import java.util.concurrent.TimeUnit
 /**
  */
 object BindingCommonAdapter {
-    @BindingAdapter(value = ["imageUrl", "placeHolder"], requireAll = false)
+    @BindingAdapter(
+        value = ["imageUrl", "placeHolder", "isGif", "imageRequestListener"],
+        requireAll = false
+    )
     @JvmStatic
     fun loadUrl(
+        view: ImageView,
+        url: Any?,
+        placeHolder: Drawable?,
+        isGif: Boolean? = false,
+        requestListener: RequestListener<Drawable>? = null
+    ) {
+        url?.let {
+            ImageLoaderManager.displayImage(view, it, isGif, placeHolder, requestListener)
+        }
+    }
+    @BindingAdapter(
+        value = ["imageNoneCacheUrl", "noneCachePlaceHolder"],
+        requireAll = false
+    )
+    @JvmStatic
+    fun loadNoneCacheUrl(
         view: ImageView,
         url: Any?,
         placeHolder: Drawable?
     ) {
         url?.let {
-            ImageLoaderManager.displayImage(view, it, placeHolder)
+            ImageLoaderManager.displayImageNoCache(view, it, placeHolder)
         }
     }
 
@@ -99,14 +137,6 @@ object BindingCommonAdapter {
     fun imageBitmap(view: ImageView, bitmap: Bitmap?) {
         bitmap?.let {
             view.setImageBitmap(it)
-        }
-    }
-
-    @BindingAdapter(value = ["imageDrawable"], requireAll = false)
-    @JvmStatic
-    fun imageDrawable(view: ImageView, bitmap: Drawable?) {
-        bitmap?.let {
-            view.setImageDrawable(it)
         }
     }
 
@@ -127,20 +157,22 @@ object BindingCommonAdapter {
     @BindingAdapter(value = ["rotate"], requireAll = false)
     @JvmStatic
     fun rotate(view: View, rotation: Float) {
-        view.rotation = rotation
-//        val animator = ObjectAnimator.ofFloat(view,"rotation",view.rotation,rotate)
-//        animator.duration = 300
-//        animator.interpolator = LinearInterpolator()
-//        animator.start()
+//        view.rotation = rotation
+        val animator = ObjectAnimator.ofFloat(view, "rotation", view.rotation, rotation)
+        animator.duration = 300
+        animator.interpolator = LinearInterpolator()
+        animator.start()
     }
 
     @BindingAdapter(value = ["rotationAnimation"], requireAll = false)
     @JvmStatic
     fun rotationAnimation(view: View, rotation: Float) {
-        val animator = ObjectAnimator.ofFloat(view, "rotation", view.rotation, rotation)
-        animator.duration = 300
-        animator.interpolator = LinearInterpolator()
-        animator.start()
+        if (view.rotation != rotation) {
+            val animator = ObjectAnimator.ofFloat(view, "rotation", view.rotation, rotation)
+            animator.duration = 300
+            animator.interpolator = LinearInterpolator()
+            animator.start()
+        }
     }
 
     @BindingAdapter(value = ["inputType"], requireAll = false)
@@ -171,6 +203,19 @@ object BindingCommonAdapter {
         }
     }
 
+    @BindingAdapter(value = ["textHtmlContent"], requireAll = false)
+    @JvmStatic
+    fun setTextHtmlContent(view: TextView, content: String?) {
+        content?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                view.text = Html.fromHtml(it, Html.FROM_HTML_MODE_COMPACT)
+            } else {
+                view.text = Html.fromHtml(it)
+
+            }
+        }
+    }
+
     @BindingAdapter(value = ["maxLength"], requireAll = false)
     @JvmStatic
     fun maxLength(view: TextView, maxlength: Int) {
@@ -180,6 +225,7 @@ object BindingCommonAdapter {
             view.filters = arrayOf()
         }
     }
+
 
     @JvmStatic
     fun isAnyPasswordInputType(inputType: Int): Boolean {
@@ -209,7 +255,22 @@ object BindingCommonAdapter {
     @BindingAdapter(value = ["imageRes"], requireAll = false)
     @JvmStatic
     fun setImageRes(imageView: ImageView, imageRes: Int) {
-        imageView.setImageResource(imageRes)
+        imageSrc(imageView, imageRes)
+    }
+
+    @BindingAdapter(value = ["changedDrawableStart", "normalDrawableStart"], requireAll = true)
+    @JvmStatic
+    fun changedButton(view: TextView, changedDrawableStart: Int, normalDrawableStart: Int) {
+        view.setOnClickListener {
+            val tag = it.tag.toString().toInt()
+            if (tag == 0) {
+                view.tag = 1
+                view.setCompoundDrawablesRelativeWithIntrinsicBounds(changedDrawableStart, 0, 0, 0)
+            } else {
+                view.tag = 0
+                view.setCompoundDrawablesRelativeWithIntrinsicBounds(normalDrawableStart, 0, 0, 0)
+            }
+        }
     }
 
     @BindingAdapter(value = ["isShowHidePassMode"], requireAll = false)
@@ -236,21 +297,42 @@ object BindingCommonAdapter {
         }
     }
 
+    @BindingAdapter(
+        value = ["onClickWithDebouncingListener", "onClickWithDebouncingById"],
+        requireAll = true
+    )
+    @JvmStatic
+    fun onClickWithDebouncingById(view: View, clickListener: View.OnClickListener?, id: Int) {
+        val v = view.findViewByParent<View>(id)
+        view.clicks().throttleFirst(800, TimeUnit.MILLISECONDS).subscribe {
+            try {
+                clickListener?.onClick(v)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     interface IActionSearchListener {
         fun onSearch(str: String)
     }
 
+    interface IActionListener<T> {
+        fun onSearch(data: T)
+    }
+
     @BindingAdapter(value = ["editorSearchAction"], requireAll = false)
     @JvmStatic
-    fun onTextEditorActions(editText: AppCompatEditText, searchAction: IActionSearchListener) {
+    fun onTextEditorActions(editText: AppCompatEditText, searchAction: IActionSearchListener?) {
         editText.editorActions {
             when (it) {
                 EditorInfo.IME_ACTION_SEARCH -> {
                     if (editText.text.isNullOrEmpty().not()) {
-                        searchAction.onSearch(editText.text.toString())
+                        searchAction?.onSearch(editText.text.toString())
                     }
                     true
                 }
+
                 else -> {
                     false
                 }
@@ -267,6 +349,24 @@ object BindingCommonAdapter {
                     clickListener.onClick(editText)
                     true
                 }
+
+                else -> {
+                    false
+                }
+            }
+        }.subscribe()
+    }
+
+    @BindingAdapter(value = ["editorSendActionClick"], requireAll = false)
+    @JvmStatic
+    fun editorSendActionClick(editText: AppCompatEditText, clickListener: View.OnClickListener) {
+        editText.editorActions {
+            when (it) {
+                EditorInfo.IME_ACTION_SEND -> {
+                    clickListener.onClick(editText)
+                    true
+                }
+
                 else -> {
                     false
                 }
@@ -317,6 +417,81 @@ object BindingCommonAdapter {
         view.setupWithViewPager(viewPager)
     }
 
+    @BindingAdapter(
+        value = [
+            "tabLayoutBindViewPager2Id",
+            "tabLayoutBindViewPager2Adapter",
+            "tabLayoutBindData",
+            "tabLayoutBindAutoRefresh",
+            "tabLayoutBindSmoothScroll",
+        ],
+        requireAll = false
+    )
+    @JvmStatic
+    fun initTabLayout(
+        view: TabLayout,
+        viewPagerId: Int,
+        pagerAdapter: RecyclerView.Adapter<*>?,
+        list: MutableList<out IMagicItem>,
+        autoRefresh: Boolean? = true,
+        smoothScroll: Boolean? = false,
+    ) {
+        val viewPager = view.findViewByParent<ViewPager2>(viewPagerId)
+        view.isLongClickable = false
+        viewPager?.let { pager ->
+            pagerAdapter?.let { adapter ->
+                if (pager.adapter != adapter) {
+                    pager.adapter = adapter
+                }
+
+                pager.adapter?.let { adapter ->
+                    if (adapter is BasePager2Adapter<*>) {
+                        list?.let {
+                            adapter.setList(it as MutableList<Nothing>)
+                        }
+                    }
+                    if (adapter is BaseRecyclerAdapter<*, *>) {
+                        list?.let {
+                            adapter.submitList(it as MutableList<Nothing>)
+                        }
+                    }
+                }
+
+                val tag = view.getTag(R.id.tabLayoutBindViewPager2Id)
+                if (tag == null) {
+                    val mediator = TabLayoutMediator(
+                        view, pager, autoRefresh ?: true, smoothScroll ?: false
+                    ) { _, _ -> }
+                    mediator.attach()
+                    view.setTag(R.id.tabLayoutBindViewPager2Id, mediator)
+                }
+
+                if (view.tabCount == list.size) {
+                    for (i in 0..view.tabCount) {
+                        val tab = view.getTabAt(i)
+                        list.getOrNull(i)?.getShowTabIconRes()?.let {
+                            if (it > 0) {
+                                try {
+                                    view.getTabAt(i)?.setIcon(it)
+                                } catch (e: Exception) {
+
+                                }
+                            }
+                        }
+                        tab?.let {
+                            it.text = list.getOrNull(i)?.getShowTabName()
+                            it.view.isLongClickable =false
+                            if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+                                it.view.tooltipText = null
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 //    @JvmStatic
 //    fun findStartDestination(graph: NavGraph?): NavDestination? {
 //        var startDestination: NavDestination? = graph
@@ -362,9 +537,34 @@ object BindingCommonAdapter {
 
     @BindingAdapter(value = ["drawableTint"], requireAll = false)
     @JvmStatic
-    fun drawableTint(textView: AppCompatTextView, @ColorInt color: Int?) {
+    fun drawableTint(textView: TextView, @ColorInt color: Int?) {
         color?.let {
+            if (it == -2) {// white 是-1 透明 是0
+                TextViewCompat.setCompoundDrawableTintList(textView, null)
+                return
+            }
             TextViewCompat.setCompoundDrawableTintList(textView, ColorStateList.valueOf(it))
+        }
+    }
+
+    @BindingAdapter(value = ["backgroundTint"], requireAll = false)
+    @JvmStatic
+    fun backgroundTint(textView: View, @ColorInt color: Int?) {
+        color?.let {
+            textView.backgroundTintList =
+                androidx.databinding.adapters.Converters.convertColorToColorStateList(it)
+        }
+    }
+
+    @BindingAdapter(value = ["drawableTint"], requireAll = false)
+    @JvmStatic
+    fun drawableTint(textView: ImageView, @ColorInt color: Int?) {
+        color?.let {
+            if (it == -2) {// white 是-1 透明 是0
+                ImageViewCompat.setImageTintList(textView, null)
+                return
+            }
+            ImageViewCompat.setImageTintList(textView, ColorStateList.valueOf(it))
         }
     }
 
@@ -414,6 +614,32 @@ object BindingCommonAdapter {
                 ResourcesCompat.getFont(view.context, R.font.medium)
             } else {
                 Typeface.DEFAULT
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
+    @BindingAdapter(value = ["textIsBold"], requireAll = false)
+    @JvmStatic
+    fun textIsBold(view: TextView, isMedium: Boolean) {
+        try {
+            view.typeface = if (isMedium) {
+                Typeface.DEFAULT_BOLD
+            } else {
+                Typeface.DEFAULT
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
+    @BindingAdapter(value = ["checkListener"], requireAll = false)
+    @JvmStatic
+    fun checkListener(view: CompoundButton, listener: CompoundButton.OnCheckedChangeListener?) {
+        try {
+            listener?.let {
+                view.setOnCheckedChangeListener(it)
             }
         } catch (e: Exception) {
 
@@ -537,6 +763,7 @@ object BindingCommonAdapter {
                 is Fragment -> {
                     ImmersionBar.setTitleBar(view.context as Fragment, view)
                 }
+
                 is Activity -> {
                     ImmersionBar.setTitleBar(view.context as Activity, view)
                 }
@@ -558,6 +785,19 @@ object BindingCommonAdapter {
         view.mActionListener = listener
         customViewModel?.let {
             view.setData(it)
+        }
+    }
+
+    @BindingAdapter(value = ["customViewBindAction", "customViewBindData"], requireAll = false)
+    @JvmStatic
+    fun customBindAction(
+        view: BaseCustomView<*, out BaseCustomModel>,
+        listener: ICustomViewActionListener?,
+        customViewModel: BaseCustomModel?
+    ) {
+        view.mActionListener = listener
+        customViewModel?.let {
+            view.setNothingData(it)
         }
     }
 
@@ -595,7 +835,7 @@ object BindingCommonAdapter {
 
     @BindingAdapter(value = ["createAddView", "createAddViewModel"], requireAll = true)
     @JvmStatic
-    fun createAddView(viewGroup: ViewGroup, addView: ICreateSubView?, vm: ViewModel) {
+    fun createAddView(viewGroup: ViewGroup, addView: ICreateSubView?, vm: ViewModel?) {
         addView?.createView(viewGroup, vm)?.let {
             viewGroup.removeAllViews()
             viewGroup.addView(it)
@@ -603,7 +843,7 @@ object BindingCommonAdapter {
     }
 
     interface ICreateSubView {
-        fun createView(parent: ViewGroup, vm: ViewModel): View?
+        fun createView(parent: ViewGroup, vm: ViewModel?): View?
     }
 
     @BindingAdapter(
@@ -681,6 +921,22 @@ object BindingCommonAdapter {
         }
     }
 
+    @BindingAdapter(
+        value = ["drawablePadding"],
+        requireAll = false
+    )
+    @JvmStatic
+    fun textDrawablePadding(
+        view: TextView,
+        drawablePadding: Int? = 0,
+    ) {
+        try {
+            view.compoundDrawablePadding = drawablePadding ?: 0
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     @BindingAdapter(value = ["replaceFragment", "replaceFragmentManager"])
     @JvmStatic
     fun replaceFragment(view: View, replaceFragment: Fragment?, fragmentManager: FragmentManager?) {
@@ -725,7 +981,11 @@ object BindingCommonAdapter {
                 transaction.hide(findHideFragment)
             }
         }
-        transaction.commit()
+        try {
+            transaction.commit()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     @BindingAdapter(value = ["bankFormat"], requireAll = false)
@@ -802,21 +1062,35 @@ object BindingCommonAdapter {
             -1 -> {
                 view.setTextKeepState("发送验证码", TextView.BufferType.NORMAL)
             }
+
             0 -> {
                 view.setTextKeepState("重新发送", TextView.BufferType.NORMAL)
             }
+
             else -> {
                 view.setTextKeepState("${number}秒后重发", TextView.BufferType.NORMAL)
             }
         }
     }
 
-    @BindingAdapter(value = ["layoutMarginStart"], requireAll = false)
+    @BindingAdapter(
+        value = ["layoutMarginStart", "layoutMarginTop", "layoutMarginEnd", "layoutMarginBottom"],
+        requireAll = false
+    )
     @JvmStatic
-    fun layoutMarginStart(view: View, startMargin: Float) {
+    fun layoutMarginStart(
+        view: View,
+        startMargin: Float,
+        topMargin: Float,
+        endMargin: Float,
+        bottomMargin: Float
+    ) {
         val params = view.layoutParams
         if (params is ViewGroup.MarginLayoutParams) {
             params.marginStart = startMargin.toInt()
+            params.topMargin = topMargin.toInt()
+            params.marginEnd = endMargin.toInt()
+            params.bottomMargin = bottomMargin.toInt()
         }
     }
 
@@ -879,12 +1153,168 @@ object BindingCommonAdapter {
 
     @BindingAdapter(value = ["layoutConstraintDimensionRatio"], requireAll = false)
     @JvmStatic
-    fun layoutConstraintDimensionRatio(layout: View, ratio: String) {
+    fun layoutConstraintDimensionRatio(layout: View, ratio: String?) {
         if (layout.layoutParams !is ConstraintLayout.LayoutParams) {
             return
         }
         val params = layout.layoutParams as ConstraintLayout.LayoutParams
         params.dimensionRatio = ratio
         layout.layoutParams = params
+    }
+
+
+    @BindingAdapter(value = ["setViewHeight"], requireAll = false)
+    @JvmStatic
+    fun setViewHeight(view: View, height: Int) {
+        val params = view.layoutParams
+        params?.let {
+            it.height = height
+            view.layoutParams = it
+        }
+    }
+
+    @BindingAdapter(value = ["setViewWidth"], requireAll = false)
+    @JvmStatic
+    fun setViewSize(view: View, width: Int) {
+        val params = view.layoutParams
+        params?.let {
+            it.width = width
+            view.layoutParams = it
+        }
+    }
+
+    @BindingAdapter(value = ["setViewHeight"], requireAll = false)
+    @JvmStatic
+    fun setViewHeight(view: View, height: Float) {
+        val params = view.layoutParams
+        params?.let {
+            it.height = height.toInt()
+            view.layoutParams = it
+        }
+    }
+
+    @BindingAdapter(value = ["setViewWidth"], requireAll = false)
+    @JvmStatic
+    fun setViewSize(view: View, width: Float) {
+        val params = view.layoutParams
+        params?.let {
+            it.width = width.toInt()
+            view.layoutParams = it
+        }
+    }
+
+    @BindingAdapter(value = ["expandableTextContent"], requireAll = false)
+    @JvmStatic
+    fun setExpandableTextContent(view: ExpandableTextView, content: String?) {
+        content?.let {
+            view.text = content
+        }
+    }
+
+    @BindingAdapter(value = ["layoutConstraintHeightMax"], requireAll = false)
+    @JvmStatic
+    fun layoutConstraintHeightMax(view: View, height: Int) {
+        val params = view.layoutParams
+        if (params is ConstraintLayout.LayoutParams) {
+            params.matchConstraintMaxHeight = height
+            view.layoutParams = params
+        }
+    }
+
+    @BindingAdapter(value = ["layoutConstraintWidthPercent"], requireAll = false)
+    @JvmStatic
+    fun layoutConstraintWidthPercent(view: View, percent: Float) {
+        val params = view.layoutParams
+        if (params is ConstraintLayout.LayoutParams) {
+            params.matchConstraintPercentWidth = percent
+            view.layoutParams = params
+        }
+    }
+
+    @BindingAdapter(value = ["layoutConstraintHorizontalWeight"], requireAll = false)
+    @JvmStatic
+    fun layoutConstraintHorizontalWeight(view: View, height: Float) {
+        val params = view.layoutParams
+        if (params is ConstraintLayout.LayoutParams) {
+            params.horizontalWeight = height
+            view.layoutParams = params
+        }
+    }
+
+    @BindingAdapter(value = ["viewTranslationY"], requireAll = false)
+    @JvmStatic
+    fun setViewTranslationY(view: View, translationY: Float) {
+        view.translationY = translationY
+    }
+
+    @BindingAdapter(value = ["viewTag"], requireAll = false)
+    @JvmStatic
+    fun setViewTag(view: View, tag: Any?) {
+        view.tag = tag
+    }
+
+
+    @BindingAdapter(value = ["indicatorBindRecyclerView"], requireAll = false)
+    @JvmStatic
+    fun indicatorBindRecyclerView(view: HIndicator, @IdRes viewId: Int) {
+        val baseIndicator = view.findViewByParent<RecyclerView>(viewId)
+        baseIndicator?.let {
+            view.bindRecyclerView(it)
+        }
+    }
+
+    @BindingAdapter(
+        value = ["progressBgColor", "progressStartColor", "progressEndColor"],
+        requireAll = false
+    )
+    @JvmStatic
+    fun progressColor(view: ProgressBar, bgColor: Int?, startColor: Int?, endColor: Int?) {
+        val bgDrawable = view.progressDrawable
+        if (bgDrawable is LayerDrawable) {
+            val bg = bgDrawable.findDrawableByLayerId(android.R.id.background)
+            if (bg is GradientDrawable && bgColor != null) {
+                bg.setColor(bgColor)
+            }
+            val progressDrawable = bgDrawable.findDrawableByLayerId(android.R.id.progress)
+            if (progressDrawable is ScaleDrawable) {
+                val pd = progressDrawable.drawable
+                if (pd is GradientDrawable) {
+                    if (startColor != null && endColor != null) {
+                        pd.colors = intArrayOf(startColor, endColor)
+                    }
+                }
+            }
+            view.background = bgDrawable
+        }
+    }
+
+    @BindingAdapter(
+        value = ["textContentIsHtml", "textContentHtmlStr", "textOpenWebListener"],
+        requireAll = false
+    )
+    @JvmStatic
+    fun textContentHtml(
+        textView: TextView,
+        isHtml: Boolean? = false,
+        contentStr: String? = null,
+        openWebListener: OnOpenWebUrlListener? = null
+    ) {
+        if (isHtml == true) {
+            if (openWebListener != null) {
+                textView.autoLinkMask = Linkify.WEB_URLS
+                textView.movementMethod = LinkMovementMethod.getInstance()
+                textView.text = LinkSpanUtils.getClickableHtml(
+                    Html.fromHtml(
+                        contentStr,
+                        Html.FROM_HTML_MODE_LEGACY
+                    ), openWebListener
+                )
+            } else {
+                textView.text = Html.fromHtml(contentStr, Html.FROM_HTML_MODE_LEGACY)
+                textView.movementMethod = LinkMovementMethod.getInstance()
+            }
+        } else {
+            textView.text = contentStr
+        }
     }
 }

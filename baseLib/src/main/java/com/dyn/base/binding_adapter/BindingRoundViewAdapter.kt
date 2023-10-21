@@ -2,10 +2,11 @@ package com.dyn.base.binding_adapter
 
 import android.view.View
 import androidx.databinding.BindingAdapter
-import com.dyn.base.ui.weight.RoundEditTextView
+import com.dyn.base.ui.weight.RoundClearEditTextView
+import com.dyn.base.ui.weight.RoundConstraintLayout
+import com.flyco.roundview.RoundFrameLayout
 import com.flyco.roundview.RoundLinearLayout
 import com.flyco.roundview.RoundTextView
-import kotlin.math.roundToInt
 
 object BindingRoundViewAdapter {
 
@@ -20,7 +21,7 @@ object BindingRoundViewAdapter {
     @JvmStatic
     fun rv_backgroundColor(view: View, color: Int) {
         when (view) {
-            is RoundEditTextView ->
+            is RoundClearEditTextView ->
                 view.getDelegate().backgroundColor = color
             is RoundTextView ->
                 view.delegate.backgroundColor = color
@@ -33,12 +34,28 @@ object BindingRoundViewAdapter {
     @JvmStatic
     fun rvStrokeWidth(view: View, width: Float) {
         when (view) {
-            is RoundEditTextView ->
+            is RoundClearEditTextView ->
                 view.getDelegate().strokeWidth =  width.toInt()
             is RoundTextView ->
                 view.delegate.strokeWidth = width.toInt()
             is RoundLinearLayout ->
                 view.delegate.strokeWidth = width.toInt()
+        }
+    }
+    @BindingAdapter(value = ["rvStrokeColor"], requireAll = false)
+    @JvmStatic
+    fun rvStrokeColor(view: View, color: Int) {
+        when (view) {
+            is RoundClearEditTextView ->
+                view.getDelegate().strokeColor =  color
+            is RoundTextView ->
+                view.delegate.strokeColor = color
+            is RoundLinearLayout ->
+                view.delegate.strokeColor = color
+            is RoundConstraintLayout ->
+                view.getDelegate().strokeColor = color
+            is RoundFrameLayout ->
+                view.delegate.strokeColor = color
         }
     }
 

@@ -1,11 +1,14 @@
 package com.dyn.base.binding_adapter
 
 import android.graphics.drawable.Drawable
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.dyn.base.R
 import com.dyn.base.loadsir.EmptyCallback
@@ -19,11 +22,18 @@ import com.orhanobut.logger.Logger
 import java.lang.Exception
 
 object BindingLoadSirAdapter {
-    @BindingAdapter(value = ["registerPage"])
+    /**
+     * @param isUnRegisterPage 是否不用注册页面状态切换  默认 否false 表示注册 true 不注册
+     * */
+    @BindingAdapter(value = ["registerPage", "isUnRegisterPage"], requireAll = false)
     @JvmStatic
-    fun registerPageView(view: View, reloadListener: Callback.OnReloadListener) {
+    fun registerPageView(
+        view: View,
+        reloadListener: Callback.OnReloadListener?,
+        isUnRegisterPage: Boolean = false
+    ) {
         val tag = view.getTag(R.id.loadSir_bind_service)
-        if (tag == null) {
+        if (tag == null && !isUnRegisterPage && reloadListener != null) {
             val loadService = LoadSir.getDefault().register(view, reloadListener)
             view.setTag(R.id.loadSir_bind_service, loadService)
         }
@@ -32,16 +42,22 @@ object BindingLoadSirAdapter {
 
     @BindingAdapter(value = ["changePage"])
     @JvmStatic
-    fun changePageStatus(view: View, status: LoadPageStatus) {
+    fun changePageStatus(view: View, status: LoadPageStatus?) {
         when (status) {
             LoadPageStatus.SUCCESS -> {
                 showCallback(view, SuccessCallback::class.java)
             }
+
             LoadPageStatus.LOADING -> {
                 showCallback(view, LoadingCallback::class.java)
             }
+
             LoadPageStatus.EMPTY -> {
                 showCallback(view, EmptyCallback::class.java)
+            }
+
+            else -> {
+                showCallback(view, ErrorCallback::class.java)
             }
         }
     }
@@ -60,27 +76,44 @@ object BindingLoadSirAdapter {
     ) {
         val tag = view.getTag(R.id.loadSir_bind_service)
         if (tag != null && tag is LoadService<*>) {
-            tag.setCallBack(EmptyCallback::class.java) { context, view ->
-                titleText?.let {
-                    val titleTv =
-                        view.findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.mLayoutEmptyTitleTv)
-                    titleTv.text = it
+            tag.setCallBack(EmptyCallback::class.java) { _, v ->
+                val titleTv =
+                    v.findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.mLayoutEmptyTitleTv)
+              titleTv?.let {
+                  if (TextUtils.isEmpty(titleText)) {
+                      titleTv.visibility = View.GONE
+                  } else {
+                      titleTv.visibility = View.VISIBLE
+                      titleTv.text = titleText
+                  }
+              }
+                val content = v.findViewById<View>(R.id.ll_empty)
+                content?.let { v ->
+                    if (minHeight > 0f) {
+                        v.layoutParams?.let {
+                            Logger.i("loadSir-------->$it")
+                            it.height = LayoutParams.WRAP_CONTENT
+                            v.layoutParams = it
+                        }
+                        v.minimumHeight = minHeight.toInt()
+                    }
                 }
-                val content = view.findViewById<View>(R.id.ll_empty)
-                content?.let {
-                    if (minHeight > 0f)
-                        it.minimumHeight = minHeight.toInt()
-                }
-                desText?.let {
-                    val desTv =
-                        view.findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.mLayoutEmptyDesTv)
-                    desTv.text = it
-                }
+                val desTv =
+                    v.findViewById<androidx.appcompat.widget.AppCompatTextView>(R.id.mLayoutEmptyDesTv)
+              desTv?.let {
+                  if (TextUtils.isEmpty(desText)) {
+                      desTv.visibility = View.GONE
+                  } else {
+                      desTv.visibility = View.VISIBLE
+                      desTv.text = desText
+                  }
+              }
                 try {
                     emptyImg?.let {
-                        val emptyImageV = view.findViewById<ImageView>(R.id.mLayoutEmptyImg)
-                        emptyImageV.setImageResource(it)
+                        val emptyImageV = v.findViewById<ImageView>(R.id.mLayoutEmptyImg)
+                        emptyImageV?.setImageResource(it)
                     }
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -101,5 +134,6 @@ object BindingLoadSirAdapter {
         SUCCESS,
         LOADING,
         EMPTY,
+        ERROR
     }
 }

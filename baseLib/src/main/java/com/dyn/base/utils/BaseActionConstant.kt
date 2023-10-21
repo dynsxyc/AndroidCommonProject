@@ -2,11 +2,12 @@ package com.dyn.base.utils
 
 object BaseActionConstant {
 
-    const val LOG_TAG_PERMISSIONS = "Tag_Permissions"
     /**
      * 公共头部action  commonHeaderView  start
      * */
+    const val ACTION_REFRESH = "action_refresh"
     const val ACTION_BACK = "action_back"
+    const val ACTION_HEADER_TV = "action_header_tv"
     const val ACTION_FINISH = "action_finish"
     const val ACTION_RIGHT = "action_right"
     const val ACTION_RIGHT_LAST = "action_right_last"

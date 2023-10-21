@@ -30,7 +30,7 @@ public class NumIndicator extends BaseIndicator {
 
     public NumIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mPaint.setTextSize(BannerUtils.dp2px(10));
+        mPaint.setTextSize(BannerUtils.dp2px(12));
         mPaint.setTextAlign(Paint.Align.CENTER);
         width = (int) BannerUtils.dp2px(44);
         height = (int) BannerUtils.dp2px(18);
@@ -56,7 +56,7 @@ public class NumIndicator extends BaseIndicator {
         }
 
         RectF rectF = new RectF(0, 0, width, height);
-        mPaint.setColor(Color.parseColor("#70000000"));
+        mPaint.setColor(Color.parseColor("#4D000000"));
         canvas.drawRoundRect(rectF, radius, radius, mPaint);
 
         String text = config.getCurrentPosition() + 1 + "/" + count;

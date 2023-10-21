@@ -13,12 +13,12 @@ import com.dyn.base.R
  */
 class ProgressLoading private constructor(context: Context, theme: Int) : Dialog(context, theme) {
     companion object {
-        @Volatile
-        private var instance: ProgressLoading? = null
-        fun getInstance(context: Context) =
-            instance ?: synchronized(context) {
-                instance ?: create(context).also { instance = it }
-            }
+//        @Volatile
+//        private var instance: ProgressLoading? = null
+        fun getInstance(context: Context) = create(context)
+//            instance ?: synchronized(context) {
+//                instance ?: create(context).also { instance = it }
+//            }
 
         /**
          * 非单例创建

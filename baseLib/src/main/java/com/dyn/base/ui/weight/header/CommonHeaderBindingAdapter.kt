@@ -12,131 +12,131 @@ object CommonHeaderBindingAdapter {
     @JvmStatic
     fun hFinishStyle(headerView: CommonHeaderView, finishDrawableStart: Drawable?, finishDrawableTop: Drawable?, finishDrawableEnd: Drawable?, finishDrawableBottom: Drawable?,
                      finishText: String?, finishTextColor: Int, finishTextSize: Int, finishMessageCount: Int, finishIsShowMessageStatus: Boolean) {
-        val style = headerView.mViewModel.finishStyle
+        val style = headerView.mViewModel?.finishStyle
         finishDrawableStart?.let {
-            style.drawableStart.set(finishDrawableStart)
+            style?.drawableStart?.set(finishDrawableStart)
         }
         finishDrawableTop?.let {
-            style.drawableTop.set(finishDrawableTop)
+            style?.drawableTop?.set(finishDrawableTop)
         }
         finishDrawableEnd?.let {
-            style.drawableEnd.set(finishDrawableEnd)
+            style?.drawableEnd?.set(finishDrawableEnd)
         }
         finishDrawableBottom?.let {
-            style.drawableBottom.set(finishDrawableBottom)
+            style?.drawableBottom?.set(finishDrawableBottom)
         }
         finishText?.let {
-            style.text.set(finishText)
+            style?.text?.set(finishText)
         }
         if (finishTextColor > 0) {
-            style.textColor.set(finishTextColor)
+            style?.textColor?.set(finishTextColor)
         }
         if (finishTextSize > 0) {
-            style.textSize.set(sp2px(finishTextSize.toFloat()))
+            style?.textSize?.set(sp2px(finishTextSize.toFloat()))
         }
-        style.messageCount.set(finishMessageCount)
-        style.isMessageStatus.set(finishIsShowMessageStatus)
+        style?.messageCount?.set(finishMessageCount)
+        style?.isMessageStatus?.set(finishIsShowMessageStatus)
     }
 
     @BindingAdapter(value = ["backDrawableStart", "backDrawableTop", "backDrawableEnd", "backDrawableBottom", "backText", "backTextColor", "backTextSize", "backMessageCount", "backIsShowMessageStatus"], requireAll = false)
     @JvmStatic
     fun hBackStyle(headerView: CommonHeaderView, backDrawableStart: Drawable?, backDrawableTop: Drawable?, backDrawableEnd: Drawable?, backDrawableBottom: Drawable?,
                      backText: String?, backTextColor: Int, backTextSize: Int, backMessageCount: Int, backIsShowMessageStatus: Boolean) {
-        val style = headerView.mViewModel.backStyle
+        val style = headerView.mViewModel?.backStyle
         backDrawableStart?.let {
-            style.drawableStart.set(backDrawableStart)
+            style?.drawableStart?.set(backDrawableStart)
         }
         backDrawableTop?.let {
-            style.drawableTop.set(backDrawableTop)
+            style?.drawableTop?.set(backDrawableTop)
         }
         backDrawableEnd?.let {
-            style.drawableEnd.set(backDrawableEnd)
+            style?.drawableEnd?.set(backDrawableEnd)
         }
         backDrawableBottom?.let {
-            style.drawableBottom.set(backDrawableBottom)
+            style?.drawableBottom?.set(backDrawableBottom)
         }
         backText?.let {
-            style.text.set(backText)
+            style?.text?.set(backText)
         }
         if (backTextColor > 0) {
-            style.textColor.set(backTextColor)
+            style?.textColor?.set(backTextColor)
         }
         if (backTextSize > 0) {
-            style.textSize.set(sp2px(backTextSize.toFloat()))
+            style?.textSize?.set(sp2px(backTextSize.toFloat()))
         }
-        style.messageCount.set(backMessageCount)
-        style.isMessageStatus.set(backIsShowMessageStatus)
+        style?.messageCount?.set(backMessageCount)
+        style?.isMessageStatus?.set(backIsShowMessageStatus)
     }
 
     @BindingAdapter(value = ["rightDrawableStart", "rightDrawableTop", "rightDrawableEnd", "rightDrawableBottom", "rightText", "rightTextColor", "rightTextSize", "rightMessageCount", "rightIsShowMessageStatus"], requireAll = false)
     @JvmStatic
     fun hRightStyle(headerView: CommonHeaderView, rightDrawableStart: Drawable?, rightDrawableTop: Drawable?, rightDrawableEnd: Drawable?, rightDrawableBottom: Drawable?,
                      rightText: String?, rightTextColor: Int, rightTextSize: Int, rightMessageCount: Int, rightIsShowMessageStatus: Boolean) {
-        val style = headerView.mViewModel.rightStyle
+        val style = headerView.mViewModel?.rightStyle
         rightDrawableStart?.let {
-            style.drawableStart.set(rightDrawableStart)
+            style?.drawableStart?.set(rightDrawableStart)
         }
         rightDrawableTop?.let {
-            style.drawableTop.set(rightDrawableTop)
+            style?.drawableTop?.set(rightDrawableTop)
         }
         rightDrawableEnd?.let {
-            style.drawableEnd.set(rightDrawableEnd)
+            style?.drawableEnd?.set(rightDrawableEnd)
         }
         rightDrawableBottom?.let {
-            style.drawableBottom.set(rightDrawableBottom)
+            style?.drawableBottom?.set(rightDrawableBottom)
         }
         rightText?.let {
-            style.text.set(rightText)
+            style?.text?.set(rightText)
         }
         if (rightTextColor > 0) {
-            style.textColor.set(rightTextColor)
+            style?.textColor?.set(rightTextColor)
         }
         if (rightTextSize > 0) {
-            style.textSize.set(sp2px(rightTextSize.toFloat()))
+            style?.textSize?.set(sp2px(rightTextSize.toFloat()))
         }
-        style.messageCount.set(rightMessageCount)
-        style.isMessageStatus.set(rightIsShowMessageStatus)
+        style?.messageCount?.set(rightMessageCount)
+        style?.isMessageStatus?.set(rightIsShowMessageStatus)
     }
 
     @BindingAdapter(value = ["rightLastDrawableStart", "rightLastDrawableTop", "rightLastDrawableEnd", "rightLastDrawableBottom", "rightLastText", "rightLastTextColor", "rightLastTextSize", "rightLastMessageCount", "rightLastIsShowMessageStatus"], requireAll = false)
     @JvmStatic
     fun hRightLastStyle(headerView: CommonHeaderView, rightLastDrawableStart: Drawable?, rightLastDrawableTop: Drawable?, rightLastDrawableEnd: Drawable?, rightLastDrawableBottom: Drawable?,
                      rightLastText: String?, rightLastTextColor: Int, rightLastTextSize: Int, rightLastMessageCount: Int, rightLastIsShowMessageStatus: Boolean) {
-        val style = headerView.mViewModel.rightLastStyle
+        val style = headerView.mViewModel?.rightLastStyle
         rightLastDrawableStart?.let {
-            style.drawableStart.set(rightLastDrawableStart)
+            style?.drawableStart?.set(rightLastDrawableStart)
         }
         rightLastDrawableTop?.let {
-            style.drawableTop.set(rightLastDrawableTop)
+            style?.drawableTop?.set(rightLastDrawableTop)
         }
         rightLastDrawableEnd?.let {
-            style.drawableEnd.set(rightLastDrawableEnd)
+            style?.drawableEnd?.set(rightLastDrawableEnd)
         }
         rightLastDrawableBottom?.let {
-            style.drawableBottom.set(rightLastDrawableBottom)
+            style?.drawableBottom?.set(rightLastDrawableBottom)
         }
         rightLastText?.let {
-            style.text.set(rightLastText)
+            style?.text?.set(rightLastText)
         }
         if (rightLastTextColor > 0) {
-            style.textColor.set(rightLastTextColor)
+            style?.textColor?.set(rightLastTextColor)
         }
         if (rightLastTextSize > 0) {
-            style.textSize.set(sp2px(rightLastTextSize.toFloat()))
+            style?.textSize?.set(sp2px(rightLastTextSize.toFloat()))
         }
-        style.messageCount.set(rightLastMessageCount)
-        style.isMessageStatus.set(rightLastIsShowMessageStatus)
+        style?.messageCount?.set(rightLastMessageCount)
+        style?.isMessageStatus?.set(rightLastIsShowMessageStatus)
     }
     @BindingAdapter(value = ["hOffset"])
     @JvmStatic
     fun hOffset(headerView: CommonHeaderView, scrollOffset: Float){
         val viewModel = headerView.mViewModel
-        val color = viewModel.bg.get()
+        val color = viewModel?.bg?.get()
         color?.let {
            val rColor =  Color.argb((255*scrollOffset).toInt(),Color.red(color),Color.green(color),Color.blue(color))
             viewModel.bg.set(rColor)
         }
-        viewModel.titleAlpha.set(scrollOffset)
+        viewModel?.titleAlpha?.set(scrollOffset)
     }
 
 

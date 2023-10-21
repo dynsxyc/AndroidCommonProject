@@ -13,6 +13,8 @@
         <item name="android:backgroundDimEnabled">true</item>
         <!-- 模糊 -->
         <item name="android:windowNoTitle">true</item>
+        <!-- 模糊 -->
+        <item name="android:windowActionBar">false</item>
     </style>
 
     <style name="dialog_from_bottom_anim">

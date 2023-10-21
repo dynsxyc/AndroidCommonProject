@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dyn.base.utils.BaseActionConstant" />
+
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.weight.datepicker.CustomDatePickerViewModel" />
+
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+    </data>
+
+    <com.dyn.base.ui.weight.RoundConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius_TL="@dimen/dp_10"
+        app:rv_cornerRadius_TR="@dimen/dp_10">
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/title"
+            style="@style/WrapWrapTextSize16.0d"
+            android:layout_height="@dimen/common_header_bar_height"
+            android:padding="@dimen/dp_10"
+            android:text="选择日期"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/closeImg"
+            onClickWithDebouncing='@{(v)->action.onAction(v,BaseActionConstant.ACTION_CANCEL,vm)}'
+            android:layout_width="@dimen/dp_46"
+            android:layout_height="@dimen/dp_46"
+            android:padding="@dimen/dp_5"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:srcCompat="@drawable/icon_cancel"
+            app:tint="#0d0d0d" />
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mtrl_calendar_days_of_week"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mtrl_calendar_days_of_week_height"
+            android:gravity="center_horizontal"
+            android:horizontalSpacing="@dimen/mtrl_calendar_month_horizontal_padding"
+            firstDayOfWeek="@{vm.firstDayOfWeek}"
+            gridNumColumns="@{vm.gridNumColumns}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/mtrl_calendar_months"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            initDatePickerMonths="@{true}"
+            android:listSelector="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/mtrl_calendar_days_of_week" />
+
+    </com.dyn.base.ui.weight.RoundConstraintLayout>
+</layout>

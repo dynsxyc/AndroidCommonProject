@@ -6,6 +6,9 @@
         <variable
             name="vm"
             type="com.dyn.webview.WebViewModelView" />
+        <variable
+            name="webCallBack"
+            type="com.dyn.webview.WebCallback" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,7 +44,7 @@
                 canGoBackStatus="@{vm.canGoBackStatus}"
                 backListener = "@{vm.backListener}"
                 dispatchEvent="@{vm.dispatchEvent}"
-                initWebView="@{vm.webCallback}"
+                initWebView="@{webCallBack}"
                 interfaceName="@{vm.interfaceName}"
                 reloadWeb="@{vm.isReLoad}"
                 webHeader="@{vm.header}"

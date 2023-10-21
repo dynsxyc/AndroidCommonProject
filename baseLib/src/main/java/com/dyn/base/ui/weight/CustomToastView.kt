@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.IntDef
 import androidx.annotation.StringRes
 import com.dyn.base.R
@@ -34,6 +35,10 @@ class CustomToastView(context: Context):LinearLayout(context) {
         )
     }
 
+    fun setImgRes(@DrawableRes res:Int){
+        mToastImg.setImageResource(res)
+    }
+
     companion object{
         const val TYPE_SUCCESS = 1
         const val TYPE_FAIL = 2
@@ -43,5 +48,5 @@ class CustomToastView(context: Context):LinearLayout(context) {
     @IntDef(value = [TYPE_TIPS,TYPE_FAIL,TYPE_SUCCESS])
     annotation class ToastType
 
-    data class CustomToastBean(val toast:String?= null, @StringRes val res: Int = -1, @ToastType val  type: Int = TYPE_TIPS)
+    data class CustomToastBean(val toast:String?= null, @StringRes val res: Int = -1, @DrawableRes val iconRes: Int = -1, @ToastType val  type: Int = TYPE_TIPS)
 }

@@ -3,9 +3,6 @@ package com.dyn.webview.jsbridge
 import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
-import android.util.Log
-import com.dyn.webview.BaseWebView
-import com.tencent.smtt.sdk.ValueCallback
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 
@@ -18,13 +15,13 @@ open class BridgeHelper(val webView: IWebView) : WebViewJavascriptBridge {
     var messageHandlers: MutableMap<String, BridgeHandler> = HashMap()
     var defaultHandler: BridgeHandler = DefaultHandler()
 
-    private var startupMessage: MutableList<Message>? = ArrayList()
+    private var startupMessage: MutableList<Message>? = mutableListOf()
 
-    fun getStartupMessage(): List<Message>? {
+    private fun getStartupMessage(): List<Message>? {
         return startupMessage
     }
 
-    fun setStartupMessage(startupMessage: MutableList<Message>?) {
+    private fun setStartupMessage(startupMessage: MutableList<Message>?) {
         this.startupMessage = startupMessage
     }
 

@@ -9,6 +9,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:windowDisablePreview">true</item> 禁用splashScreen 启动样式-->
     </style>
     <!--应用主题-->
     <style name="AppTheme" parent="BaseTheme">
@@ -66,6 +67,7 @@
         <item name="android:layout_alignParentEnd">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:layout_gravity">right|center_vertical</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
     </style>
     <style name="LineDivider">
         <item name="android:layout_width">match_parent</item>
@@ -82,6 +84,10 @@
         <item name="android:layout_marginStart">@dimen/common_margin_middle</item>
         <item name="android:layout_marginEnd">@dimen/common_margin_middle</item>
     </style>
+    <style name="LineDivider.Margin.Small">
+        <item name="android:layout_marginStart">@dimen/common_margin_small</item>
+        <item name="android:layout_marginEnd">@dimen/common_margin_small</item>
+    </style>
     <style name="LineImg">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_0_5</item>
@@ -92,5 +98,44 @@
         <item name="colorPrimary">?attr/colorSecondary</item>
         <item name="colorOnPrimary">?attr/colorOnSecondary</item>
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+    </style>
+
+    <declare-styleable name="ExpandableTextView">
+        <attr name="maxCollapsedLines" format="integer"/>
+        <attr name="maxExpandableLines" format="integer"/>
+        <attr name="animDuration" format="integer"/>
+        <attr name="animAlphaStart" format="float"/>
+        <attr name="expandIndicator" format="reference"/>
+        <attr name="collapseIndicator" format="reference"/>
+        <attr name="expandToggleType" format="enum">
+            <enum name="ImageButton" value="0"/>
+            <enum name="TextView" value="1"/>
+        </attr>
+        <attr name="expandableTextId" format="reference"/>
+        <attr name="expandCollapseToggleId" format="reference"/>
+        <attr name="expandToggleOnTextClick" format="boolean"/>
+    </declare-styleable>
+
+    <style name="BaseTabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabIndicatorFullWidth">false</item>
+    </style>
+
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="android:background">@null</item>
+        <item name="tabIconTint">@null</item>
+        <item name="tabMaxWidth">@dimen/design_tab_max_width</item>
+        <item name="tabIndicatorAnimationDuration">@integer/design_tab_indicator_anim_duration_ms</item>
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorGravity">bottom</item>
+        <item name="tabIndicatorAnimationMode">linear</item>
+        <item name="tabIndicator">@drawable/mtrl_tabs_default_indicator</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
+        <item name="tabTextColor">@null</item>
+        <item name="tabRippleColor">?attr/colorControlHighlight</item>
+        <item name="tabUnboundedRipple">false</item>
     </style>
 </resources>

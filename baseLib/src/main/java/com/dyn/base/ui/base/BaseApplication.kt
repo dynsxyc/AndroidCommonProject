@@ -24,11 +24,10 @@ import com.orhanobut.logger.Logger
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.umeng.lib.UMManager
 
 
 open class BaseApplication : Application(), ViewModelStoreOwner {
-    private lateinit var mViewModelStore: ViewModelStore
+    private var mViewModelStore: ViewModelStore =ViewModelStore()
 
     companion object {
         lateinit var instance: BaseApplication
@@ -43,7 +42,6 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         super.attachBaseContext(base)
         MultiDex.install(this)
         instance = this
-        mViewModelStore = ViewModelStore()
     }
 
     override fun onCreate() {
@@ -61,7 +59,6 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
             .commit()
 //        openStrictMode()
         initSmartRefreshLayout()
-        UMManager.init(this)
         initLogger()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             val processName = ProcessUtils.getCurrentProcessName()
@@ -121,15 +118,15 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
     }
 
     private fun initSmartRefreshLayout() {
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             ClassicsHeader(context).setDrawableSize(20f)
         }
-        SmartRefreshLayout.setDefaultRefreshFooterCreator() { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshFooterCreator() { context, _ ->
             ClassicsFooter(context).setDrawableSize(20f)
         }
     }
 
-    override fun getViewModelStore(): ViewModelStore {
-        return mViewModelStore
-    }
+    override val viewModelStore: ViewModelStore
+        get() = mViewModelStore
+
 }

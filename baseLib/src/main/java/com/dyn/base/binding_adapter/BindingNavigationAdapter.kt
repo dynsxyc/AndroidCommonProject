@@ -1,25 +1,13 @@
 package com.dyn.base.binding_adapter
 
 import android.content.res.ColorStateList
-import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.annotation.NonNull
-import androidx.core.view.forEach
 import androidx.core.view.forEachIndexed
+import androidx.core.view.get
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
-import androidx.databinding.InverseBindingListener
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph
-import androidx.navigation.NavOptions
-import com.dyn.base.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.ref.WeakReference
+import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 object BindingNavigationAdapter {
 
@@ -27,10 +15,10 @@ object BindingNavigationAdapter {
     @JvmStatic
     fun navigationSelectedListener(
         bottomNavigationView: BottomNavigationView,
-       listener: BottomNavigationView.OnNavigationItemSelectedListener?
+       listener: OnItemSelectedListener?
     ) {
         listener?.let {
-            bottomNavigationView.setOnNavigationItemSelectedListener(it)
+            bottomNavigationView.setOnItemSelectedListener(it)
         }
     }
     @BindingAdapter(value = ["navigationItemIconTintList"])
@@ -60,11 +48,57 @@ object BindingNavigationAdapter {
         bottomNavigationView: BottomNavigationView,
         hide: Boolean
     ) {
-        if (hide) {
-            bottomNavigationView.menu.forEachIndexed { index, item ->
-                (bottomNavigationView.getChildAt(0) as ViewGroup).getChildAt(index)
-                    .setOnLongClickListener { true }
+            if (hide) {
+                bottomNavigationView.menu.forEachIndexed { index, _ ->
+                    (bottomNavigationView.getChildAt(0) as ViewGroup?)?.getChildAt(index)?.setOnLongClickListener { true }
+                }
+        }
+
+    }
+    @BindingAdapter(value = ["hasIconTint"])
+    @JvmStatic
+    fun hasIconTint(
+        bottomNavigationView: BottomNavigationView,
+        hide: Boolean
+    ) {
+            if (hide.not()) {
+                bottomNavigationView.itemIconTintList = null
+        }
+
+    }
+    data class NavShowHideData(var isShow:Boolean,val position:Int)
+    @BindingAdapter(value = ["navigationViewHideData"])
+    @JvmStatic
+    fun navigationViewHideByPosition(
+        bottomNavigationView: BottomNavigationView,
+        data:NavShowHideData?
+    ) {
+        data?.let {
+            val position = data.position
+            val positionItemMenu = bottomNavigationView.menu[position]
+            val currentVisible = positionItemMenu.isVisible
+            if (currentVisible != data.isShow){
+                positionItemMenu.isVisible = data.isShow
             }
         }
+
+    }
+    @BindingAdapter(value = ["navigationViewHideDataList"])
+    @JvmStatic
+    fun navigationViewHideByPosition(
+        bottomNavigationView: BottomNavigationView,
+        data:List<NavShowHideData>?
+    ) {
+        data?.let {
+          it.forEach { item->
+              val position = item.position
+              val positionItemMenu = bottomNavigationView.menu[position]
+              val currentVisible = positionItemMenu.isVisible
+              if (currentVisible != item.isShow){
+                  positionItemMenu.isVisible = item.isShow
+              }
+          }
+        }
+
     }
 }

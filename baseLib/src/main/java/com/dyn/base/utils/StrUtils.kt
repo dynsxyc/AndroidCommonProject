@@ -1,6 +1,9 @@
 package com.dyn.base.utils
 
+import android.text.TextUtils
 import com.blankj.utilcode.util.RegexUtils
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 object StrUtils {
     fun hidePhoneCenter(str: String?): String {

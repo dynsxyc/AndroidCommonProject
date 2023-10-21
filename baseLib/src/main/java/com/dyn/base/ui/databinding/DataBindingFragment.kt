@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.util.keyIterator
@@ -20,10 +21,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
+import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.dyn.base.R
 import com.dyn.base.ui.base.BaseApplication
 import com.dyn.base.ui.weight.CustomToastView
+import com.dyn.base.ui.weight.CustomToastView.Companion.TYPE_TIPS
 import com.dyn.base.utils.BaseToastUtils
 import java.lang.Exception
 
@@ -32,7 +35,7 @@ abstract class DataBindingFragment : Fragment() {
     private var mActivityProvider: ViewModelProvider? = null
     private var mFactory: ViewModelProvider.Factory? = null
     private var mBinding: ViewDataBinding? = null
-    private var mDataBindingConfig: DataBindingConfig? = null
+    private lateinit var mDataBindingConfig: DataBindingConfig
     private var mTvStrictModeTip: TextView? = null
 
 
@@ -68,27 +71,32 @@ abstract class DataBindingFragment : Fragment() {
             mBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false)
             mBinding!!.lifecycleOwner = this
         }
-        //        if (rootView.background == null){
-//            rootView.setBackgroundColor(ColorUtils.getColor(R.color.common_bg))
-//        }
         return mBinding!!.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        mDataBindingConfig = getDataBindingConfig()
-        mBinding!!.setVariable(
-            mDataBindingConfig!!.vmVariableId,
-            mDataBindingConfig!!.stateViewModel
-        )
-        val bindingParams = mDataBindingConfig!!.bindingParams
-        bindingParams.keyIterator().forEach {
-            mBinding!!.setVariable(it, bindingParams.get(it))
-        }
-        mBinding!!.executePendingBindings()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view?.setBackgroundColor(getBackgroundColor())
     }
 
+    override fun onStart() {
+        if (isInitBinding.not()){
+            isInitBinding = true
+            mDataBindingConfig = getDataBindingConfig()
+            mBinding!!.setVariable(
+                mDataBindingConfig.vmVariableId,
+                mDataBindingConfig.stateViewModel
+            )
+            val bindingParams = mDataBindingConfig.bindingParams
+            bindingParams.keyIterator().forEach {
+                mBinding!!.setVariable(it, bindingParams.get(it))
+            }
+            mBinding?.executePendingBindings()
+        }
+        super.onStart()
+    }
 
+    private var isInitBinding = false
     fun isDebug(): Boolean {
         return context?.let {
             it.applicationContext != null && it.applicationContext.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
@@ -97,10 +105,11 @@ abstract class DataBindingFragment : Fragment() {
 
     fun showToast(
         text: String,
-        @CustomToastView.ToastType type: Int = CustomToastView.TYPE_TIPS,
+        @DrawableRes iconRes: Int = -1,
+        @CustomToastView.ToastType type: Int = TYPE_TIPS,
         duration: Int = Toast.LENGTH_SHORT
     ) {
-        BaseToastUtils.showToast(text,type,duration)
+        BaseToastUtils.showToast(text, iconRes = iconRes, type = type, duration = duration)
     }
 
 
@@ -167,6 +176,7 @@ abstract class DataBindingFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        isInitBinding = false
         mBinding?.unbind()
         mBinding = null
     }
@@ -175,4 +185,7 @@ abstract class DataBindingFragment : Fragment() {
 
     @LayoutRes
     abstract fun getLayoutId(): Int
+
+    protected open fun getBackgroundColor(): Int = ColorUtils.getColor(R.color.common_bg)
+
 }

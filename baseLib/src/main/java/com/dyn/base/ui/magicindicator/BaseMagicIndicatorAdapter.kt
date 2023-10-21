@@ -152,13 +152,16 @@ abstract class BaseMagicIndicatorAdapter<T>: CommonNavigatorAdapter() {
         if (mOnPageSelectedListeners == null){
             mOnPageSelectedListeners = ArrayList()
         }
+        if (mOnPageSelectedListeners?.contains(listener) == true){
+            return
+        }
         mOnPageSelectedListeners!!.add(listener)
     }
 
-    fun onPageSelected(position: Int){
+    fun onPageSelected(position: Int,d: T?){
         mOnPageSelectedListeners?.let { data->
             data.forEach {
-                it.onItemSelected(position)
+                it.onItemSelected(position,d)
             }
         }
     }

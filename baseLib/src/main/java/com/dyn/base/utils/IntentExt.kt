@@ -1,10 +1,12 @@
 package com.dyn.base.utils
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Parcelable
 import com.blankj.utilcode.util.LogUtils
 import com.dyn.base.ui.base.BaseApplication
@@ -69,5 +71,13 @@ object IntentExt {
         chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetIntents.toArray(arrayOf<Parcelable>()));
         context.startActivity(chooserIntent);
 
+    }
+
+    fun Activity.openWebPage(url: String) {
+        val webpage: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, webpage)
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
     }
 }

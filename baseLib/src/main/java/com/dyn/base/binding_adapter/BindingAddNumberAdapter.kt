@@ -15,8 +15,8 @@ object BindingAddNumberAdapter {
         view: AddNumberView,
         newValue: Int
     ) {
-        if (newValue != view.mViewModel.count.get())
-            view.mViewModel.count.set(newValue)
+        if (newValue != view.mViewModel?.count?.get())
+            view.mViewModel?.count?.set(newValue)
     }
 
     @JvmStatic
@@ -24,7 +24,7 @@ object BindingAddNumberAdapter {
         attribute = "numberValue",
         event = "numberChanged"
     )
-    fun getNumberValue(view: AddNumberView): Int = view.mViewModel.count.get()!!
+    fun getNumberValue(view: AddNumberView): Int = view.mViewModel?.count?.get()!!
 
     @JvmStatic
     @BindingAdapter(
@@ -35,7 +35,7 @@ object BindingAddNumberAdapter {
         bindingListener: InverseBindingListener?
     ) {
         if (bindingListener != null)
-            addNumberView.setOnPropertyChangedCallback(object :IOnNumberChangeListener{
+            addNumberView.setOnPropertyChangedCallback(object : IOnNumberChangeListener {
                 override fun onChange() {
                     bindingListener.onChange()
                 }
@@ -48,6 +48,15 @@ object BindingAddNumberAdapter {
         view: AddNumberView,
         newValue: Int
     ) {
-            view.mViewModel.maxCount.set(newValue)
+        view.mViewModel?.maxCount?.set(newValue)
+    }
+
+    @JvmStatic
+    @BindingAdapter("numberMinValue")
+    fun numberMinValue(
+        view: AddNumberView,
+        newValue: Int
+    ) {
+        view.mViewModel?.minCount?.set(newValue)
     }
 }

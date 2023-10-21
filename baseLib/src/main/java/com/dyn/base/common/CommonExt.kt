@@ -4,6 +4,8 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.IntRange
 import androidx.navigation.AnimBuilder
@@ -23,12 +25,12 @@ import java.util.concurrent.TimeUnit
 /**
  * rxJava 切换线程
  * */
-fun <T> Observable<T>.handlerThread(): Observable<T> {
+fun <T : Any> Observable<T>.handlerThread(): Observable<T> {
     return this.subscribeOn(AppSchedulerProvider.instance.io())
         .observeOn(AppSchedulerProvider.instance.ui())
 }
 
-fun <T> Single<T>.handlerThread(): Single<T> {
+fun <T : Any> Single<T>.handlerThread(): Single<T> {
     return this.subscribeOn(AppSchedulerProvider.instance.io())
         .observeOn(AppSchedulerProvider.instance.ui())
 }
@@ -88,41 +90,6 @@ fun View.invalidateAllDataCustomView(map: MutableMap<Class<out BaseCustomView<*,
     }
 }
 
-
-/***
- *@param millis 剩余时间 单位 毫秒级
- * @param precision 显示位数
- **/
-fun millis2FitTimeSpan(millis: Long, @IntRange(from = 1, to = 5) precision: Int): String {
-    var millis = millis
-    val units :Array<String> = arrayOf("天", "小时", "分", "秒", "毫秒")
-    if (millis == 0L) return "00".plus(units[precision - 1])
-    val sb = StringBuilder()
-    if (millis < 0) {
-        sb.append("-")
-        millis = -millis
-    }
-    val unitLen = intArrayOf(86400000, 3600000, 60000, 1000, 1)
-    var appendI = precision
-    for (i in 0 until precision) {
-        if (millis >= unitLen[i]) {
-            val mode = millis / unitLen[i]
-            millis -= mode * unitLen[i]
-            var modeStr = mode.toString()
-            if (mode < 10) {
-                modeStr = "0".plus(mode)
-            }
-            sb.append(modeStr).append(units[i])
-            appendI = i
-        } else if (i > appendI) {
-            sb.append("00${units[i]}")
-        }
-    }
-    return sb.toString()
-}
-
-
-
 /***
  *@param millis 剩余时间 单位 毫秒级
  * @param precision 显示位数
@@ -131,34 +98,35 @@ fun millis2Data(millis: Long): String {
     var millis = millis
     val sb = StringBuilder()
     val unitLen = intArrayOf(60000, 1000)
-    val min = if (millis>=unitLen[0]){
-        val mode = millis/unitLen[0]
-        millis -= mode*unitLen[0]
-        if (mode<10){
+    val min = if (millis >= unitLen[0]) {
+        val mode = millis / unitLen[0]
+        millis -= mode * unitLen[0]
+        if (mode < 10) {
             "0".plus(mode)
-        }else{
+        } else {
             mode
         }
-    }else{
+    } else {
         "00"
     }
-    val second = if (millis>=unitLen[1]){
-        val mode = millis/unitLen[1]
-        if (mode<10){
+    val second = if (millis >= unitLen[1]) {
+        val mode = millis / unitLen[1]
+        if (mode < 10) {
             "0".plus(mode)
-        }else{
+        } else {
             mode
         }
-    }else{
+    } else {
         "00"
     }
     sb.append(min).append(":").append(second)
     return sb.toString()
 }
+
 /**
  * 从逗号分隔的字符串中  提取第一个字符串
  * */
-fun String.getFirstStrByComma():String?{
+fun String.getFirstStrByComma(): String? {
     return this?.split(",".toRegex())?.get(0)
 }
 
@@ -167,9 +135,9 @@ fun NavController.customNav(
     bundle: Bundle? = null,
     popUpToId: Int? = null,
     inclusive: Boolean = false,
-    isLaunchSingleTop: Boolean = false
-){
-    hideKeyboard(this)
+    isLaunchSingleTop: Boolean = false,
+    animBuilder: AnimBuilder.() -> Unit = ::createDefaultNavAnim
+) {
     this.navigate(
         destinationId,
         bundle,
@@ -182,10 +150,17 @@ fun NavController.customNav(
                     inclusive
             }
             this.anim {
-                createDefaultNavAnim(this)
+                animBuilder.invoke(this)
             }
         }
     )
+}
+
+fun NavController.pop(
+    @IdRes destinationId: Int,
+    inclusive: Boolean = false
+) {
+    this.popBackStack(destinationId, inclusive)
 }
 
 private fun hideKeyboard(controller: NavController) {
@@ -193,13 +168,63 @@ private fun hideKeyboard(controller: NavController) {
         val activityField = NavController::class.java.getDeclaredField("mActivity")
         activityField.isAccessible = true
         val activity = activityField.get(controller)
-        if (activity is Activity){
+        if (activity is Activity) {
             Logger.i("-----------------------隐藏软键盘-------------------------------")
-KeyboardUtils.hideSoftInputByToggle(activity)
+            KeyboardUtils.hideSoftInputByToggle(activity)
         }
-    }catch (e: Exception){
+    } catch (e: Exception) {
         e.printStackTrace()
     }
+}
+
+
+val units = arrayOf(":", ":", "", "")
+val unitLen = arrayOf(3600000L, 60000L, 1000L, 1L)
+
+val sb = StringBuilder()
+fun millis2FitTimeSpan(m: Long, p: Int): String? {
+    if (p <= 0) return null
+    var precision = p.coerceAtMost(4);
+    var millis = m
+    if (millis == 0L) return "0" + units[precision - 1]
+    sb.clear()
+    if (millis < 0) {
+        sb.append("-");
+        millis = -millis;
+    }
+    for (i in 0 until precision) {
+        if (millis >= unitLen[i]) {
+            val mode = millis / unitLen[i];
+            millis -= mode * unitLen[i];
+            sb.append(if (mode < 10) "0$mode" else mode).append(units[i]);
+        } else {
+            sb.append("00${units[i]}")
+        }
+    }
+    return sb.toString();
+}
+
+val timeList = mutableListOf<String>()
+val unitLenDay = arrayOf(86400000L, 3600000L, 60000L, 1000L, 1L)
+fun millis2FitTimeSpanToList(m: Long, time: Array<Long>): MutableList<String> {
+    timeList.clear()
+    var millis = m
+    if (millis == 0L) {
+        return timeList
+    }
+    if (millis < 0) {
+        millis = -millis;
+    }
+    for (i in time.indices) {
+        if (millis >= time[i]) {
+            val mode = millis / time[i];
+            millis -= mode * time[i]
+            timeList.add(if (mode < 10) "0$mode" else mode.toString())
+        } else {
+            timeList.add("00")
+        }
+    }
+    return timeList
 }
 
 /**
@@ -212,4 +237,30 @@ private fun createDefaultNavAnim(animBuilder: AnimBuilder) {
         popEnter = R.anim.in_from_left
         popExit = R.anim.out_to_right
     }
+}
+
+fun createFromBottomNavAnim(animBuilder: AnimBuilder) {
+    animBuilder.apply {
+        enter = R.anim.in_from_bottom
+        exit = R.anim.anim_alpha_out
+        popEnter = R.anim.anim_alpha_in
+        popExit = R.anim.out_to_bottom
+    }
+}
+
+fun <T> View.findViewByParent(pagerId: Int): T? {
+    var result: T? = null
+    var p: ViewParent? = parent
+    while (result == null) {
+        if (p != null && p is ViewGroup) {
+            result = p.findViewById(pagerId)
+            if (p.id == android.R.id.content) {
+                break
+            }
+            p = p?.parent
+        }else{
+            break
+        }
+    }
+    return result
 }

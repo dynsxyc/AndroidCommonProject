@@ -1,5 +1,7 @@
 package com.dyn.base.ui.base.recycler
 
+import android.content.Context
+import android.util.Log
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
@@ -7,22 +9,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.dyn.base.BR
 import com.dyn.base.customview.BaseCustomModel
 import com.dyn.base.customview.ICustomViewActionListener
+import com.orhanobut.logger.Logger
 
-abstract class BaseRecyclerAdapter<T:BaseCustomModel, DB : ViewDataBinding>(@LayoutRes layoutId: Int,
-                                                                            private val clickAction:ICustomViewActionListener? = null,
-                                                                            data: MutableList<T>? = null) : BaseQuickAdapter<T, RecyclerViewHolder<DB>>(layoutId,data),Cloneable {
+abstract class BaseRecyclerAdapter<T:BaseCustomModel, DB : ViewDataBinding>(@LayoutRes val layoutId: Int,
+                                                                            private val clickAction:ICustomViewActionListener? = null,open var item: List<T> = emptyList()) : BaseQuickAdapter<T, RecyclerViewHolder<DB>>(item),Cloneable {
 
-    constructor(@LayoutRes layoutId: Int, clickAction:ICustomViewActionListener? = null):this(layoutId,clickAction,null)
 
     private var mVariableData = lazy { mutableMapOf<Int,Any?>()}.value
 
-    override fun onCreateDefViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder<DB> {
-        val holder = super.onCreateDefViewHolder(parent, viewType)
-        onCreateBinding(holder.dataBinding)
+    override fun onCreateViewHolder(
+        context: Context,
+        parent: ViewGroup,
+        viewType: Int
+    ): RecyclerViewHolder<DB> {
+
+        val holder = RecyclerViewHolder<DB>(layoutId,parent)
+        onCreateBinding(holder.binding)
         return holder
     }
-    override fun convert(holder: RecyclerViewHolder<DB>, item: T) {
-        holder.dataBinding?.let { binding->
+
+    override fun onBindViewHolder(holder: RecyclerViewHolder<DB>, position: Int, item: T?) {
+        holder.binding?.let { binding->
             binding.setVariable(getDataVariableId(), item)
             binding.setVariable(BR.action, clickAction)
             binding.setVariable(BR.position,holder.layoutPosition)
@@ -50,5 +57,15 @@ abstract class BaseRecyclerAdapter<T:BaseCustomModel, DB : ViewDataBinding>(@Lay
     fun addVariableData(variableId:Int,data:Any?): BaseRecyclerAdapter<T, DB> {
         mVariableData[variableId] = data
         return this
+    }
+
+    override fun getItemCount(items: List<T>): Int {
+        val count = try {
+            super.getItemCount(items)
+        }catch (e:Exception){
+            Logger.i("getItemCount is exception ${this.javaClass.simpleName}")
+            0
+        }
+        return count
     }
 }

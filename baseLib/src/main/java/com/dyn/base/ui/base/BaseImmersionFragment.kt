@@ -1,12 +1,11 @@
 package com.dyn.base.ui.base
 
 import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import androidx.annotation.Nullable
-import com.dyn.base.R
 import com.dyn.base.ui.databinding.DataBindingFragment
-import com.gyf.immersionbar.BarHide
 import com.gyf.immersionbar.components.ImmersionOwner
 import com.gyf.immersionbar.components.ImmersionProxy
 import com.gyf.immersionbar.ktx.immersionBar
@@ -14,50 +13,48 @@ import com.gyf.immersionbar.ktx.immersionBar
 /**
  * 这个类主要实现immersionBar 功能
  * */
-abstract class BaseImmersionFragment :DataBindingFragment(), ImmersionOwner{
-    /**
-     * ImmersionBar代理类
-     */
-    private val mImmersionProxy = ImmersionProxy(this)
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        mImmersionProxy.isUserVisibleHint = isVisibleToUser
-    }
-
-    override fun onCreate(@Nullable savedInstanceState: Bundle?) {
-        mImmersionProxy.onCreate(savedInstanceState)
+abstract class BaseImmersionFragment : DataBindingFragment(), ImmersionOwner {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        onLazyBeforeView()
         super.onCreate(savedInstanceState)
     }
 
-    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
-        mImmersionProxy.onActivityCreated(savedInstanceState)
-        super.onActivityCreated(savedInstanceState)
-    }
-
     override fun onResume() {
-        mImmersionProxy.onResume()
+        if (isInPager()){
+            val parentFragment = parentFragment
+            userVisibleHint = parentFragment?.userVisibleHint?:true
+        }else
+        if (userVisibleHint) {
+            onVisible()
+        }
         super.onResume()
     }
 
-    override fun onPause() {
-        mImmersionProxy.onPause()
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        mImmersionProxy.onDestroy()
-        super.onDestroy()
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (isVisibleToUser) {
+            onVisible()
+        } else {
+            onInvisible()
+        }
+        super.setUserVisibleHint(isVisibleToUser)
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
-        mImmersionProxy.onHiddenChanged(hidden)
         super.onHiddenChanged(hidden)
+        userVisibleHint = !hidden
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        mImmersionProxy.onConfigurationChanged(newConfig)
+    override fun onPause() {
+        if (isInPager()) {
+            userVisibleHint = false
+        }else{
+            onInvisible()
+        }
+        super.onPause()
+    }
+
+    protected open fun isInPager(): Boolean {
+        return false
     }
 
     /**
@@ -76,9 +73,13 @@ abstract class BaseImmersionFragment :DataBindingFragment(), ImmersionOwner{
 
     override fun initImmersionBar() {
         immersionBar {
-            fullScreen(false)
-            autoDarkModeEnable(true,0.5f)
-            statusBarColor(R.color.transparent,0.6f)
+            autoDarkModeEnable(true, 0.5f)
+            statusBarDarkFont(true)
+            keyboardEnable(
+                true, WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+                        or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+            )
+            transparentStatusBar()
         }
     }
 
@@ -87,7 +88,7 @@ abstract class BaseImmersionFragment :DataBindingFragment(), ImmersionOwner{
      * On visible.
      */
     override fun onVisible() {
-        if (immersionBarEnabled()){
+        if (immersionBarEnabled()) {
             initImmersionBar()
         }
     }

@@ -49,13 +49,13 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
         drawableLook = resources.getDrawable(iconLook)
         drawableNoLook = resources.getDrawable(iconNoLook)
         this.isShowHidePassMode = isShowHidePassMode
-        if (isShowHidePassMode){
+        if (isShowHidePassMode) {
             var drawables = compoundDrawables
-                    setCompoundDrawablesWithIntrinsicBounds(
-                        drawables[0], drawables[1], drawableNoLook,
-                        drawables[3]
-                    )
-        }else{
+            setCompoundDrawablesWithIntrinsicBounds(
+                drawables[0], drawables[1], drawableNoLook,
+                drawables[3]
+            )
+        } else {
             updateIconClear()
         }
 
@@ -78,7 +78,7 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        Log.i("editTouch",event.toString())
+        Log.i("editTouch", event.toString())
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 // 点击是的 x 坐标
@@ -89,7 +89,7 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
                     if (isShowHidePassMode.not()) {
                         // 清空文本
                         setText("")
-                    }else{
+                    } else {
                         var drawables = compoundDrawables
                         when (transformationMethod) {
                             is HideReturnsTransformationMethod -> {
@@ -99,6 +99,7 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
                                     drawables[3]
                                 )
                             }
+
                             is PasswordTransformationMethod -> {
                                 transformationMethod = HideReturnsTransformationMethod.getInstance()
                                 setCompoundDrawablesWithIntrinsicBounds(
@@ -113,7 +114,7 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
                 requestFocus()
                 val index = text?.length?.let {
                     it
-                }?:0
+                } ?: 0
                 setSelection(index)
             }
         }
@@ -139,15 +140,16 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
                     drawables[3]
                 )
             }
-        }else{
-            when(transformationMethod){
-                is PasswordTransformationMethod ->{
+        } else {
+            when (transformationMethod) {
+                is PasswordTransformationMethod -> {
                     setCompoundDrawablesWithIntrinsicBounds(
                         drawables[0], drawables[1], drawableNoLook,
                         drawables[3]
                     )
                 }
-                is HideReturnsTransformationMethod ->{
+
+                is HideReturnsTransformationMethod -> {
                     setCompoundDrawablesWithIntrinsicBounds(
                         drawables[0], drawables[1], drawableLook,
                         drawables[3]
@@ -156,8 +158,6 @@ open class ClearEditText(context: Context, attributes: AttributeSet?) :
             }
         }
     }
-
-
 
 
     fun setIconClear(@DrawableRes resId: Int) {

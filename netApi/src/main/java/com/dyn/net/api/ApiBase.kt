@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -32,8 +33,12 @@ abstract class ApiBase<S> {
             .client(getOkHttpClient())
             .baseUrl(getBaseUrl())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(GsonFactory.gson))
+            .addConverterFactory(createConverterFactory())
             .build()
+    }
+
+    protected open fun createConverterFactory(): Converter.Factory {
+        return GsonConverterFactory.create(GsonFactory.gson)
     }
 
     val mService: S by lazy {
@@ -83,7 +88,7 @@ abstract class ApiBase<S> {
         return okHttpClient
     }
 
-    private fun setLoggingLevel(builder: OkHttpClient.Builder) {
+    protected open fun setLoggingLevel(builder: OkHttpClient.Builder) {
         val logInterceptor = HttpLoggingInterceptor()
         var isDebug = false
         getRequestInterceptor()?.let {
@@ -152,10 +157,12 @@ abstract class ApiBase<S> {
         }
     }
 
-    private val checkNetConsumer = Consumer<Disposable> { t ->
+    val checkNetConsumer = Consumer<Disposable> { t ->
         if (NetworkUtils.isAvailable().not()) {
-            throw ServerException(-1, "请检查网络连接")
-            t?.dispose()
+            if (t.isDisposed.not()) {
+                throw ServerException(-1, "请检查网络连接")
+                t?.dispose()
+            }
         }
     }
 

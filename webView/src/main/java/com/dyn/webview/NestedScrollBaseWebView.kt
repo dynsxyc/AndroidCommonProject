@@ -28,7 +28,6 @@ class NestedScrollBaseWebView(context: Context, attrs: AttributeSet?, defStyleAt
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        Logger.i("webView contentHeight->$contentHeight scale->$scale height->$height scrollY->$scrollY")
         var result = false
         val trackedEvent = MotionEvent.obtain(event)
         val action: Int = MotionEventCompat.getActionMasked(event)

@@ -1,6 +1,6 @@
 package com.dyn.net.api.errorhandler
 
-import com.dyn.base.utils.ServerException
+import com.dyn.net.api.ServerException
 import com.dyn.net.api.beans.IBaseResponse
 import io.reactivex.rxjava3.functions.Function
 /**

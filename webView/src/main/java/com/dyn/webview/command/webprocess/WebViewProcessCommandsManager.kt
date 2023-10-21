@@ -39,7 +39,7 @@ class WebViewProcessCommandsManager {
     /**
      * 寻找并执行命令
      * */
-    fun findAndExecCommand(context: Context, level: Int, action: String, params: Map<String, String>, resultBack: ResultBack) {
+    fun findAndExecCommand(context: Context, level: Int, action: String, params: Map<String, Any>, resultBack: ResultBack) {
         mLocalCommands[action]?.exec(context, params, resultBack)
     }
 

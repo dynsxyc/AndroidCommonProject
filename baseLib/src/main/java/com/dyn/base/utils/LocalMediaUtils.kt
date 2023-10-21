@@ -11,11 +11,8 @@ object LocalMediaUtils {
             isCompressed && compressPath.isNullOrEmpty().not() -> {
                 compressPath
             }
-            androidQToPath.isNullOrEmpty().not() -> {
-                androidQToPath
-            }
             else -> {
-                path
+                realPath
             }
         }
     }

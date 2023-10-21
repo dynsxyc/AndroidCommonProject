@@ -161,6 +161,10 @@ class AlertDialogManager(val dialog: Dialog,val viewDataBinding: ViewDataBinding
             mWidth = ViewGroup.LayoutParams.MATCH_PARENT
             return this
         }
+        fun fullHeight(): Builder {
+            mHeight = ViewGroup.LayoutParams.MATCH_PARENT
+            return this
+        }
 
         /**
          * 设置Dialog的宽高
@@ -261,8 +265,6 @@ class AlertDialogManager(val dialog: Dialog,val viewDataBinding: ViewDataBinding
             val dialogManager = create()
             dialogManager.dialog.show()
             val window = dialogManager.dialog.window
-            //设置位置
-            window?.setGravity(mGravity)
             // 设置动画
             if (mAnimations != 0) {
                 window?.setWindowAnimations(mAnimations)
@@ -271,9 +273,11 @@ class AlertDialogManager(val dialog: Dialog,val viewDataBinding: ViewDataBinding
             val params = window?.attributes
             params?.width = mWidth
             params?.height = mHeight
+            params?.gravity = mGravity
             window?.attributes = params
+            //设置位置
+            window?.setGravity(mGravity)
             window?.clearFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM)
-//             window.setBackgroundDrawable(ColorDrawable(mWindowBackgroundColor))
             return dialogManager
         }
     }

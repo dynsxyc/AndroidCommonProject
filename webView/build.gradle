@@ -8,7 +8,6 @@ def app_dependencies = rootProject.ext.app_dependencies
 
 android {
     compileSdkVersion app_android.compileSdkVersion
-    buildToolsVersion app_android.buildToolsVersion
 
     defaultConfig {
         minSdkVersion app_android.minSdkVersion
@@ -29,6 +28,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.dyn.webview'
+    buildFeatures {
+        aidl true
+    }
 //    kotlinOptions {
 //        jvmTarget = "1.8"
 //    }
@@ -36,13 +39,13 @@ android {
 
 dependencies {
     implementation app_dependencies.core_ktx
-    implementation app_dependencies.lefecycle_viewmodel
     implementation app_dependencies.appcompat
+    implementation app_dependencies.lefecycle_viewmodel
     kapt app_dependencies.databinding_compiler
 
     kapt app_dependencies.autoService
     implementation app_dependencies.autoService
-    api 'com.tencent.tbs:tbssdk:44216'
+//    api 'com.tencent.tbs:tbssdk:44216'
 
     api app_dependencies.gson
 //    api app_dependencies.jsBridge

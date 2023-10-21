@@ -36,10 +36,11 @@
     </style>
 
     <style name="WrapWrapTextSize15.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
     <style name="WrapWrapTextSize15.ff.medium">
         <item name="font">@font/medium</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="WrapWrapTextSize15.black">
@@ -79,7 +80,7 @@
     </style>
 
     <style name="MatchWrapTextSize15.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize15.black">
@@ -133,7 +134,7 @@
     </style>
 
     <style name="WrapWrapTextSize13.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize13.89">
@@ -173,7 +174,7 @@
     </style>
 
     <style name="MatchWrapTextSize13.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize13.33">
@@ -197,7 +198,7 @@
     </style>
 
     <style name="WrapMatchTextSize13.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapMatchTextSize13.33">
@@ -230,7 +231,7 @@
     </style>
 
     <style name="WrapWrapTextSize11.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize11.33">
@@ -262,7 +263,7 @@
     </style>
 
     <style name="MatchWrapTextSize11.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize11.33">
@@ -283,7 +284,10 @@
     </style>
 
     <style name="WrapWrapTextSize12.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="WrapWrapTextSize12.black">
+        <item name="android:textColor">@color/common_black</item>
     </style>
 
     <style name="WrapWrapTextSize12.ff.medium">
@@ -312,6 +316,9 @@
     <style name="WrapWrapTextSize12.0A">
         <item name="android:textColor">@color/text_color_0A</item>
     </style>
+    <style name="WrapWrapTextSize12.0D">
+        <item name="android:textColor">#0d0d0d</item>
+    </style>
 
     <style name="WrapWrapTextSize12.0A.medium">
         <item name="android:fontFamily">@font/medium</item>
@@ -338,7 +345,7 @@
     </style>
 
     <style name="MatchWrapTextSize12.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize12.33">
@@ -362,7 +369,7 @@
     </style>
 
     <style name="WrapWrapTextSize10.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize10.33">
@@ -390,7 +397,7 @@
     </style>
 
     <style name="WrapMatchTextSize10.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapMatchTextSize10.33">
@@ -418,7 +425,7 @@
     </style>
 
     <style name="MatchWrapTextSize10.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize10.33">
@@ -443,7 +450,7 @@
     </style>
 
     <style name="WrapWrapTextSize8.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize8.33">
@@ -463,7 +470,7 @@
     </style>
 
     <style name="MatchWrapTextSize8.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize8.33">
@@ -484,7 +491,7 @@
     </style>
 
     <style name="WrapWrapTextSize21.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize21.ff.bold">
@@ -508,7 +515,7 @@
     </style>
 
     <style name="MatchWrapTextSize21.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize21.ff.bold">
@@ -532,11 +539,14 @@
     </style>
 
     <style name="WrapWrapTextSize16.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize16.06">
         <item name="android:textColor">@color/text_color_06</item>
+    </style>
+    <style name="WrapWrapTextSize16.0D">
+        <item name="android:textColor">#0D0D0D</item>
     </style>
 
     <style name="WrapWrapTextSize16.1c">
@@ -588,7 +598,20 @@
     </style>
 
     <style name="MatchWrapTextSize16.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="WrapWrapTextSize16.0d">
+        <item name="android:textColor">#0D0D0D</item>
+    </style>
+    <style name="MatchWrapTextSize16.0d">
+        <item name="android:textColor">#0D0D0D</item>
+    </style>
+    <style name="WrapWrapTextSize16.0d.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="MatchWrapTextSize16.0d.bold">
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="MatchWrapTextSize16.ff.bold">
@@ -616,7 +639,7 @@
     </style>
 
     <style name="WrapWrapTextSize17.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize17.ff.bold">
@@ -652,7 +675,7 @@
     </style>
 
     <style name="MatchWrapTextSize17.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize17.black">
@@ -688,7 +711,7 @@
     </style>
 
     <style name="WrapWrapTextSize18.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize18.black">
@@ -709,6 +732,7 @@
 
     <style name="WrapWrapTextSize18.33.medium">
         <item name="android:fontFamily">@font/medium</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="WrapWrapTextSize18.66">
@@ -724,7 +748,7 @@
     </style>
 
     <style name="MatchWrapTextSize18.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize18.ff.bold">
@@ -748,7 +772,7 @@
     </style>
 
     <style name="WrapWrapTextSize24.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
     <style name="WrapWrapTextSize24.ff.medium">
         <item name="android:fontFamily">@font/medium</item>
@@ -779,7 +803,7 @@
     </style>
 
     <style name="MatchWrapTextSize24.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize24.ff.bold">
@@ -804,7 +828,7 @@
     </style>
 
     <style name="WrapWrapTextSize26.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="WrapWrapTextSize26.ff.bold">
@@ -832,7 +856,7 @@
     </style>
 
     <style name="MatchWrapTextSize26.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize26.ff.bold">
@@ -860,7 +884,16 @@
     </style>
 
     <style name="WrapWrapTextSize14.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="WrapWrapTextSize14.ff.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="WrapWrapTextSize14.0d">
+        <item name="android:textColor">#0D0D0D</item>
+    </style>
+    <style name="WrapWrapTextSize14.0d.bold">
+        <item name="android:textStyle">bold</item>
     </style>
     <style name="WrapWrapTextSize14.ff.medium">
         <item name="android:fontFamily">@font/medium</item>
@@ -907,7 +940,7 @@
     </style>
 
     <style name="MatchWrapTextSize14.ff">
-        <item name="android:textColor">@color/common_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="MatchWrapTextSize14.33">

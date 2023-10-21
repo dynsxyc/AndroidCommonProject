@@ -46,6 +46,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.dyn.base'
 //    kotlinOptions {
 //        jvmTarget = "1.8"
 //    }
@@ -53,7 +54,7 @@ android {
 
 
 dependencies {
-    api 'io.github.dynsxyc:umenglib:0.0.1'
+//    api 'io.github.dynsxyc:umenglib:0.0.1'
 
     api app_dependencies.kotlin_stdlib
     api app_dependencies.core_ktx
@@ -96,25 +97,28 @@ dependencies {
     api app_dependencies.rxbinding4_viewpager2
     api app_dependencies.rxbinding4_material
     api app_dependencies.rxbinding4_recyclerview
+    api app_dependencies.superTextView
+    api  'com.github.ome450901:SimpleRatingBar:1.5.1'
 
     api app_dependencies.easypermissions
 //    api app_dependencies.room_runtime
 //    kapt app_dependencies.room_compiler
 //    api app_dependencies.room_ktx
 //    api app_dependencies.room_rxjava
-    api app_dependencies.PictureSelector
+    api app_dependencies.PictureSelectorCore
+    api app_dependencies.PictureSelectorCompress
+    api app_dependencies.PictureSelectorCrop
     api app_dependencies.FlycoRoundView_Lib
+//    implementation 'androidx.glance:glance:1.0.0-alpha03'
 
     kapt app_dependencies.glide_compiler
 
     kapt app_dependencies.databinding_compiler
     api app_dependencies.gson
     api app_dependencies.logger
-    api app_dependencies.AutoSize
     api app_dependencies.ViewPagerBanner
     api app_dependencies.circleimageview
     api app_dependencies.roundedimageview
-    api app_dependencies.SwipeDelMenuLayout
     api app_dependencies.switchbutton
     api app_dependencies.MagicIndicator
     api app_dependencies.WheelPicker

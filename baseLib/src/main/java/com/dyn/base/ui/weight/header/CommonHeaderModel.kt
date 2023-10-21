@@ -11,9 +11,9 @@ import com.dyn.base.R
 import com.dyn.base.customview.BaseCustomModel
 
 data class CommonHeaderModel(
+        var bg : ObservableField<Int> = ObservableField<Int>(ColorUtils.getColor(R.color.common_header_bg)),
         var title: ObservableField<String> =  ObservableField<String>(""),
-        var bg : ObservableField<Int> = ObservableField<Int>(Color.WHITE),
-        var titleColor:ObservableField<Int> = ObservableField(ColorUtils.getColor(R.color.text_color_33)),
+        var titleColor:ObservableField<Int> = ObservableField(ColorUtils.getColor(R.color.common_header_title)),
         var titleAlpha:ObservableField<Float> = ObservableField(1.0f),
         var titleSize:ObservableField<Int> = ObservableField(sp2px(18f)),
         var bindStatusBar:ObservableField<Boolean> = ObservableField(true),
@@ -32,10 +32,12 @@ data class CommonHeaderButton(
         var drawableEnd:ObservableField<Drawable> = ObservableField(),
         var drawableTop:ObservableField<Drawable> = ObservableField(),
         var drawableBottom:ObservableField<Drawable> = ObservableField(),
-        var drawableTint:ObservableField<Int?> = ObservableField(Color.BLACK),
+        var drawableTint:ObservableField<Int?> = ObservableField(ColorUtils.getColor(R.color.common_header_title)),
+        var drawablePadding:ObservableField<Int?> = ObservableField(0),
         var text: ObservableField<String> =  ObservableField(""),
         var textSize:ObservableField<Int> = ObservableField(sp2px(0f)),
-        var textColor :ObservableField<Int> = ObservableField(Color.BLACK),
+        var textColor :ObservableField<Int> = ObservableField(ColorUtils.getColor(R.color.common_header_title)),
         var messageCount:ObservableField<Int> = ObservableField(0),
-        var isMessageStatus:ObservableField<Boolean> = ObservableField(false)
+        var isMessageStatus:ObservableField<Boolean> = ObservableField(false),
+        var isBold:ObservableField<Boolean> = ObservableField(false),
 )

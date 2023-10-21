@@ -25,4 +25,8 @@ class CommonHeaderView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
     override fun getClickVariableId(): Int {
         return BR.action
     }
+
+    override fun rootClickable(): Boolean {
+        return false
+    }
 }

@@ -6,21 +6,18 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
+import android.net.http.SslError
 import android.os.Build
 import android.text.TextUtils
 import android.util.Log
+import android.webkit.*
 import androidx.annotation.RequiresApi
 import com.dyn.webview.BaseWebView
 import com.dyn.webview.R
 import com.dyn.webview.WebCallback
 import com.dyn.webview.utils.WebConstants
 import com.dyn.webview.jsbridge.BridgeHelper
-import com.tencent.smtt.export.external.interfaces.SslError
-import com.tencent.smtt.export.external.interfaces.SslErrorHandler
-import com.tencent.smtt.export.external.interfaces.WebResourceError
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest
-import com.tencent.smtt.sdk.WebView
-import com.tencent.smtt.sdk.WebViewClient
+import com.orhanobut.logger.Logger
 
 class DWebViewClient(
     private val mWebView: WebView,
@@ -41,20 +38,20 @@ class DWebViewClient(
     override fun shouldOverrideUrlLoading(view: WebView?, url: String): Boolean {
         // 当前链接的重定向, 通过是否发生过点击行为来判断
         // 如果链接跟当前链接一样，表示刷新
-        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------1-----------------")
-        if (mTouchListener.isTouchByUser || mWebView.url == url) {
-            return super.shouldOverrideUrlLoading(view, url)
-        }
-        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------2-----------------")
+        Logger.i("shouldOverrideUrlLoading -------1----------------- $url")
+//        if (mTouchListener.isTouchByUser || mWebView.url == url) { //这个if 放开 导致网页自己刷新出现空白
+//            return super.shouldOverrideUrlLoading(view, url)
+//        }
+        Logger.i("shouldOverrideUrlLoading -------2-----------------")
         if (url.isNullOrEmpty().not() && handleLinked(url)) {
             return true
         }
-        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------3-----------------")
+        Logger.i("shouldOverrideUrlLoading -------3-----------------")
         // 控制页面中点开新的链接在当前webView中打开
         if (bridgeHelper?.shouldOverrideUrlLoading(url) == true){
             return true
         }
-        Log.i(BaseWebView.TAG,"shouldOverrideUrlLoading -------4-----------------")
+        Logger.i("shouldOverrideUrlLoading -------4-----------------")
         if (mHeader != null) {
             view?.loadUrl(url,mHeader)
         } else {
@@ -127,7 +124,7 @@ class DWebViewClient(
         error: WebResourceError?
     ) {
         super.onReceivedError(view, request, error)
-        mWebCallback.onPageError()
+//        mWebCallback.onSmartPageError()
     }
 
     override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler, error: SslError) {

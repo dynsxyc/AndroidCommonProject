@@ -47,14 +47,18 @@
         <attr name="contentTopMargin" format="dimension"/>
     </declare-styleable>
     <declare-styleable name="AddNumberView">
+        <attr name="step_number" format="integer"/>
         <attr name="min_number" format="integer"/>
         <attr name="max_number" format="integer"/>
+        <attr name="layoutId" format="integer"/>
         <attr name="isEditable" format="boolean"/>
     </declare-styleable>
     <attr name="triangleColor" format="color"/>
     <attr name="triangleWidth" format="dimension"/>
     <declare-styleable name="TriangleView">
         <attr name="triangleIsArrowDown" format="boolean"/>
+        <attr name="triangleIsRight" format="boolean"/>
+        <attr name="triangleRightPosition" format="integer"/>
         <attr name="triangleWidth"/>
         <attr name="triangleColor"/>
     </declare-styleable>
@@ -87,5 +91,12 @@
         <attr name="inputTypeIsDefault" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="HIndicator">
+        <attr name="hiBgColor" format="color"/>
+        <attr name="hiIndicatorColor" format="color"/>
+    </declare-styleable>
+
     <declare-styleable name="RoundConstraintLayout"><attr name="rv_backgroundColor"/><attr name="rv_backgroundPressColor"/><attr name="rv_cornerRadius"/><attr name="rv_strokeWidth"/><attr name="rv_strokeColor"/><attr name="rv_strokePressColor"/><attr name="rv_isRadiusHalfHeight"/><attr name="rv_isWidthHeightEqual"/><attr name="rv_cornerRadius_TL"/><attr name="rv_cornerRadius_TR"/><attr name="rv_cornerRadius_BL"/><attr name="rv_cornerRadius_BR"/><attr name="rv_isRippleEnable"/></declare-styleable>
+    <declare-styleable name="RoundEditTextView"><attr name="rv_backgroundColor"/><attr name="rv_backgroundPressColor"/><attr name="rv_cornerRadius"/><attr name="rv_strokeWidth"/><attr name="rv_strokeColor"/><attr name="rv_strokePressColor"/><attr name="rv_isRadiusHalfHeight"/><attr name="rv_isWidthHeightEqual"/><attr name="rv_cornerRadius_TL"/><attr name="rv_cornerRadius_TR"/><attr name="rv_cornerRadius_BL"/><attr name="rv_cornerRadius_BR"/><attr name="rv_isRippleEnable"/></declare-styleable>
+    <declare-styleable name="RoundClearEditTextView"><attr name="rv_backgroundColor"/><attr name="rv_backgroundPressColor"/><attr name="rv_cornerRadius"/><attr name="rv_strokeWidth"/><attr name="rv_strokeColor"/><attr name="rv_strokePressColor"/><attr name="rv_isRadiusHalfHeight"/><attr name="rv_isWidthHeightEqual"/><attr name="rv_cornerRadius_TL"/><attr name="rv_cornerRadius_TR"/><attr name="rv_cornerRadius_BL"/><attr name="rv_cornerRadius_BR"/><attr name="rv_isRippleEnable"/></declare-styleable>
 </resources>

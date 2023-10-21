@@ -13,7 +13,7 @@ class ShowToastCommand : Command {
         return WebConstants.CommandAction.SHOWTOAST
     }
 
-    override fun exec(context: Context, params: Map<String, String>?, resultBack: ResultBack?) {
+    override fun exec(context: Context, params: Map<String, Any>?, resultBack: ResultBack?) {
         params?.let {
             Toast.makeText(context, it["message"].toString(), Toast.LENGTH_SHORT).show()
         }

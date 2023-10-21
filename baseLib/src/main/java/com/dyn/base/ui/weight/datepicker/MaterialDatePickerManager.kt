@@ -11,6 +11,7 @@ import androidx.core.util.Pair
 import androidx.fragment.app.FragmentManager
 import com.dyn.base.R
 import com.google.android.material.datepicker.*
+import com.google.android.material.datepicker.CalendarConstraints.DateValidator
 import java.util.*
 
 object MaterialDatePickerManager {
@@ -59,15 +60,16 @@ object MaterialDatePickerManager {
         @PickerOpeningChoiceMode openingChoice: Int = OPENING_CHOICE_DEFAULT,
         @PickerValidationChoiceMode validationChoice: Int = VALIDATION_CHOICE_DEFAULT,
         @PickerThemeChoiceMode themeChoice: Int = THEME_MODE_DIALOG,
+        validator:DateValidator? = null,
         complete:(Any?)->Unit
     ) {
-        val dialogTheme = resolveOrThrow(context, R.attr.materialCalendarTheme)
-        val fullscreenTheme = resolveOrThrow(context, R.attr.materialCalendarFullscreenTheme)
+        val dialogTheme = resolveOrThrow(context, com.google.android.material.R.attr.materialCalendarTheme)
+        val fullscreenTheme = resolveOrThrow(context, com.google.android.material.R.attr.materialCalendarFullscreenTheme)
         initSettings()
         val builder =
             setupDateSelectorBuilder(selectionModeChoice, selectionChoice, inputModeChoices)
         val constraintsBuilder =
-            setupConstraintsBuilder(boundsChoice, openingChoice, validationChoice)
+            setupConstraintsBuilder(boundsChoice, openingChoice, validationChoice,validator)
         when (themeChoice) {
             THEME_MODE_DIALOG -> {
                 builder.setTheme(dialogTheme)
@@ -129,7 +131,7 @@ object MaterialDatePickerManager {
     }
 
     private fun setupConstraintsBuilder(
-        boundsChoice: Int, openingChoice: Int, validationChoice: Int
+        boundsChoice: Int, openingChoice: Int, validationChoice: Int,validator: DateValidator?
     ): CalendarConstraints.Builder {
         val constraintsBuilder = CalendarConstraints.Builder()
         if (boundsChoice == BOUNDS_CHOICE_THIS_YEAR) {
@@ -144,6 +146,9 @@ object MaterialDatePickerManager {
         } else if (openingChoice == OPENING_CHOICE_NEXT_1_MOUTH) {
             constraintsBuilder.setOpenAt(nextMonth)
         }
+        if (validationChoice == VALIDATION_CHOICE_CUSTOM && validator!= null){
+            constraintsBuilder.setValidator(validator)
+        }else
         if (validationChoice == VALIDATION_CHOICE_TODAY_ONWARD) {
             constraintsBuilder.setValidator(DateValidatorPointForward.now())
         } else if (validationChoice == VALIDATION_CHOICE_WEEKDAYS) {
@@ -152,18 +157,18 @@ object MaterialDatePickerManager {
             val lowerBoundCalendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             lowerBoundCalendar.add(Calendar.DAY_OF_MONTH, -14)
             val lowerBound = lowerBoundCalendar.timeInMillis
-            val validators: MutableList<CalendarConstraints.DateValidator> = ArrayList()
+            val validators: MutableList<DateValidator> = ArrayList()
             validators.add(DateValidatorPointForward.from(lowerBound))
             validators.add(DateValidatorWeekdays())
             constraintsBuilder.setValidator(CompositeDateValidator.allOf(validators))
         } else if (validationChoice == VALIDATION_CHOICE_MULTIPLE_RANGE) {
-            val validatorsMultple: MutableList<CalendarConstraints.DateValidator> = ArrayList()
+            val validatorsMultple: MutableList<DateValidator> = ArrayList()
             val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
             utc.timeInMillis = today
             utc[Calendar.DATE] = 10
             val pointBackward = DateValidatorPointBackward.before(utc.timeInMillis)
             utc[Calendar.DATE] = 20
-            val validatorsComposite: MutableList<CalendarConstraints.DateValidator> = ArrayList()
+            val validatorsComposite: MutableList<DateValidator> = ArrayList()
             val pointForwardComposite = DateValidatorPointForward.from(utc.timeInMillis)
             utc[Calendar.DATE] = 26
             val pointBackwardComposite = DateValidatorPointBackward.before(utc.timeInMillis)

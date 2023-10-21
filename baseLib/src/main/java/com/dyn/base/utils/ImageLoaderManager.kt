@@ -4,14 +4,16 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
-import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.DrawableImageViewTarget
 import com.dyn.base.R
 import kotlin.random.Random
 
 object ImageLoaderManager {
-    private val holderDrawables by lazy {
+    val holderDrawables by lazy {
         val list = mutableListOf<Drawable>()
         val colorArrays = StringUtils.getStringArray(R.array.default_img_colors)
         colorArrays.forEach {
@@ -23,7 +25,13 @@ object ImageLoaderManager {
         list
     }
 
-    fun displayImage(imageView: ImageView, url: Any?, placeholder: Drawable? = null) {
+    fun displayImage(
+        imageView: ImageView,
+        url: Any?,
+        isGif: Boolean? = false,
+        placeholder: Drawable? = null,
+        requestListener:RequestListener<Drawable>? = null
+    ) {
         var holder = placeholder
         if (holder == null) {
             holder = holderDrawables[Random.nextInt(holderDrawables.size)]
@@ -33,7 +41,27 @@ object ImageLoaderManager {
             return
         }
 
-        Glide.with(imageView).load(url).placeholder(holder).into(imageView)
+        val request = Glide.with(imageView)
+        if (isGif == true) {
+            request.load(url).placeholder(holder).into(imageView)
+            return
+        }
+        request.load(url).placeholder(holder).addListener(requestListener).into(imageView)
+    }
+    fun displayImageNoCache(
+        imageView: ImageView,
+        url: Any?,
+        placeholder: Drawable? = null
+    ) {
+        var holder = placeholder
+        if (holder == null) {
+            holder = holderDrawables[Random.nextInt(holderDrawables.size)]
+        }
+        if (url == null || (url is String && url.isNullOrEmpty())) {
+            imageView.setImageDrawable(holder)
+            return
+        }
+        Glide.with(imageView).load(url).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).placeholder(holder).into(imageView)
     }
 
 }

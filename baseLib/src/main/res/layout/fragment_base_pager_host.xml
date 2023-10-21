@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.base.pager.BasePagerViewModel" />
+        <variable
+            name="pager2Adapter"
+            type="com.dyn.base.ui.base.recycler.BasePager2Adapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dyn.base.ui.weight.header.CommonHeaderView
+            android:id="@+id/mCommonHeaderView"
+            viewBindAction="@{vm.MCustomViewActionListener}"
+            viewBindData="@{vm.MCommonHeaderModel}"
+            visible="@{vm.MHasTitle}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/mOrderManagerMagicIndicator"
+            app:layout_constraintVertical_chainStyle="packed"
+            />
+
+        <net.lucode.hackware.magicindicator.MagicIndicator
+            android:id="@+id/mOrderManagerMagicIndicator"
+            background="@{vm.indicatorBg}"
+            magicAdapter="@{vm.magicAdapter}"
+            magicBindPager="@{@id/magicViewPager}"
+            magicIndicatorConfig="@{vm.mMagicConfig}"
+            magicIndicatorData="@{vm.MMagicData}"
+            setViewHeight="@{vm.indicatorHeight}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_50"
+            app:layout_constraintBottom_toTopOf="@id/pagerHost"
+            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView"
+            visible="@{vm.magicIndicatorIsShow}"
+            tools:visibility="gone"
+            />
+
+        <com.dyn.base.ui.viewpager2.NestedScrollableHost
+            android:id="@+id/pagerHost"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mOrderManagerMagicIndicator">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/magicViewPager"
+                pager2Adapter="@{pager2Adapter}"
+                pager2Data="@{vm.MMagicData}"
+                pager2Position="@={vm.pagerPosition}"
+                pagerSmoothScroll="@{true}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                />
+        </com.dyn.base.ui.viewpager2.NestedScrollableHost>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

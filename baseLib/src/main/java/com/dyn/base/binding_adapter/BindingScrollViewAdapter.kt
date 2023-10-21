@@ -96,27 +96,25 @@ object BindingScrollViewAdapter {
         bindingListener: InverseBindingListener?
     ) {
         if (bindingListener != null) {
-            view.post {
-                bindingListener.onChange()
-            }
+//            view.post {
+//                bindingListener.onChange()
+//            }
+            view.postDelayed({
+                view.doOnLayout {
+                    Log.i("dyn", "-----------------post----------${it.measuredHeight}--------")
+                    bindingListener.onChange()
+                }
+            }, 300)
         }
     }
 
     @JvmStatic
-    @BindingAdapter("viewHeight")
-    fun viewHeight(
-        view: View,
-        newValue: Int
-    ) {
-        val params = view.layoutParams
-        params?.let {
-            if (it.height != newValue) {
-                it.height = newValue
-                view.layoutParams = it
-            }
-        }
+    @BindingAdapter(
+        "viewHeight"
+    )
+    fun setViewHeight(view: View,height:Int) {
+//        return view.measuredHeight
     }
-
     @JvmStatic
     @InverseBindingAdapter(
         attribute = "viewHeight",
@@ -129,17 +127,15 @@ object BindingScrollViewAdapter {
     @JvmStatic
     @BindingAdapter(
         "viewHeightCallBack",
-        "viewHeightRequestCallBack",
         requireAll = false
     )
     fun viewHeightCallBack(
         view: View,
-        bindingListener: InverseBindingListener?,
-        request: Boolean
+        bindingListener: InverseBindingListener?
     ) {
         if (bindingListener != null) {
             view.postDelayed({
-                view.doOnPreDraw {
+                view.doOnLayout {
                     Log.i("dyn", "-----------------post----------${it.measuredHeight}--------")
                     bindingListener.onChange()
                 }
@@ -168,7 +164,7 @@ object BindingScrollViewAdapter {
         }
         val valueAnimator = ValueAnimator.ofFloat(startHeight, endHeight)
         valueAnimator.addUpdateListener {
-            view.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            view.updateLayoutParams<ViewGroup.LayoutParams> {
                 Logger.d("----update-------" + it.animatedValue)
                 this.height = ((it.animatedValue as Float) * viewHeight).toInt()
                 val value = it.animatedValue as Float
@@ -193,7 +189,6 @@ object BindingScrollViewAdapter {
         newValue: Int
     ) {
         if (view.minimumHeight != newValue) {
-            Logger.i("----------------------minHeight->$newValue")
             view.minimumHeight = newValue
         }
     }

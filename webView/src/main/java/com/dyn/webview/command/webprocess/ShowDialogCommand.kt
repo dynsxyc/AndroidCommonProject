@@ -15,7 +15,7 @@ class ShowDialogCommand : Command{
         return WebConstants.CommandAction.SHOWDIALOG
     }
 
-    override fun exec(context: Context, params: Map<String, String>?, resultBack: ResultBack?) {
+    override fun exec(context: Context, params: Map<String, Any>?, resultBack: ResultBack?) {
         params?.let {
             if (it.isNotEmpty()) {
                 val title = params["title"] as String?
@@ -38,7 +38,7 @@ class ShowDialogCommand : Command{
                             val buttonWhich = getDialogButtonWhich(i)
                             if (buttonWhich == 0) return
                             dialog.setButton(buttonWhich, resultData["title"]) { dialog, which ->
-                                resultData[WebConstants.NATIVE2WEB_CALLBACK] = callbackName
+                                resultData[WebConstants.NATIVE2WEB_CALLBACK] = callbackName as String?
                                 resultBack?.onResult(WebConstants.SUCCESS, name(), resultData)
                             }
                         }

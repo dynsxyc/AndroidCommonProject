@@ -5,15 +5,12 @@ buildscript {
     apply from: file("config/config.gradle")
     ext {
         rootProject.ext.kotlin_version = '1.5.0'
-        objectboxVersion = '2.9.1'
+        objectboxVersion = '3.7.0'
     }
 
     repositories {
         mavenCentral()
-        /**
-         * 友盟统计 step 1
-         * */
-        maven { url 'https://repo1.maven.org/maven2/' }
+        maven { url 'https://storage.zego.im/maven' }
         maven {
             url "https://maven.aliyun.com/repository/central"
         }
@@ -29,13 +26,29 @@ buildscript {
         maven {
             url "https://jitpack.io"
         }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+
+        maven { url 'https://repo1.maven.org/maven2/' }
 //        maven {
 //            url "http://localhost:8081/artifactory/android_group/"
 //        }
+
+        //穿山甲 SDK依赖
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
+
+        //mintegral sdk依赖   引入mintegral sdk需要添加此maven
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/"
+        }
+        google()
     }
     dependencies {
 //        classpath "com.android.tools.build:gradle:3.4.2"
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:8.1.1'
 
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0'
         classpath "org.jetbrains.kotlin:kotlin-allopen:${rootProject.ext.kotlin_version}"
@@ -57,7 +70,11 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
-
+plugins {
+    id 'com.google.dagger.hilt.android' version '2.44' apply false
+//    id 'com.android.library' version '8.1.1' apply false
+//    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+}
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
@@ -66,10 +83,10 @@ allprojects {
     repositories {
         mavenCentral()
         // 支付宝 SDK AAR 包所需的配置
-        flatDir {
-            dirs 'libs'
-        }
-        maven { url 'https://repo1.maven.org/maven2/' }
+//        flatDir {
+//            dirs 'libs'
+//        }
+        maven { url 'https://storage.zego.im/maven' }
         maven {
             url "https://maven.aliyun.com/repository/central"
         }
@@ -83,12 +100,27 @@ allprojects {
             url "https://maven.aliyun.com/repository/gradle-plugin"
         }
 
+        maven { url 'https://repo1.maven.org/maven2/' }
         maven {
             url "https://jitpack.io"
         }
 //        maven {
 //            url "http://localhost:8081/artifactory/android_group/"
 //        }
+
+        //穿山甲 SDK依赖
+        maven {
+            url "https://artifact.bytedance.com/repository/pangle"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+
+        //mintegral sdk依赖   引入mintegral sdk需要添加此maven
+        maven {
+            url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_support/"
+        }
+        google()
 
     }
 }

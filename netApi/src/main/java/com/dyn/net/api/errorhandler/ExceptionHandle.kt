@@ -1,7 +1,9 @@
 package com.dyn.net.api.errorhandler
 
 import android.net.ParseException
-import com.dyn.base.utils.ServerException
+import com.blankj.utilcode.util.StringUtils.getString
+import com.dyn.net.api.R
+import com.dyn.net.api.ServerException
 import com.google.gson.JsonParseException
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
@@ -32,10 +34,10 @@ object ExceptionHandle {
                 INTERNAL_SERVER_ERROR,
                 BAD_GATEWAY,
                 SERVICE_UNAVAILABLE->{
-                    ex.message = e.code().toString()
+                    ex.message = getString(R.string.net_error_message)
                 }
                 else ->
-                    ex.message = "网络错误";
+                    ex.message = getString(R.string.net_error_message)
             }
             ex
         } else if (e is ServerException) {

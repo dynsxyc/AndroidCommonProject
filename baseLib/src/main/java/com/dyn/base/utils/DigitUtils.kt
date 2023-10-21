@@ -1,33 +1,31 @@
 package com.dyn.base.utils
 
-import java.lang.Exception
 import java.math.BigDecimal
-import java.math.BigInteger
-import java.math.MathContext
 import java.math.RoundingMode
 
 object DigitUtils {
+
     private val ONE_WAN = BigDecimal(10000)
     fun Int.fenToYuan(): String {
-        return this.toBigDecimal().divide(BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP).toString()
+        return this.toBigDecimal().divide(BigDecimal(100), 2, RoundingMode.HALF_UP).toString()
     }
 
     fun String.fenToYuan(): String {
         if (this.isNullOrEmpty()) {
             return "0.00"
         }
-        return BigDecimal(this).divide(BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP).toString()
+        return BigDecimal(this).divide(BigDecimal(100), 2, RoundingMode.HALF_UP).toString()
     }
 
-    fun String?.toMBigDecimal(): BigDecimal {
+    fun String?.toMBigDecimal(dotLength :Int = 2): BigDecimal {
         return try {
             if (this.isNullOrEmpty()){
-                BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_UP)
+                BigDecimal.ZERO.setScale(dotLength, RoundingMode.HALF_UP)
             }else{
-                this.toBigDecimal().setScale(2, BigDecimal.ROUND_HALF_UP)
+                this.toBigDecimal().setScale(dotLength, RoundingMode.HALF_UP)
             }
         } catch (e: Exception) {
-            BigDecimal.ZERO.setScale(2, BigDecimal.ROUND_HALF_UP)
+            BigDecimal.ZERO.setScale(dotLength, RoundingMode.HALF_UP)
         }
     }
     /**
@@ -42,7 +40,7 @@ object DigitUtils {
         return if (remainder<= BigDecimal.ZERO){
             b.divide(ONE_WAN).setScale(0).toString().plus("万")
         }else{
-            b.divide(ONE_WAN).setScale(2,BigDecimal.ROUND_HALF_UP).toString().plus("万")
+            b.divide(ONE_WAN).setScale(2,RoundingMode.HALF_UP).toString().plus("万")
         }
     }
     /**
@@ -54,9 +52,33 @@ object DigitUtils {
         }
         return this.toMBigDecimal().toString()
     }
+    private val hundredBig = BigDecimal(100)
+    private val tenBig = BigDecimal(10)
+    /**
+     * 金额显示  保留有效位数显示
+     * */
+    fun String?.toShowEffectivePrice():String{
+        if (this.isNullOrEmpty()){
+            return "0.0"
+        }
+        return try {
+            val oBig = this.toMBigDecimal().multiply(hundredBig).setScale(0, RoundingMode.DOWN)
+            val hundred = oBig.divideAndRemainder(hundredBig)[1]//求余 数组0位为商  1位为余
+            val ten = oBig.divideAndRemainder(tenBig)[1]
+            if (hundred == BigDecimal.ZERO) {
+                this.toMBigDecimal(0).toString()
+            } else if (ten == BigDecimal.ZERO) {
+                this.toMBigDecimal(1).toString()
+            } else {
+                this.toMBigDecimal().toString()
+            }
+        }catch (e:Exception){
+            this
+        }
+    }
 
     fun BigDecimal.fenToYuan(): String {
-        return this.divide(BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP).toString()
+        return this.divide(BigDecimal(100), 2, RoundingMode.HALF_UP).toString()
     }
 
     /**
@@ -74,7 +96,7 @@ object DigitUtils {
             BigDecimal(minuend)
         }
         val reductionBigDecimal = BigDecimal(reduction)
-        return reductionBigDecimal.subtract(minuendBigDecimal).setScale(2,BigDecimal.ROUND_HALF_UP).toString()
+        return reductionBigDecimal.subtract(minuendBigDecimal).setScale(2,RoundingMode.HALF_UP).toString()
     }
 
     /**
@@ -106,7 +128,7 @@ object DigitUtils {
         if (price.isNullOrEmpty()) {
             return ""
         }
-        return BigDecimal(this).multiply(BigDecimal(price)).setScale(2, BigDecimal.ROUND_HALF_UP)
+        return BigDecimal(this).multiply(BigDecimal(price)).setScale(2, RoundingMode.HALF_UP)
             .toString()
     }
 }

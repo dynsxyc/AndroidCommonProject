@@ -27,7 +27,7 @@ object BindingRadioGroupAdapter {
     @JvmStatic
     fun setRadioButtonCheckedListener(group:RadioGroup,listener:InverseBindingListener?){
         listener?.let {
-            group.setOnCheckedChangeListener { group, checkedId ->
+            group.setOnCheckedChangeListener { _, _ ->
                 it.onChange()
             }
         }

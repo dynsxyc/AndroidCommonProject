@@ -7,20 +7,29 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.WindowManager
+import android.webkit.CookieManager
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient.FileChooserParams
+import android.webkit.WebView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.TimeUtils
 import com.dyn.base.mvvm.view.BaseFragment
 import com.dyn.base.ui.databinding.DataBindingConfig
+import com.dyn.base.utils.LocalMediaUtils.filter
+import com.dyn.base.utils.PictureSelectorUtils
 import com.dyn.webview.jsbridge.BridgeHandler
 import com.dyn.webview.jsbridge.CallBackFunction
 import com.dyn.webview.utils.WebConstants
 import com.dyn.webview.utils.WebConstants.REQUEST_CODE_LOLIPOP
-import com.tencent.smtt.sdk.CookieManager
-import com.tencent.smtt.sdk.ValueCallback
-import com.tencent.smtt.sdk.WebView
-import com.umeng.vt.diff.V
-import org.checkerframework.checker.units.qual.K
+import com.gyf.immersionbar.ktx.immersionBar
+import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
+import java.io.File
+import kotlin.collections.HashMap
 
 class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
     private var mIsError = false //判断页面是否加载成功
@@ -46,55 +55,61 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         }
     }
 
+    override fun getDataBindingConfig(): DataBindingConfig {
+        return super.getDataBindingConfig().addBindingParam(BR.webCallBack,this)
+    }
+
     override fun onLazyAfterView() {
         super.onLazyAfterView()
-        arguments?.getParcelable<WebViewArgs>("args")?.let { b ->
-            mViewModel.webUrl.postValue(b.loadUrl)
-            mViewModel.mHasTitle.value = b.isShowActionBar?:true
-            mViewModel.interfaceName.value = b.interfaceName
-            mViewModel.mCommonHeaderModel.title.set(b.title)
-            mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
-                ContextCompat.getDrawable(
-                    requireActivity(),
-                    R.drawable.ic_nav_close
-                )
-            )
-            val isSyncCookie = b.isSyncCookie
-            val header = b.header
-            header?.let {
-                if (isSyncCookie) {
-                    syncCookie(mViewModel.webUrl.value, it)
-                }
-            }
-            mViewModel.header.value = header
+        val b = arguments?.getParcelable<WebViewArgs>("args")
+        var url = b?.loadUrl
+//        url += if (url?.indexOf("?") == -1) {
+//            "?t=" + TimeUtils.getNowMills()+"&appVersion=${AppUtils.getAppVersionName()}&platform=zimei_android"
+//        } else {
+//            "&t=" + TimeUtils.getNowMills()+"&appVersion=${AppUtils.getAppVersionName()}&platform=zimei_android"
 //        }
-            mViewModel.webCallback = this
+        mViewModel.mHasTitle.value = b?.isShowActionBar ?: true
+        mViewModel.interfaceName.value = b?.interfaceName
+        mViewModel.mCommonHeaderModel.title.set(b?.title)
+        mViewModel.mCommonHeaderModel.finishStyle.drawableStart.set(
+            ContextCompat.getDrawable(
+                requireActivity(),
+                com.dyn.base.R.drawable.ic_nav_close
+            )
+        )
+        val isSyncCookie = b?.isSyncCookie
+        val header = b?.header
+        header?.let {
+            if (isSyncCookie == true) {
+                syncCookie(mViewModel.webUrl.value, it)
+            }
         }
-        mViewModel.bridgeHandler.value = object :BridgeHandler{
+        mViewModel.header.value = header
+        mViewModel.bridgeHandler.value = object : BridgeHandler {
             override fun handler(data: String?, function: CallBackFunction?) {
-                if (data.isNullOrEmpty()){
+                if (data.isNullOrEmpty()) {
                     return
                 }
                 try {
                     val map = GsonUtils.fromJson(data, MutableMap::class.java)
-                    if (map.isNullOrEmpty().not() && map.containsKey("cmd")){
+                    if (map.isNullOrEmpty().not() && map.containsKey("cmd")) {
                         val key = map["cmd"].toString()
-                        exec(requireContext(),
-                            WebConstants.LEVEL_LOCAL,key, mutableMapOf("jsData" to "js").toString(),function)
+                        if (TextUtils.equals(key, "config")) {
+                            mViewModel.mHasTitle.value = false
+                        }
+                        exec(
+                            requireContext(),
+                            WebConstants.LEVEL_LOCAL, key, GsonUtils.toJson(map), function
+                        )
                     }
 
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
             }
 
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        CommandDispatcher.instance.initAidlConnect(requireContext().applicationContext)
         mViewModel.canGoBack.observe(viewLifecycleOwner, Observer {
             if (it.not()) {//直接返回
                 onClickHeaderFinish()
@@ -102,6 +117,13 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
                 mViewModel.mCommonHeaderModel.hasFinish.set(true)
             }
         })
+        mViewModel.webUrl.value = url
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        CommandDispatcher.instance.initAidlConnect(requireContext().applicationContext)
+
     }
 
     override fun getLayoutId(): Int {
@@ -149,11 +171,11 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         } else {
             mViewModel.showPageSuccess()
         }
-        mViewModel.finishRefresh.postValue(true)
+        mViewModel.finishRefresh.value = true
         mIsError = false
     }
 
-    override fun onPageError() {
+    override fun onSmartPageError() {
         mIsError = true
     }
 
@@ -225,30 +247,46 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
      * web选择文件
      * */
     override fun onShowFileChooser(
-        cameraIntent: Intent?,
+        cameraIntent: FileChooserParams?,
         filePathCallback: ValueCallback<Array<Uri>>?
     ) {
-        //整个弹出框为:相机、相册、文件管理
-        //如果安装了其他的相机、文件管理程序，也有可能会弹出
-        //selectionIntent(相册、文件管理)
-        //Intent selectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        //selectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
-        //selectionIntent.setType("image/*");
-        mFilePathCallback = filePathCallback
-        //------------------------------------
-        //如果通过下面的方式，则弹出的选择框有:相机、相册(Android9.0,Android8.0)
-        //如果是小米Android6.0系统上，依然是：相机、相册、文件管理
-        //如果安装了其他的相机(百度魔拍)、文件管理程序(ES文件管理器)，也有可能会弹出
-        val selectionIntent = Intent(Intent.ACTION_PICK, null)
-        selectionIntent.type = "image/*"
-        //------------------------------------
-//        val intentArray: Array<Intent?>
-//        intentArray = cameraIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
-        val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-        chooserIntent.putExtra(Intent.EXTRA_TITLE, getString(R.string.file_chooser))
-        chooserIntent.putExtra(Intent.EXTRA_INTENT, selectionIntent)
-//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
-        startActivityForResult(chooserIntent, REQUEST_CODE_LOLIPOP)
+//        //整个弹出框为:相机、相册、文件管理
+//        //如果安装了其他的相机、文件管理程序，也有可能会弹出
+//        //selectionIntent(相册、文件管理)
+//        //Intent selectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+//        //selectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+//        //selectionIntent.setType("image/*");
+//        mFilePathCallback = filePathCallback
+//        //------------------------------------
+//        //如果通过下面的方式，则弹出的选择框有:相机、相册(Android9.0,Android8.0)
+//        //如果是小米Android6.0系统上，依然是：相机、相册、文件管理
+//        //如果安装了其他的相机(百度魔拍)、文件管理程序(ES文件管理器)，也有可能会弹出
+//        val selectionIntent = Intent(Intent.ACTION_PICK, null)
+//        selectionIntent.type = "image/*"
+//        //------------------------------------
+////        val intentArray: Array<Intent?>
+////        intentArray = cameraIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
+//        val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+//        chooserIntent.putExtra(Intent.EXTRA_TITLE, getString(R.string.file_chooser))
+//        chooserIntent.putExtra(Intent.EXTRA_INTENT, selectionIntent)
+////        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
+//        startActivityForResult(chooserIntent, REQUEST_CODE_LOLIPOP)
+        PictureSelectorUtils.with(requireActivity()).isSingleMode(true).isGalleryHasCamera(true).listener(
+            object : OnResultCallbackListener<LocalMedia> {
+                override fun onCancel() {
+
+                }
+
+                override fun onResult(result: ArrayList<LocalMedia>?) {
+                    result?.let {
+                        if (it.isNotEmpty()) {
+                            val path = it[0].filter()
+                            filePathCallback?.onReceiveValue(arrayOf(Uri.fromFile(File(path))))
+                        }
+                    }
+                }
+            }
+        ).open()
     }
 
 
@@ -285,7 +323,8 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
             cmd,
             params,
             callback,
-            getCommandDispatcher())
+            getCommandDispatcher()
+        )
     }
 
     private fun getCommandDispatcher(): CommandDispatcher.DispatcherCallBack? {
@@ -319,6 +358,19 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
         }
         val newCookie = cookieManager.getCookie(url)
         return !TextUtils.isEmpty(newCookie)
+    }
+
+    override fun initImmersionBar() {
+        immersionBar {
+            autoDarkModeEnable(true, 0.5f)
+            statusBarDarkFont(true)
+            keyboardEnable(true,WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            transparentStatusBar()
+        }
+    }
+
+    override fun immersionBarEnabled(): Boolean {
+        return true
     }
 
 }

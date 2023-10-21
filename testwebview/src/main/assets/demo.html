@@ -62,7 +62,7 @@
 
             //call native method {'param': '中文测试'}
             window.WebViewJavascriptBridge.callHandler(
-                'submitFromWeb'
+                'jsBridgeFn'
                 , {'cmd': 'testCmd','param': '中文测试',}
                 , function(responseData) {
                     document.getElementById("show").innerHTML = "send get responseData from java, data = " + responseData

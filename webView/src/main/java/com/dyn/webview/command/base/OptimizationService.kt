@@ -17,7 +17,7 @@ class OptimizationService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val url = intent?.getStringExtra(WebConstants.INTENT_TAG_URL)
-        Logger.i("onBind---------------$url")
+        Logger.i("onStartCommand---------------$url")
         url?.let {
             BaseWebView(this).loadUrl(url)
         }

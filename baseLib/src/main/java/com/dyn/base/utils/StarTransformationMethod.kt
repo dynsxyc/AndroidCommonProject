@@ -2,6 +2,7 @@ package com.dyn.base.utils
 
 import android.graphics.Rect
 import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.text.*
 import android.text.method.TransformationMethod
@@ -71,22 +72,22 @@ class StarTransformationMethod : TransformationMethod {
     class PasswordCharSequence(private val mSource: CharSequence) : CharSequence, GetChars {
         override val length: Int = mSource.length
 
-        override fun get(i: Int): Char {
+        override fun get(index: Int): Char {
 
             if (mSource is Spanned) {
                 val sp = mSource
                 var st = sp.getSpanStart(ACTIVE)
                 var en = sp.getSpanEnd(ACTIVE)
-                if (i in st until en) {
-                    return mSource[i]
+                if (index in st until en) {
+                    return mSource[index]
                 }
                 val visible: Array<Visible> = sp.getSpans(0, sp.length, Visible::class.java)
                 for (a in visible.indices) {
                     if (sp.getSpanStart(visible[a].mTransformer) >= 0) {
                         st = sp.getSpanStart(visible[a])
                         en = sp.getSpanEnd(visible[a])
-                        if (i in st until en) {
-                            return mSource[i]
+                        if (index in st until en) {
+                            return mSource[index]
                         }
                     }
                 }
@@ -94,9 +95,9 @@ class StarTransformationMethod : TransformationMethod {
             return DOT
         }
 
-        override fun subSequence(start: Int, end: Int): CharSequence {
-            val buf = CharArray(end - start)
-            getChars(start, end, buf, 0)
+        override fun subSequence(startIndex: Int, endIndex: Int): CharSequence {
+            val buf = CharArray(endIndex - startIndex)
+            getChars(startIndex, endIndex, buf, 0)
             return String(buf)
         }
 
@@ -147,7 +148,7 @@ class StarTransformationMethod : TransformationMethod {
         private val mText: Spannable,
         val mTransformer: StarTransformationMethod
     ) :
-        Handler(), UpdateLayout, Runnable {
+        Handler(Looper.myLooper()!!), UpdateLayout, Runnable {
         override fun run() {
             mText.removeSpan(this)
         }

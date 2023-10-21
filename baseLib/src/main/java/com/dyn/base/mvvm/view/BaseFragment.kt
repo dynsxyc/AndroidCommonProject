@@ -4,49 +4,44 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
-import androidx.annotation.NonNull
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.*
 import androidx.navigation.fragment.NavHostFragment
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.ResourceUtils
 import com.dyn.base.BR
+import com.dyn.base.R
 import com.dyn.base.bus.SharedViewModel
 import com.dyn.base.common.customNav
 import com.dyn.base.customview.BaseCustomModel
 import com.dyn.base.customview.ICustomViewActionListener
 import com.dyn.base.mvvm.viewmodel.BaseViewModel
 import com.dyn.base.ui.OnRequestPermissionListener
-import com.dyn.base.ui.base.BaseActivity
-import com.dyn.base.ui.base.BaseActivity.Companion.PERMISSION_RC_CODE
 import com.dyn.base.ui.base.BaseImmersionFragment
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_HIDE
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_SHOW_CANCEL
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_SHOW_UNCANCEL
+import com.dyn.base.ui.base.OnPermissionResultListener
+import com.dyn.base.ui.base.PermissionProxyClient
 import com.dyn.base.ui.databinding.DataBindingConfig
 import com.dyn.base.ui.weight.CustomToastView
 import com.dyn.base.ui.weight.ProgressLoading
 import com.dyn.base.utils.BaseActionConstant
-import com.dyn.base.utils.BaseActionConstant.LOG_TAG_PERMISSIONS
+import com.dyn.base.utils.BaseConstant.LOG_TAG_PERMISSIONS
+import com.gyf.immersionbar.ImmersionBar
 import com.orhanobut.logger.Logger
-import com.umeng.analytics.MobclickAgent
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
-import pub.devrel.easypermissions.PermissionRequest
+import com.vmadalin.easypermissions.EasyPermissions
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
-    EasyPermissions.PermissionCallbacks, ICustomViewActionListener {
+    OnPermissionResultListener, ICustomViewActionListener {
     lateinit var mShardViewModel: SharedViewModel
     private val viewModelClazz =
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
@@ -56,6 +51,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
     private val progressLoading by lazy {
         ProgressLoading.getInstance(requireContext())
     }
+    protected var lifecycleIndex = 0
 
     override fun getDataBindingConfig(): DataBindingConfig {
         return DataBindingConfig(BR.vm, mViewModel)
@@ -94,14 +90,22 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
         super.onAttach(activity)
     }
 
+    var time = 0L
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onAttach")
+        time = System.currentTimeMillis()
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onAttach ${++lifecycleIndex}"
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onCreate")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onCreate ${++lifecycleIndex}"
+        )
     }
 
     override fun onCreateView(
@@ -111,7 +115,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
     ): View? {
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onCreateView"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onCreateView ${++lifecycleIndex}"
         )
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -120,100 +124,145 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
         super.onViewCreated(view, savedInstanceState)
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onViewCreated"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onViewCreated ${++lifecycleIndex}"
         )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        mViewModel = getFragmentViewModel(viewModelClazz)
-        lifecycle.addObserver(mViewModel)
-        mShardViewModel = getAppViewModelProvider().get(SharedViewModel::class.java)
-
-        if (requestBackPressed()) {
-            mOnBackPressedCallback = object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    if (onBackPressed()) {
-                        mOnBackPressedCallback!!.isEnabled = false
-                        requireActivity().onBackPressed()
-                    }
-                }
-
-            }
-            requireActivity().onBackPressedDispatcher
-                .addCallback(this, mOnBackPressedCallback!!)
-        }
-        initToast()
-        initDialog()
-        mViewModel.mLifeCycle.value = this
-        mViewModel.mCustomViewActionListener = this
-        mViewModel.mBackAction.observe(this) {
-            if (it) {
-                pop(false)
-            }
-        }
         super.onActivityCreated(savedInstanceState)
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onActivityCreated"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onActivityCreated ${++lifecycleIndex}"
         )
     }
 
     override fun onStart() {
+        if (isLazyInitView.not()) {
+            isLazyInitView = true
+            mViewModel = getFragmentViewModel(viewModelClazz)
+            lifecycle.addObserver(mViewModel)
+            mShardViewModel = getAppViewModelProvider()[SharedViewModel::class.java]
+
+            if (requestBackPressed()) {
+                mOnBackPressedCallback = object : OnBackPressedCallback(true) {
+                    override fun handleOnBackPressed() {
+                        if (onBackPressed()) {
+                            mOnBackPressedCallback!!.isEnabled = false
+                            requireActivity().onBackPressed()
+                        }
+                    }
+
+                }
+                requireActivity().onBackPressedDispatcher
+                    .addCallback(viewLifecycleOwner, mOnBackPressedCallback!!)
+            }
+            initToast()
+            initDialog()
+            mViewModel.mLifeCycle.value = this
+            mViewModel.mCustomViewActionListener = this
+            mViewModel.headerStatusBarHeight.value = ImmersionBar.getStatusBarHeight(this)
+                .plus(resources.getDimension(R.dimen.common_header_bar_height).toInt())
+            mViewModel.mBackAction.observe(viewLifecycleOwner) {
+                if (it) {
+                    pop(false)
+                }
+            }
+            onLazyAfterView()
+        }
         super.onStart()
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onStart")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onStart ${++lifecycleIndex}"
+        )
     }
 
+    private var isLazyInitView = false
     override fun onResume() {
         super.onResume()
-        if (com.umeng.lib.BuildConfig.IS_INIT_UMENG_STATISTICS) { //自动采集模式不需要设置onResume和onPause 的手动调用
-            Log.i("dyn", "友盟统计onVisible - tag>${this.tag + "_" + this.javaClass.simpleName}")
-            MobclickAgent.onPageStart(this.tag + "_" + this.javaClass.simpleName)
-        }
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onResume")
+//        if (com.umeng.lib.BuildConfig.IS_INIT_UMENG_STATISTICS) { //自动采集模式不需要设置onResume和onPause 的手动调用
+//            Log.i("dyn", "友盟统计onVisible - tag>${this.tag + "_" + this.javaClass.simpleName}")
+//            MobclickAgent.onPageStart(this.tag + "_" + this.javaClass.simpleName)
+//        }
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onResume ${++lifecycleIndex}  time->${System.currentTimeMillis() - time}"
+        )
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: setUserVisibleHint isVisibleToUser=$isVisibleToUser ${++lifecycleIndex} "
+        )
+        super.setUserVisibleHint(isVisibleToUser)
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onHiddenChanged hidden=$hidden ${++lifecycleIndex} "
+        )
+        super.onHiddenChanged(hidden)
     }
 
     override fun onPause() {
         super.onPause()
-        if (com.umeng.lib.BuildConfig.IS_INIT_UMENG_STATISTICS) { //自动采集模式不需要设置onResume和onPause 的手动调用
-            Log.i("dyn", "友盟统计onInvisible - tag>${this.tag + "_" + this.javaClass.simpleName}")
-            MobclickAgent.onPageEnd(this.tag + "_" + this.javaClass.simpleName)
-        }
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onPause")
+//        if (com.umeng.lib.BuildConfig.IS_INIT_UMENG_STATISTICS) { //自动采集模式不需要设置onResume和onPause 的手动调用
+//            Log.i("dyn", "友盟统计onInvisible - tag>${this.tag + "_" + this.javaClass.simpleName}")
+//            MobclickAgent.onPageEnd(this.tag + "_" + this.javaClass.simpleName)
+//        }
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onPause ${++lifecycleIndex}"
+        )
     }
 
     override fun onStop() {
         super.onStop()
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onStop")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onStop ${++lifecycleIndex}"
+        )
     }
 
     override fun onDestroyView() {
+        isLazyInitView = false
         super.onDestroyView()
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDestroyView"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDestroyView ${++lifecycleIndex}"
         )
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDestroy")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDestroy ${++lifecycleIndex}"
+        )
     }
 
     override fun onDetach() {
         super.onDetach()
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDetach")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onDetach ${++lifecycleIndex}"
+        )
     }
 
     override fun onVisible() {
         super.onVisible()
-        Logger.d("生命周期%s", "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onVisible")
+        Logger.d(
+            "生命周期%s",
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onVisible ${++lifecycleIndex}"
+        )
     }
 
     override fun onInvisible() {
         super.onInvisible()
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onInvisible"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onInvisible ${++lifecycleIndex}"
         )
     }
 
@@ -221,7 +270,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
         super.onLazyAfterView()
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onLazyAfterView"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName}: onLazyAfterView ${++lifecycleIndex}"
         )
     }
 
@@ -229,7 +278,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
         super.onLazyBeforeView()
         Logger.d(
             "生命周期%s",
-            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName} onLazyBeforeView--------------"
+            "Fragment tag:${this.tag + "_" + this.javaClass.simpleName} onLazyBeforeView ${++lifecycleIndex}"
         )
     }
 
@@ -238,20 +287,35 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
      * 初始化弹框相应监听
      * */
     private fun initDialog() {
-        mViewModel.mLoadingDialogStatus.observe(this, Observer {
+        mViewModel.mLoadingDialogStatus.observe(viewLifecycleOwner, Observer {
             when (it) {
                 LOADING_DIALOG_STATUS_SHOW_CANCEL -> {
                     progressLoading.showCancelableLoading()
                 }
+
                 LOADING_DIALOG_STATUS_SHOW_UNCANCEL -> {
                     progressLoading.showUnCancelableLoading()
                 }
+
                 LOADING_DIALOG_STATUS_HIDE -> {
                     progressLoading.hideLoading()
                 }
             }
         })
     }
+
+    fun showCancelableLoading() {
+        progressLoading.showCancelableLoading()
+    }
+
+    fun showUnCancelableLoading() {
+        progressLoading.showUnCancelableLoading()
+    }
+
+    fun hideLoading() {
+        progressLoading.hideLoading()
+    }
+
 
     /**
      * 初始化toast 操作监听
@@ -264,6 +328,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
                         showToast(data, duration = Toast.LENGTH_SHORT)
                     }
                 }
+
                 is Int -> {
                     data?.let {
                         showToast(data, Toast.LENGTH_SHORT)
@@ -281,7 +346,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
                         data.toast
                     }
                     toast?.let {
-                        showToast(it, data.type, Toast.LENGTH_SHORT)
+                        showToast(it, type = data.type, duration = Toast.LENGTH_SHORT)
                     }
                 }
             }
@@ -293,11 +358,13 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
                         showToast(data, duration = Toast.LENGTH_LONG)
                     }
                 }
+
                 is Int -> {
                     data?.let {
                         showToast(data, Toast.LENGTH_LONG)
                     }
                 }
+
                 is CustomToastView.CustomToastBean -> {
                     val toast = if (TextUtils.isEmpty(data.toast)) {
                         getString(data.res)
@@ -305,7 +372,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
                         data.toast
                     }
                     toast?.let {
-                        showToast(it, data.type, Toast.LENGTH_LONG)
+                        showToast(it, type = data.type, duration = Toast.LENGTH_LONG)
                     }
                 }
             }
@@ -499,12 +566,15 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
             BaseActionConstant.ACTION_BACK -> {
                 onClickHeaderBack()
             }
+
             BaseActionConstant.ACTION_FINISH -> {
                 onClickHeaderFinish()
             }
+
             BaseActionConstant.ACTION_RIGHT -> {
                 onClickHeaderRight()
             }
+
             BaseActionConstant.ACTION_RIGHT_LAST -> {
                 onClickHeaderRightLast(view)
             }
@@ -528,52 +598,45 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
             requireActivity().onBackPressed()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i(LOG_TAG_PERMISSIONS, "fragment   onRequestPermissionsResult")
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    /***权限相关API   start ****/
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        Logger.i("$LOG_TAG_PERMISSIONS fragment   onPermissionsGranted")
     }
 
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-        Log.i(LOG_TAG_PERMISSIONS, "fragment   onPermissionsDenied")
-
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-//        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
-//            AppSettingsDialog.Builder(this).build().show()
-//        }
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        Logger.i("$LOG_TAG_PERMISSIONS fragment   onPermissionsDenied")
     }
 
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Log.i(LOG_TAG_PERMISSIONS, "fragment   onPermissionsGranted")
+    override fun onRationaleAccepted(requestCode: Int) {
+        Logger.i("$LOG_TAG_PERMISSIONS fragment   onRationaleAccepted")
     }
 
+    override fun onRationaleDenied(requestCode: Int) {
+        Logger.i("$LOG_TAG_PERMISSIONS fragment   onRationaleDenied")
+    }
 
     private var mNexAction: OnRequestPermissionListener? = null
     private var mPermissions: Array<out String>? = null
     private var mTips = "当前App需要请求权限操作"
 
-    @AfterPermissionGranted(PERMISSION_RC_CODE)
-    private fun requestPermission() {
-        Log.i(LOG_TAG_PERMISSIONS, "fragment   requestPermission")
-        mPermissions?.let {
-            if (hasPermission(*it)) {
-                // Have permission, do the thing!
-                mNexAction?.onInvoke()
-            } else {
-                // Ask for one permission
-                EasyPermissions.requestPermissions(
-                    PermissionRequest.Builder(this, PERMISSION_RC_CODE, *it)
-                        .setTheme(com.dyn.base.R.style.PermissionsThemeDialog)
-                        .setRationale(mTips).build()
-                )
-            }
-        }
-    }
+//    @AfterPermissionGranted(PERMISSION_FRAGMENT_RC_CODE)
+//    private fun requestPermission() {
+//        mPermissions?.let {
+//            if (hasPermission(*it)) {
+//                // Have permission, do the thing!
+//                mNexAction?.onInvoke()
+//            } else {
+//                // Ask for one permission
+//                EasyPermissions.requestPermissions(this,
+//                    PermissionRequest.Builder(this.requireContext())
+//                        .code(PERMISSION_FRAGMENT_RC_CODE)
+//                        .perms(it)
+//                        .theme(com.dyn.base.R.style.PermissionsThemeDialog)
+//                        .rationale(mTips).build()
+//                )
+//            }
+//        }
+//    }
 
     /**
      * 请求权限操作，如果有继续后续操作
@@ -586,17 +649,24 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
         mNexAction = action
         mPermissions = params
         mTips = tips
-        requestPermission()
+        Logger.i("$LOG_TAG_PERMISSIONS fragment   requestPermission")
+        val activity = requireActivity()
+        if (activity is PermissionProxyClient) {
+            activity.registerPermissionResult(this)
+            activity.requestPermission(tips, params = params, action = action)
+        }
     }
 
-    private fun hasPermission(vararg args: String): Boolean {
+    fun hasPermission(vararg args: String): Boolean {
         return EasyPermissions.hasPermissions(requireContext(), *args)
     }
+
+    /***权限相关API   end ****/
 
     /**
      * @return true 软件盘切换成功  false 软键盘没显示
      * */
-    fun ifKeyboardShowToHide(): Boolean {
+    private fun ifKeyboardShowToHide(): Boolean {
         return if (KeyboardUtils.isSoftInputVisible(requireActivity())) {
             KeyboardUtils.hideSoftInput(requireActivity())
             true
@@ -604,5 +674,6 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
             false
         }
     }
+
 
 }

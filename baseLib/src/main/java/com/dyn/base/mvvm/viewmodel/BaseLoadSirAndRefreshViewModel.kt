@@ -25,6 +25,7 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
     val onReloadListener = Callback.OnReloadListener {
         onLoadSirReload()
     }
+
     /**
      * 显示加载状态 并重新加载
      * */
@@ -32,10 +33,11 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
         showPageLoading()
         loadSirReload()
     }
+
     /**
      * 显示加载进度  并调用刷新
      * */
-    open fun onPageReload(){
+    open fun onPageReload() {
         showPageLoading()
         refresh()
     }
@@ -62,10 +64,10 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
     }
 
     open fun showPageFail(exception: Throwable? = null) {
+        emptyTitleStr.value = StringUtils.getString(R.string.customErrorTitleStr)
+        emptyDesStr.value = StringUtils.getString(R.string.customErrorDesStr)
+        emptyImgDrawable.value = R.drawable.img_data_nonet_error
         pageStatus.value = BindingLoadSirAdapter.LoadPageStatus.EMPTY
-            emptyTitleStr.value = StringUtils.getString(R.string.customErrorTitleStr)
-            emptyDesStr.value = StringUtils.getString(R.string.customErrorDesStr)
-            emptyImgDrawable.value = R.drawable.img_data_nonet_error
     }
 
     open fun showPageEmpty() {
@@ -85,10 +87,12 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
     /************************SmartRefreshLayout  start ************************/
     val mOnRefreshLoadMoreListener = object : OnRefreshLoadMoreListener {
         override fun onRefresh(refreshLayout: RefreshLayout) {
+            isStartRefreshing.value = true
             refresh()
         }
 
         override fun onLoadMore(refreshLayout: RefreshLayout) {
+            isStartLoadMore.value = true
             loadNextPage()
         }
 
@@ -102,10 +106,12 @@ abstract class BaseLoadSirAndRefreshViewModel : BaseViewModel() {
     val enableRefresh = MutableLiveData<Boolean>(true)//是否启用刷新
     val enableAutoLoadMore = MutableLiveData<Boolean>(true)//上啦到底部是否自动加载更多
     val setNoMoreData = MutableLiveData<Boolean>(false)//是否显示底部已没有更多数据
+    val isStartRefreshing = MutableLiveData(false)//是否开始刷新
+    val isStartLoadMore = MutableLiveData(false)//是否开始加载更多
 
     open fun finishSmartRefreshStatus() {
-        finishRefresh.postValue(true)
-        finishLoadMore.postValue(true)
+        finishRefresh.value = true
+        finishLoadMore.value = true
     }
 
     /**

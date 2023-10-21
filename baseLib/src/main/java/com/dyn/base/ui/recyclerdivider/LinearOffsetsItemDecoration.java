@@ -45,6 +45,14 @@ public class LinearOffsetsItemDecoration extends RecyclerView.ItemDecoration {
         mIsOffsetLast = true;
         mIsOffsetEdge = true;
     }
+    public LinearOffsetsItemDecoration(@Orientation int orientation,int offset) {
+        this.mOrientation = orientation;
+        mIsOffsetTopFirst = true;
+        mIsOffsetLast = true;
+        mIsOffsetEdge = true;
+        this.mItemOffsets = offset;
+        this.mItemFirstTopOffsets = offset;
+    }
 
     public void setOrientation(@Orientation int orientation) {
         this.mOrientation = orientation;
@@ -103,7 +111,12 @@ public class LinearOffsetsItemDecoration extends RecyclerView.ItemDecoration {
         }
         if ((adapterPosition == 0) && mIsOffsetTopFirst) {
             if (mOrientation == LINEAR_OFFSETS_HORIZONTAL) {
-                outRect.left = mItemFirstTopOffsets;
+                if (((LinearLayoutManager)parent.getLayoutManager()).getReverseLayout()){
+                    outRect.right = mItemFirstTopOffsets;
+                }else {
+                    outRect.left = mItemFirstTopOffsets;
+                }
+
             } else {
                 outRect.top = mItemFirstTopOffsets;
             }

@@ -80,7 +80,7 @@ abstract class BaseModel<NET_DATA, RESULT_DATA> : INetDataObserver<NET_DATA> {
     /**
      * 加载下一页
      * */
-    fun loadNextPage() {
+    open fun loadNextPage() {
         if (mIsLoading.not()) {
             mIsLoading = true
             load()
@@ -186,7 +186,6 @@ abstract class BaseModel<NET_DATA, RESULT_DATA> : INetDataObserver<NET_DATA> {
                 }
             } else {
                 it.onSuccess(this, resultData)
-                //saveDataToPreference
                 if (getCachePreferenceKey().isNullOrBlank().not() && isFromCache.not()) {
                     saveDataToPreference(netData)
                 }
@@ -238,12 +237,19 @@ abstract class BaseModel<NET_DATA, RESULT_DATA> : INetDataObserver<NET_DATA> {
     /**
      * rx java autoDispose 使用的provider clear操作
      * */
-    fun onClear() {
+    open fun onClear() {
         autoDisposeLifecycleScopeProvider.onCleared()
+    }
+
+    open fun onReBind(){
+        autoDisposeLifecycleScopeProvider.onBind()
     }
 
     fun getCurrentPage(): Int {
         return mPage
+    }
+    fun setCurrentPage(page:Int){
+        mPage = page
     }
 
 }

@@ -52,7 +52,7 @@
             android:layout_height="@dimen/dp_22"
             app:srcCompat="@drawable/icon_cancel"
             android:padding="@dimen/dp_2"
-            app:tint="@color/common_white"
+            app:tint="@color/white"
             android:background="@drawable/bg_circle_99"
             app:layout_constraintTop_toTopOf="@+id/mImageAdd"
             app:layout_constraintBottom_toTopOf="@+id/mImageAdd"

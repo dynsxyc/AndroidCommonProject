@@ -218,8 +218,8 @@ object LocationUtils {
     fun getAddress(latitude: Double, longitude: Double): Address? {
         val geocoder = Geocoder(Utils.getApp(), Locale.getDefault())
         try {
-            val addresses: List<Address> = geocoder.getFromLocation(latitude, longitude, 1)
-            if (addresses.size > 0) return addresses[0]
+            val addresses: List<Address>? = geocoder.getFromLocation(latitude, longitude, 1)
+            addresses?.firstOrNull()
         } catch (e: IOException) {
             e.printStackTrace()
         }

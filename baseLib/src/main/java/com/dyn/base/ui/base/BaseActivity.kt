@@ -6,7 +6,10 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.dyn.base.BR
 import com.dyn.base.R
 import com.dyn.base.bus.SharedViewModel
@@ -19,21 +22,20 @@ import com.dyn.base.ui.databinding.DataBindingConfig
 import com.dyn.base.ui.weight.ProgressLoading
 import com.dyn.base.ui.weight.header.CommonHeaderModel
 import com.dyn.base.utils.BaseActionConstant
+import com.dyn.base.utils.BaseConstant.LOG_TAG_PERMISSIONS_ACTIVITY
+import com.dyn.base.utils.BaseConstant.PERMISSION_ACTIVITY_RC_CODE
 import com.gyf.immersionbar.ktx.immersionBar
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.AppSettingsDialog
-import pub.devrel.easypermissions.EasyPermissions
+import com.orhanobut.logger.Logger
+import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
+import com.vmadalin.easypermissions.dialogs.DEFAULT_SETTINGS_REQ_CODE
+import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustomViewActionListener,
-    EasyPermissions.PermissionCallbacks {
+    EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks,PermissionProxyClient {
     val mShardViewModel by lazy {
         getAppViewModelProvider().get(SharedViewModel::class.java)
-    }
-
-    companion object {
-        const val PERMISSION_RC_CODE = 200
-        const val PERMISSION_ACTIVITY_RC_CODE = 201
     }
 
     private val vmClazz =
@@ -48,12 +50,31 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel.mCustomViewActionListener = this
+        lifecycle.addObserver(mViewModel)
+        mViewModel.mLifeCycle.value = this
         initDialog()
-        immersionBar {
-            fullScreen(false)
-            autoDarkModeEnable(true, 0.5f)
-            statusBarColor(R.color.transparent, 0.6f)
+        if (immersionBarEnabled()){
+            initImmersionBar()
         }
+    }
+    protected open fun initImmersionBar() {
+        immersionBar {
+            autoDarkModeEnable(true, 0.5f)
+            statusBarDarkFont(true)
+            keyboardEnable(true, WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+                    or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+            )
+            transparentStatusBar()
+        }
+    }
+    /**
+     * 是否可以实现沉浸式，当为true的时候才可以执行initImmersionBar方法
+     * Immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    protected open fun immersionBarEnabled(): Boolean {
+        return false
     }
     /**
      * 初始化弹框相应监听
@@ -119,6 +140,30 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
     protected open fun onHeaderBack() {
         finish()
     }
+    /**权限相关  start */
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == DEFAULT_SETTINGS_REQ_CODE) {
+//            val yes = getString(R.string.yes)
+//            val no = getString(R.string.no)
+//
+//            // Do something after user returned from app settings screen, like showing a Toast.
+//            Toast.makeText(
+//                this,
+//                getString(
+//                    R.string.returned_from_app_settings_to_activity,
+//                    if (hasCameraPermission()) yes else no,
+//                    if (hasLocationAndContactsPermissions()) yes else no,
+//                    if (hasSmsPermission()) yes else no,
+//                    if (hasStoragePermission()) yes else no
+//                ),
+//                Toast.LENGTH_LONG
+//            ).show()
+            Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity onActivityResult")
+        }
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -126,31 +171,32 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.i(BaseActionConstant.LOG_TAG_PERMISSIONS,"baseActivity   onRequestPermissionsResult")
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity   onRequestPermissionsResult")
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
-
-        Log.i(BaseActionConstant.LOG_TAG_PERMISSIONS,"baseActivity   onPermissionsDenied")
-        // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-        // This will display a dialog directing them to enable the permission in app settings.
-        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms) && (EasyPermissions.hasPermissions(this,*perms.toTypedArray()).not())) {
-            AppSettingsDialog.Builder(this).setThemeResId(R.style.PermissionsThemeDialog).build().show()
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity onPermissionsDenied")
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            SettingsDialog.Builder(this).build().show()
         }
+        permissionResultListener?.onPermissionsDenied(requestCode, perms)
     }
 
-
-    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-        Log.i(BaseActionConstant.LOG_TAG_PERMISSIONS,"baseActivity   onPermissionsGranted")
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity onPermissionsGranted")
+        permissionResultListener?.onPermissionsGranted(requestCode, perms)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-            //设置中心请求权限回来了
-            requestPermission()
-        }
+    override fun onRationaleAccepted(requestCode: Int) {
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity onRationaleAccepted")
+        permissionResultListener?.onRationaleAccepted(requestCode)
+    }
+
+    override fun onRationaleDenied(requestCode: Int) {
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity onRationaleDenied")
+        permissionResultListener?.onRationaleDenied(requestCode)
+
     }
 
     private var mNexAction: OnRequestPermissionListener? = null
@@ -159,6 +205,7 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
 
     @AfterPermissionGranted(PERMISSION_ACTIVITY_RC_CODE)
     private fun requestPermission() {
+        Logger.i("$LOG_TAG_PERMISSIONS_ACTIVITY activity requestPermission")
         mPermissions?.let {
             if (hasPermission(*it)) {
                 // Have permission, do the thing!
@@ -174,7 +221,7 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
         }
     }
 
-    fun requestPermissionAndInvokeAction(
+    private fun requestPermissionAndInvokeAction(
         tips: String,
         vararg params: String,
         action: OnRequestPermissionListener?
@@ -185,9 +232,23 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
         requestPermission()
     }
 
+    override fun requestPermission(
+        tips: String,
+        vararg params: String,
+        action: OnRequestPermissionListener?
+    ) {
+        requestPermissionAndInvokeAction(tips, params=params, action)
+    }
+    private var permissionResultListener:OnPermissionResultListener? = null
+    override fun registerPermissionResult(permissionResultListener: OnPermissionResultListener) {
+        this.permissionResultListener = permissionResultListener
+    }
+
     private fun hasPermission(vararg args: String): Boolean {
         return EasyPermissions.hasPermissions(this, *args)
     }
+    /**权限相关  end */
+
 
 /*
 //打开这段代码  实现APP字体大小固定，不跟随系统字体大小变化而变化

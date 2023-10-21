@@ -3,10 +3,9 @@ package com.dyn.base.ui.weight
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.flyco.roundview.RoundViewDelegate
 
-class RoundEditTextView constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : ClearEditText(context, attrs){
+class RoundEditTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AppCompatEditText(context, attrs){
     constructor(context: Context):this(context, null)
     constructor(context: Context, attrs: AttributeSet?):this(context, attrs, 0)
 

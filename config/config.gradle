@@ -5,16 +5,16 @@ ext {
     kotlin_version = '1.4.20'
     room_version = "2.2.5"
     androidx_version = '1.1.3'
-    navigationVersion = '2.4.1'
+    navigationVersion = '2.5.0'
 
     app_dependencies = [
 
-            "lefecycle_viewmodel"            : 'androidx.lifecycle:lifecycle-viewmodel:2.2.0',
-            "lefecycle_viewmodel_ktx"        : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
+            "lefecycle_viewmodel"            : 'androidx.lifecycle:lifecycle-viewmodel:2.4.0',
+            "lefecycle_viewmodel_ktx"        : 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0',
             "lifecycle_livedata_ktx"         : 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0',
             "lifecycle_common_java8"         : 'androidx.lifecycle:lifecycle-common-java8:2.2.0',
             "constraintlayout"               : "androidx.constraintlayout:constraintlayout:2.0.0-beta1",
-            "appcompat"                      : "androidx.appcompat:appcompat:1.3.0",
+            "appcompat"                      : "androidx.appcompat:appcompat:1.6.0",
             "core_ktx"                       : "androidx.core:core-ktx:1.6.0",
             "collection_ktx"                 : "androidx.collection:collection-ktx:1.1.0",//Collection 扩展程序包含在 Android 的节省内存的集合库中使用的实用函数，包括 ArrayMap、LongSparseArray、LruCache 等等。
             "kotlin_stdlib"                  : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
@@ -29,20 +29,21 @@ ext {
             "rxAndroid"                      : 'io.reactivex.rxjava3:rxandroid:3.0.0',
             "rxAndroid2"                     : 'io.reactivex.rxjava2:rxandroid:2.1.1',
             "rxJava"                         : 'io.reactivex.rxjava3:rxjava:3.0.5',
+            "recyclerView"                   : 'androidx.recyclerview:recyclerview:1.2.0',
             "autodispose"                    : 'com.uber.autodispose2:autodispose:2.0.0',
             "autodispose_android"            : 'com.uber.autodispose2:autodispose-android:2.0.0',
             "autodispose_lifecycle"          : 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.0.0',
             "android_multidex"               : "com.android.support:multidex:1.0.3",
             "autoService"                    : "com.google.auto.service:auto-service:1.0-rc7",
-            "google_material"                : "com.google.android.material:material:1.5.0",
+            "google_material"                : "com.google.android.material:material:1.8.0",//1.6.1
 
 
             // 基础依赖包，必须要依赖  https://github.com/gyf-dev/ImmersionBar
-            "immersionbar"                   : 'com.gyf.immersionbar:immersionbar:3.0.0',
+            "immersionbar"                   : 'com.geyifeng.immersionbar:immersionbar:3.2.2',
             // fragment快速实现（可选）
-            "immersionbar_components"        : 'com.gyf.immersionbar:immersionbar-components:3.0.0',
+            "immersionbar_components"        : 'com.geyifeng.immersionbar:immersionbar-components:3.2.2',
             // kotlin扩展（可选）
-            "immersionbar_ktx"               : 'com.gyf.immersionbar:immersionbar-ktx:3.0.0',
+            "immersionbar_ktx"               : 'com.geyifeng.immersionbar:immersionbar-ktx:3.2.2',
 
 
             "navigation_fragment"            : "androidx.navigation:navigation-fragment:$navigationVersion",
@@ -53,21 +54,22 @@ ext {
             "navigation_runtime"             : "androidx.navigation:navigation-runtime:$navigationVersion",
 
             "vectordrawable"                 : "androidx.vectordrawable:vectordrawable:1.1.0",
-            "ViewPagerBanner"                : "com.youth.banner:banner:2.1.0",
+            "ViewPagerBanner"                : "io.github.youth5201314:banner:2.2.2",
 
             //glide
-            "glide"                          : "com.github.bumptech.glide:glide:4.11.0",
-            "glide_compiler"                 : "com.github.bumptech.glide:compiler:4.11.0",
+            "glide"                          : "com.github.bumptech.glide:glide:4.14.2",
+            "glide_compiler"                 : "com.github.bumptech.glide:compiler:4.14.2",
 
             "databinding_compiler"           : "com.android.databinding:compiler:4.1.1",
             "loadSir"                        : "com.kingja.loadsir:loadsir:1.3.8",
             "lottie"                         : "com.airbnb.android:lottie:3.4.1",
             "viewPager2"                     : "androidx.viewpager2:viewpager2:1.0.0",
             "utilCode"                       : 'com.blankj:utilcodex:1.30.5',
+            "superTextView"                  : 'com.github.lygttpod:SuperTextView:2.4.6',
 
-            "smartRefreshLayout"             : "com.scwang.smart:refresh-layout-kernel:2.0.1",
-            "smartRefreshHeader"             : "com.scwang.smart:refresh-header-classics:2.0.1",
-            "smartRefreshFooter"             : "com.scwang.smart:refresh-footer-classics:2.0.1",
+            "smartRefreshLayout"             : "io.github.scwang90:refresh-layout-kernel:2.0.5",
+            "smartRefreshHeader"             : "io.github.scwang90:refresh-header-classics:2.0.5",
+            "smartRefreshFooter"             : "io.github.scwang90:refresh-footer-classics:2.0.5",
 
             /*********权限请求*****/
 
@@ -77,7 +79,7 @@ ext {
             "rxPermissions"                  : 'com.github.tbruyelle:rxpermissions:0.12',
 
             /**RecyclerView Adapter*/
-            "BaseRecyclerViewAdapterHelper"  : 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4',
+            "BaseRecyclerViewAdapterHelper"  : 'io.github.cymchad:BaseRecyclerViewAdapterHelper:4.0.0-beta10',
 
             /**rxbinding start*/
             "rxbinding4"                     : 'com.jakewharton.rxbinding4:rxbinding:4.0.0',
@@ -105,10 +107,22 @@ ext {
             "room_rxjava"                    : "androidx.room:room-rxjava2:$room_version",
 
 
-            "PictureSelector"                : "com.github.LuckSiege.PictureSelector:picture_library:v2.6.0",
+            "PictureSelectorCore"            : "io.github.lucksiege:pictureselector:v3.11.1",
+            "PictureSelectorCompress"        : "io.github.lucksiege:compress:v3.11.1",
+            "PictureSelectorCrop"            : "io.github.lucksiege:ucrop:v3.11.1",
+            "PictureSelectorCamerax"         : "io.github.lucksiege:camerax:v3.11.1",
+
+
+            // PictureSelector 基础 (必须)
+//            implementation 'io.github.lucksiege:pictureselector:v3.10.6'
+            // 图片压缩 (按需引入)
+//            implementation 'io.github.lucksiege:compress:v3.10.6'
+            // 图片裁剪 (按需引入)
+//            implementation 'io.github.lucksiege:ucrop:v3.10.6'
             "FlycoRoundView_Lib"             : "com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar",
             "CheckVersionLib"                : "com.github.AlexLiuSheng:CheckVersionLib:2.4_androidx",//版本检测  https://github.com/AlexLiuSheng/CheckVersionLib
-            "easypermissions"                : "pub.devrel:easypermissions:3.0.0",
+//            "easypermissions"                : "pub.devrel:easypermissions:3.0.0",
+            "easypermissions"                : "com.vmadalin:easypermissions-ktx:1.0.0",
             "leakcanary_android"             : "com.squareup.leakcanary:leakcanary-android:2.4",
             "lifecycle_extensions"           : 'androidx.lifecycle:lifecycle-extensions:2.2.0',
             //捕捉crash
@@ -135,14 +149,16 @@ ext {
             "umeng_oaid_vivo"                : 'com.umeng.umsdk:oaid_vivo:1.0.0.1',// (可选)
 
 
-            "AutoSize"                       : "me.jessyan:autosize:1.1.2",
-            "jsBridge"                       : "com.github.lzyzsd:jsbridge:1.0.4",
-            "GSYVideoPlayer"                 : "com.shuyu:GSYVideoPlayer:8.0.0",
+            "AutoSize"                       : "com.github.JessYanCoding:AndroidAutoSize:v1.2.1",
+//            "GSYVideoPlayer"                 : "com.shuyu:GSYVideoPlayer:8.0.0",
+            "GSYVideoPlayer"                 : "com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.3.4-release-jitpack",
             "SwipeDelMenuLayout"             : "com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0",
 //            "switchbutton"                   : "com.kyleduo.switchbutton:library:2.0.2",
             "switchbutton"                   : "com.github.zcweng:switch-button:0.0.3@aar",
             "WheelPicker"                    : "cn.aigestudio.wheelpicker:WheelPicker:1.1.3",
-            "xPopup"                         : "com.lxj:xpopup:2.2.12",
+            "xPopup"                         : "com.github.li-xiaojun:XPopup:2.9.1",
+//            "xPopup"                         : "com.github.li-xiaojun:XPopup:2.2.25",
+            "xPopupExt"                      : "com.github.li-xiaojun:XPopupExt:1.0.0",
             "wechatSdk"                      : "com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+",
             "SuspensionIndexBar"             : "com.github.mcxtzhang:SuspensionIndexBar:V1.0.0",
 
@@ -153,11 +169,16 @@ ext {
             "mmkv"                           : 'com.tencent:mmkv-static:1.2.10'
 
     ]
+    //拍照
+//    api 'com.otaliastudios:cameraview:2.7.2'
+//文档 https://natario1.github.io/CameraView/docs/more-features
+
+//    api 'io.crossbar.autobahn:autobahn-android:21.7.1'//webSocket
     app_android = [
-            buildToolsVersion: "30.0.3",
-            compileSdkVersion: 32,
-            minSdkVersion    : 21,
-            targetSdkVersion : 32,
+            buildToolsVersion: "31.0.0",
+            compileSdkVersion: 33,
+            minSdkVersion    : 24,
+            targetSdkVersion : 31,
     ]
 
 

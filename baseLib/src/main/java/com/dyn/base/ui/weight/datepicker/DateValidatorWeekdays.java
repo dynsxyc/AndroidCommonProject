@@ -26,7 +26,7 @@ import java.util.TimeZone;
 /** A {@link DateValidator} that only allows dates from a given point onward to be clicked. */
 public class DateValidatorWeekdays implements DateValidator {
 
-  DateValidatorWeekdays() {}
+//  DateValidatorWeekdays() {}
 
   private Calendar utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 

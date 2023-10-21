@@ -1,20 +1,25 @@
 package com.dyn.base.binding_adapter
 
+import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
+import com.blankj.utilcode.util.ResourceUtils
 import com.blankj.utilcode.util.SpanUtils
+import com.blankj.utilcode.util.SpanUtils.ALIGN_CENTER
 import com.dyn.base.R
-import java.lang.Exception
 import java.math.RoundingMode
 import java.text.NumberFormat
 import java.util.*
+import kotlin.Exception
 
 object BindingPriceStyleAdapter {
 
     @BindingAdapter(
-        value = ["priceStyleText", "priceStyleLabelSize", "priceStyleNumberSize", "priceStyleFractionSize","priceIsBold"],
+        value = ["priceStyleText", "priceStyleLabelSize", "priceStyleNumberSize", "priceStyleFractionSize", "priceIsBold"],
         requireAll = false
     )
     @JvmStatic
@@ -24,7 +29,7 @@ object BindingPriceStyleAdapter {
         labelSize: Int,
         numberSize: Int,
         fractionSize: Int,
-        isBold:Boolean = false,
+        isBold: Boolean = false,
     ) {
         var minPrice: String = format("0.00")
         var maxPrice: String? = null
@@ -36,10 +41,10 @@ object BindingPriceStyleAdapter {
                 minPrice = format(split[0])
                 maxPrice = format(split[1])
             }
-        }else{
+        } else {
             minPrice = format(originalStr)
         }
-        val typeface = ResourcesCompat.getFont(textView.context, R.font.medium)?: Typeface.DEFAULT
+        val typeface = ResourcesCompat.getFont(textView.context, R.font.medium) ?: Typeface.DEFAULT
         val result = SpanUtils.with(textView).append("¥").setFontSize(labelSize, true)
             .setTypeface(if (isBold) typeface else Typeface.DEFAULT)
             .append(minPrice.substring(0 until minPrice.length - 3)).setFontSize(numberSize, true)
@@ -55,28 +60,14 @@ object BindingPriceStyleAdapter {
                 .append(maxPrice.substring(maxPrice.length - 3)).setFontSize(fractionSize, true)
                 .setTypeface(if (isBold) typeface else Typeface.DEFAULT)
         }
-//        val spannedStr = SpannableString(formatStr)
-//        spannedStr.setSpan(AbsoluteSizeSpan(sp2px(labelSize)), 0, 1, SPAN_INCLUSIVE_EXCLUSIVE)
-//        spannedStr.setSpan(
-//            AbsoluteSizeSpan(sp2px(numberSize)),
-//            1,
-//            formatStr.length - 3,
-//            SPAN_INCLUSIVE_EXCLUSIVE
-//        )
-//        spannedStr.setSpan(
-//            AbsoluteSizeSpan(sp2px(fractionSize)),
-//            formatStr.length - 3,
-//            formatStr.length,
-//            SPAN_INCLUSIVE_EXCLUSIVE
-//        )
         textView.text = result.create()
     }
 
     @JvmStatic
     fun format(number: String): String {
-       val vaStr =  if (number.indexOf(",")!=-1){
-            number.replace(",","")
-        }else{
+        val vaStr = if (number.indexOf(",") != -1) {
+            number.replace(",", "")
+        } else {
             number
         }
         val numberFormat = NumberFormat.getInstance(Locale.CHINA)
@@ -89,4 +80,114 @@ object BindingPriceStyleAdapter {
             numberFormat.format(0.00)
         }
     }
+
+    /**
+     * 小羊角 大价格显示
+     * */
+    @BindingAdapter(value = ["moneyLabelStr","moneyLabelSize", "moneyLabelColor", "moneyContentStr","moneyIsBold", "moneyContentSize", "moneyContentColor", "isMinPrice"],requireAll = false)
+    @JvmStatic
+    fun commonPriceStyle(
+        textView: TextView,
+        moneyLabelStr: String? = "¥",
+        labelSize: Int,
+        moneyLabelColor: Int = -1,
+        contentStr: String? = "",
+        moneyIsBold: Boolean = false,
+        contentSize: Int,
+        contentColor: Int = -1,
+        isMinPrice: Boolean? = false,
+    ) {
+        val utils = SpanUtils.with(textView)
+            .append(moneyLabelStr?:"¥").setFontSize(labelSize, true).setForegroundColor(moneyLabelColor)
+            .append(contentStr?:"").setFontSize(contentSize, true).setForegroundColor(contentColor)
+        if (moneyIsBold){
+            utils.setBold()
+        }
+        if (isMinPrice == true) {
+            utils.append("起").setFontSize(labelSize, true).setForegroundColor(moneyLabelColor)
+        }
+        utils.create()
+    }
+
+    /**
+     * 文字后面附加小图片
+     * */
+    @BindingAdapter(value = ["textLastLabelStr", "textLastLabelDrawable"])
+    @JvmStatic
+    fun textLastLabel(
+        textView: TextView,
+        content: String?,
+        drawableRes: Drawable?
+    ) {
+        val sp = SpanUtils.with(textView)
+        content?.let {
+            sp.append(it)
+        }
+        drawableRes?.let {
+            sp.appendImage(drawableRes, ALIGN_CENTER)
+        }
+        sp.create()
+    }
+    /**
+     * 文字后面附加小图片
+     * */
+    @BindingAdapter(value = ["textLastMutableLabelStr", "textLastMutableLabelRes"])
+    @JvmStatic
+    fun textLastLabel(
+        textView: TextView,
+        content: String?,
+        drawableRes: MutableList<Int>?
+    ) {
+        val sp = SpanUtils.with(textView)
+        content?.let {
+            sp.append(it)
+        }
+        drawableRes?.forEach {
+            try {
+                sp.appendImage(ResourceUtils.getDrawable(it), ALIGN_CENTER)
+                sp.append(" ")
+            }catch (e:Exception){
+
+            }
+        }
+        sp.create()
+    }
+
+    /**
+     * 文字后面附加小图片
+     * */
+    @BindingAdapter(value = ["textContentStr","textUnitStr","textUnitLittleSize"])
+    @JvmStatic
+    fun textUnit(
+        textView: TextView,
+        content: String?,
+        unitStr:String?,
+        unitSize:Int = 14,
+    ) {
+        SpanUtils.with(textView)
+            .append(content?:"")
+            .append(unitStr?:"").setFontSize(unitSize,true)
+            .create()
+    }
+
+    /**
+     * 中间文字颜色不同
+     * */
+    @BindingAdapter(value = ["middleColorTextStartStr","middleColorTextMiddleStr","middleColorTextEndStr","middleColorTextColor"],)
+    @JvmStatic
+    fun textMiddleColor(
+        textView: TextView,
+        startStr: String?,
+        middleStr: String?,
+        endStr: String?,
+        @ColorInt color:Int,
+    ) {
+        SpanUtils.with(textView)
+            .append(startStr?:"")
+            .append(middleStr?:"").setForegroundColor(color)
+            .append(endStr?:"")
+            .create()
+    }
+
+
 }

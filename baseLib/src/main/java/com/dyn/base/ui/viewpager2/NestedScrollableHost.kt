@@ -58,7 +58,9 @@ class NestedScrollableHost : FrameLayout {
     init {
         touchSlop = ViewConfiguration.get(context).scaledTouchSlop
     }
-
+    /**
+     * 判断子控件是否可以滑动
+     * */
     private fun canChildScroll(orientation: Int, delta: Float): Boolean {
         val direction = -delta.sign.toInt()
         return when (orientation) {
@@ -96,7 +98,7 @@ class NestedScrollableHost : FrameLayout {
             println("touchSlop ->$touchSlop scaledDx->$scaledDx scaledDy->$scaledDy ")
             if (scaledDx > touchSlop || scaledDy > touchSlop) {
                 if (isVpHorizontal == (scaledDy > scaledDx)) {
-                    println("------------------------------1------------这里改了  水平滑动不拦截---------------------- ")
+                    println("------------------------------1------------  水平滑动不拦截---------------------- ")
                     // Gesture is perpendicular, allow all parents to intercept
                     // parent.requestDisallowInterceptTouchEvent(false)
                     // return true

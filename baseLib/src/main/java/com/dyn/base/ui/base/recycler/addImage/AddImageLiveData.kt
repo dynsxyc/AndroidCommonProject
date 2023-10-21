@@ -65,10 +65,10 @@ class AddImageLiveData(private val mMaxCount: Int = 9) {
         return mMaxCount - mDatas.size + 1
     }
 
-    fun getAddedData():MutableList<AddImageItemBean>{
+    fun getAddedData():MutableList<AddImageItemBean>?{
         return mDatas?.filter {
             it.isAdd.not()
-        }.toMutableList()
+        }?.toMutableList()
     }
 
     fun isAddEmpty():Boolean{
@@ -82,9 +82,9 @@ class AddImageLiveData(private val mMaxCount: Int = 9) {
         }else{
             mDatas?.filter {
                 it.isAdd.not()
-            }.joinToString(",") {
+            }?.joinToString(",") {
                 it.successUrl?:""
-            }
+            }?:""
         }
     }
 }

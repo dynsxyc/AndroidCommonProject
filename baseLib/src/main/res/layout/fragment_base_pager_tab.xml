@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.dyn.base.ui.base.pager.BaseTabPagerViewModel" />
+
+        <variable
+            name="pager2Adapter"
+            type="com.dyn.base.ui.base.recycler.BasePager2Adapter" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dyn.base.ui.weight.header.CommonHeaderView
+            android:id="@+id/mCommonHeaderView"
+            viewBindAction="@{vm.MCustomViewActionListener}"
+            viewBindData="@{vm.MCommonHeaderModel}"
+            visible="@{vm.MHasTitle}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/mTabLl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tabLayoutBindViewPager2Id="@{@id/magicViewPager}"
+            tabLayoutBindData="@{vm.MMagicData}"
+            tabLayoutBindViewPager2Adapter="@{pager2Adapter}"
+            app:layout_constraintTop_toBottomOf="@+id/mCommonHeaderView" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/magicViewPager"
+            pager2Position="@={vm.pagerPosition}"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mTabLl" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

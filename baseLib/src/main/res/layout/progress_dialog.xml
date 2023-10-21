@@ -23,6 +23,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/common_margin_small"
         android:text="@string/loading"
-        android:textColor="@color/common_white"
+        android:textColor="@color/white"
         android:textSize="@dimen/sp_14" />
 </androidx.appcompat.widget.LinearLayoutCompat>

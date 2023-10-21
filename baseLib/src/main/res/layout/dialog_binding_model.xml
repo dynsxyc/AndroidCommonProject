@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="com.dyn.base.utils.BaseActionConstant"/>
+        <variable
+            name="vm"
+            type="com.dyn.base.dialog.CommonDialogModel" />
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+        <variable
+            name="openWebListener"
+            type="com.dyn.base.utils.OnOpenWebUrlListener" />
+    </data>
+
+    <com.dyn.base.ui.weight.RoundConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp_10"
+        app:rv_backgroundColor="@color/white"
+        app:rv_cornerRadius="@dimen/dp_12">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mDialogTitleTipsTv"
+            style="@style/MatchWrapTextSize18.ff.bold"
+            android:textColor="@color/text_color_33"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="@{vm.title}"
+            tools:text="提示"
+            tools:visibility="visible"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mDialogDesTv"
+            style="@style/WrapWrapTextSize16.33"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            textGravity="@{vm.desGravity}"
+            android:textAlignment="textStart"
+            android:paddingStart="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingEnd="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_20"
+            android:visibility="visible"
+            textContentIsHtml="@{vm.desIsHtml}"
+            textContentHtmlStr="@{vm.desContentStr}"
+            textOpenWebListener="@{openWebListener}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mDialogTitleTipsTv"
+            tools:visibility="visible"
+            tools:text="提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容"
+            />
+
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/mDialogLeftTv"
+                style="@style/WrapWrapTextSize14.99"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center"
+                android:text="@{vm.cancelStr}"
+                tools:text="取消"
+                app:rv_strokeWidth="@dimen/dp_1"
+                app:rv_strokeColor="@color/common_divider"
+                app:rv_backgroundColor="@color/white"
+                app:rv_backgroundPressColor="@color/common_white_press"
+                app:rv_isRadiusHalfHeight="true"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginEnd="@dimen/dp_10"
+                app:layout_goneMarginEnd="@dimen/dp_20"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/mDialogDesTv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/mDialogRightTv"
+                onClickWithDebouncing="@{(v)->action.onAction(v,BaseActionConstant.ACTION_CONFIRM,vm)}"
+                visible="@{vm.hasCancelBt}"
+                tools:visibility="visible" />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/mDialogRightTv"
+                style="@style/WrapWrapTextSize14.ff"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp_40"
+                android:gravity="center"
+                android:text="@{vm.completeStr}"
+                tools:text="确定"
+                app:rv_strokeWidth="@dimen/dp_1"
+                app:rv_strokeColor="@color/common_divider"
+                app:rv_backgroundColor="@color/colorPrimary"
+                app:rv_backgroundPressColor="@color/colorPrimary"
+                app:rv_isRadiusHalfHeight="true"
+                android:layout_marginStart="@dimen/dp_10"
+                android:layout_marginEnd="@dimen/dp_20"
+                app:layout_goneMarginStart="@dimen/dp_20"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/mDialogDesTv"
+                app:layout_constraintStart_toEndOf="@id/mDialogLeftTv"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                onClickWithDebouncing="@{(v)->action.onAction(v,BaseActionConstant.ACTION_CONFIRM,vm)}"
+                visible="@{vm.hasCompleteBt}"
+                tools:visibility="gone" />
+
+    </com.dyn.base.ui.weight.RoundConstraintLayout>
+</layout>

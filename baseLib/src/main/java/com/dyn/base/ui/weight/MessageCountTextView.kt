@@ -7,6 +7,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import com.blankj.utilcode.util.ColorUtils
 import com.dyn.base.R
 import com.flyco.roundview.RoundTextView
 import com.orhanobut.logger.Logger
@@ -19,7 +20,7 @@ class MessageCountTextView(context: Context, attributeSet: AttributeSet?, defaul
     private var isMessageStatus: Boolean = false
     private var maxCount: Int = 99
     private var messageCount: Int = 0
-    private var mCountMinSize = dp2px(14f)
+    private var mCountMinSize = dp2px(16f)
     private var mStatusMinSize = dp2px(5f)
 
     init {
@@ -29,7 +30,9 @@ class MessageCountTextView(context: Context, attributeSet: AttributeSet?, defaul
         messageCount = typedArray.getInt(R.styleable.MessageCountTextView_messageCount, messageCount)
         mCountMinSize = typedArray.getDimensionPixelSize(R.styleable.MessageCountTextView_mCountMinSize, mCountMinSize.toInt()).toFloat()
         mStatusMinSize = typedArray.getDimensionPixelSize(R.styleable.MessageCountTextView_mStatusMinSize, mStatusMinSize.toInt()).toFloat()
-        val bgColor = typedArray.getColor(R.styleable.MessageCountTextView_bgColor, Color.RED)
+//        val bgColor = typedArray.getColor(R.styleable.MessageCountTextView_bgColor,Color.RED)
+        val bgColor = typedArray.getColor(R.styleable.MessageCountTextView_bgColor,resources.getColor(R.color.message_bg_color ))
+//        val bgColor = typedArray.getColor(R.styleable.MessageCountTextView_bgColor, ColorUtils.getColor(R.color.message_bg_color))
         val tColor = typedArray.getColor(R.styleable.MessageCountTextView_textColor, Color.WHITE)
         setTextColor(tColor)
         mDelegate.backgroundColor = bgColor
@@ -63,7 +66,7 @@ class MessageCountTextView(context: Context, attributeSet: AttributeSet?, defaul
 
     private fun showMessageCount() {
         val w = mCountMinSize.toInt()
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, (w / 2).toFloat())
+        textSize = 10f
         minWidth = w
         minHeight = w
         mDelegate.cornerRadius = w / 2

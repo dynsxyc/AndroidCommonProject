@@ -6,7 +6,7 @@ import android.os.Looper
 import android.os.SystemClock
 import android.text.TextUtils
 import android.util.AttributeSet
-import com.tencent.smtt.sdk.WebView
+import android.webkit.WebView
 
 open class BridgeWebView(context: Context, attrs: AttributeSet?, defStyle: Int) :
     WebView(context, attrs, defStyle), WebViewJavascriptBridge {

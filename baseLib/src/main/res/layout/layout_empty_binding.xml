@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.dyn.base.utils.BaseActionConstant" />
+
+        <variable
+            name="vm"
+            type="com.dyn.base.customview.BaseCustomModel" />
+
+        <variable
+            name="action"
+            type="com.dyn.base.customview.ICustomViewActionListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        onClickWithDebouncing="@{(v)->action.onAction(v,BaseActionConstant.ACTION_REFRESH ,vm)}"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/dp_30"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mLayoutEmptyImg"
+            android:layout_width="@dimen/dp_180"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/img_data_empty" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mLayoutEmptyTitleTv"
+            style="@style/WrapWrapTextSize15.34"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_25"
+            android:text="@string/emptyTitleStr"
+            android:textColor="@color/text_color_33"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toTopOf="@id/mLayoutEmptyDesTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mLayoutEmptyImg" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/mLayoutEmptyDesTv"
+            style="@style/WrapWrapTextSize12.89"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="@string/emptyDesStr"
+            android:textColor="@color/text_color_99"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mLayoutEmptyTitleTv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

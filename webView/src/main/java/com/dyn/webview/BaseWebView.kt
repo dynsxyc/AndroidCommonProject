@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.webkit.ValueCallback
+import android.webkit.WebView
 import com.dyn.webview.jsbridge.*
 import com.dyn.webview.remotewebview.javascriptinterface.WebViewJavaScriptInterface
 import com.dyn.webview.remotewebview.settings.WebViewDefaultSettings
@@ -12,19 +14,20 @@ import com.dyn.webview.remotewebview.webchromeclient.DWebChromeClient
 import com.dyn.webview.remotewebview.webviewclient.DWebViewClient
 import com.dyn.webview.utils.WebConstants
 import com.google.gson.Gson
-import com.tencent.smtt.sdk.WebView
-import java.security.AccessController.getContext
+import com.orhanobut.logger.Logger
+import java.util.Objects
 
 open class BaseWebView(
     context: Context,
     attrs: AttributeSet?,
-    defStyleAttr: Int
-) : WebView(context, attrs, defStyleAttr), DWebViewClient.WebViewTouchListener,WebViewJavascriptBridge, IWebView {
+    defStyleAttr: Int,defStyleRes:Int
+) : WebView(context, attrs, defStyleAttr,defStyleRes), DWebViewClient.WebViewTouchListener,WebViewJavascriptBridge, IWebView {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?,defStyleAttr: Int) : this(context, attrs, android.R.attr.webViewStyle,0)
 
     private var mWebCallback: WebCallback? = null
-    var mHeader: Map<String, String>? = null //加载网页同步的请求头
+    private var mHeader: Map<String, String>? = null //加载网页同步的请求头
     private val mRemoteInterface by lazy {
         val jsInterFace = WebViewJavaScriptInterface(getContext(),
             object : WebViewJavaScriptInterface.JavascriptCommand {
@@ -50,9 +53,10 @@ open class BaseWebView(
         bridgeHelper = BridgeHelper(this)
     }
 
-    fun registerWebViewCallBack(webCallback: WebCallback) {
+    fun registerWebViewCallBack(webCallback: WebCallback, header: HashMap<String, String>?) {
+        mHeader = header
         mWebCallback = webCallback
-        webViewClient = DWebViewClient(this, mHeader, webCallback, bridgeHelper, this)
+        webViewClient = DWebViewClient(this, header, webCallback, bridgeHelper, this)
         webChromeClient = DWebChromeClient(webCallback)
 
 //        callHandler("functionInJs", Gson().toJson(mutableMapOf("name" to "张三")), object :
@@ -121,21 +125,20 @@ open class BaseWebView(
         }
     }
 
-
     override fun loadUrl(url: String) {
         if (mHeader == null) {
             super.loadUrl(url)
         } else {
             super.loadUrl(url, mHeader!!)
         }
-        Log.i(TAG, "WebView load url 1: $url")
+        Logger.i( "WebView load url 1: $url")
         resetAllStateInternal(url)
 
     }
 
     override fun loadUrl(url: String, additionalHttpHeaders: MutableMap<String, String>) {
         super.loadUrl(url, additionalHttpHeaders)
-        Log.i(TAG, "WebView load url 2: $url")
+        Logger.i( "WebView load url 2: $url")
         resetAllStateInternal(url)
     }
 
@@ -160,9 +163,6 @@ open class BaseWebView(
 
     override var isTouchByUser = false
 
-    companion object {
-        const val TAG = "BaseWebView"
-    }
     /**
      * webView 点击图片 响应
      * */

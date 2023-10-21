@@ -1,9 +1,8 @@
 package com.dyn.webview.remotewebview.settings
 
 import android.os.Build
-import com.dyn.webview.utils.WebUtils
-import com.tencent.smtt.sdk.WebSettings
-import com.tencent.smtt.sdk.WebView
+import android.webkit.WebSettings
+import android.webkit.WebView
 
 /**
  *
@@ -17,13 +16,13 @@ object WebViewDefaultSettings {
         val mWebSettings = webView.settings
         mWebSettings.javaScriptEnabled = true
         mWebSettings.javaScriptCanOpenWindowsAutomatically = true //支持通过JS打开新窗口
-        mWebSettings.setSupportZoom(true)
-        mWebSettings.builtInZoomControls = true
-        if (WebUtils.isNetworkConnected()) {
-            mWebSettings.cacheMode = WebSettings.LOAD_DEFAULT
-        } else {
-            mWebSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-        }
+        mWebSettings.setSupportZoom(false)
+        mWebSettings.builtInZoomControls = false
+//        if (WebUtils.isNetworkConnected()) {
+            mWebSettings.cacheMode = WebSettings.LOAD_NO_CACHE
+//        } else {
+//            mWebSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
+//        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            mWebSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
@@ -40,7 +39,7 @@ object WebViewDefaultSettings {
 
 //        mWebSettings.textZoom = 100
         mWebSettings.databaseEnabled = true
-        mWebSettings.setAppCacheEnabled(true)
+//        mWebSettings.setAppCacheEnabled(true)
         mWebSettings.loadsImagesAutomatically = true
 //        mWebSettings.setSupportMultipleWindows(false)
         mWebSettings.blockNetworkImage = false//是否阻塞加载网络图片  协议http or https

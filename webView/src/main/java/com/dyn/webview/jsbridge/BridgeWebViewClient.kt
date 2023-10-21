@@ -1,7 +1,7 @@
 package com.dyn.webview.jsbridge
 
-import com.tencent.smtt.sdk.WebView
-import com.tencent.smtt.sdk.WebViewClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 

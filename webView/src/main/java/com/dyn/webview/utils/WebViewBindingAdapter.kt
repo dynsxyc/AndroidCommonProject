@@ -1,16 +1,16 @@
 package com.dyn.webview.utils
 
+import android.os.Build
 import android.os.Looper
-import android.util.Log
+import android.text.TextUtils
 import android.view.ViewGroup
+import android.webkit.WebView
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
 import com.dyn.webview.BaseWebView
 import com.dyn.webview.DispatchWebEvent
 import com.dyn.webview.WebCallback
 import com.dyn.webview.jsbridge.BridgeHandler
 import com.orhanobut.logger.Logger
-import com.tencent.smtt.sdk.WebView
 
 object WebViewBindingAdapter {
     @BindingAdapter(value = ["loadWebUrl"], requireAll = false)
@@ -21,12 +21,6 @@ object WebViewBindingAdapter {
         }
     }
 
-    @BindingAdapter(value = ["webHeader"], requireAll = false)
-    @JvmStatic
-    fun webHeader(web: BaseWebView, webHeader: HashMap<String, String>?) {
-        web.mHeader = webHeader
-    }
-
     @BindingAdapter(value = ["loadDataWithBaseURL", "loadDataBaseurl"], requireAll = true)
     @JvmStatic
     fun loadDataWithBaseURL(web: BaseWebView, data: String?, baseUrl: String?) {
@@ -35,16 +29,44 @@ object WebViewBindingAdapter {
         }
     }
 
-    @BindingAdapter(value = ["initWebView"], requireAll = false)
+    @BindingAdapter(value = ["initWebView","webHeader"], requireAll = false)
     @JvmStatic
-    fun initWebView(web: BaseWebView, webCallback: WebCallback) {
-        web.registerWebViewCallBack(webCallback)
+    fun initWebView(web: BaseWebView, webCallback: WebCallback?, header: HashMap<String, String>?) {
+        webCallback?.let {
+            web.requestFocus()
+            web.isEnabled = true
+            web.registerWebViewCallBack(it,header)
+        }
     }
 
     @BindingAdapter(value = ["interfaceName"], requireAll = false)
     @JvmStatic
-    fun addJavascriptInterface(web: BaseWebView, interfaceName: String) {
-        web.addJavascriptInterface(interfaceName)
+    fun addJavascriptInterface(web: BaseWebView, interfaceName: String?) {
+        interfaceName?.let {
+            web.addJavascriptInterface(it)
+        }
+    }
+    @BindingAdapter(value = ["webLoadJsStr"], requireAll = false)
+    @JvmStatic
+    fun webLoadJsStr(web: BaseWebView, jsStr: String?) {
+        jsStr?.let {
+            if (Build.VERSION.SDK_INT< 18) {
+                Logger.i("调用js方法 SDK_INT< 18  2-》$jsStr")
+                web.loadUrl(jsStr)
+            } else {
+                Logger.i("调用js方法  3-》$jsStr")
+                web.evaluateJavascript(jsStr) {
+                    //返回JS方法中的返回值，我们没有写返回值所以为null
+                }
+            }
+        }
+    }
+    @BindingAdapter(value = ["customInterfaceObject","customInterfaceName"], requireAll = true)
+    @JvmStatic
+    fun addJavascriptInterface(web: BaseWebView, interfaceObject: Any?, interfaceName: String?) {
+        if (interfaceObject != null && TextUtils.isEmpty(interfaceName).not()){
+            web.addJavascriptInterface(interfaceObject,interfaceName!!)
+        }
     }
 
     @BindingAdapter(value = ["reloadWeb"])
@@ -122,6 +144,13 @@ object WebViewBindingAdapter {
     fun registerBridgeHandler(web: BaseWebView, handlerName: String?, handler: BridgeHandler?) {
         if (handlerName.isNullOrEmpty().not() && handler != null) {
             web.registerHandler(handlerName!!, handler)
+        }
+    }
+    @BindingAdapter(value = ["bridgeCallHandler"])
+    @JvmStatic
+    fun callBridgeHandler(web: BaseWebView, handlerData: CallHandlerData?) {
+        handlerData?.let {
+            web.callHandler(it.handlerName,it.data,it.callBack)
         }
     }
 

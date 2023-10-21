@@ -20,7 +20,7 @@
             android:id="@+id/mAddNumberViewMinusRl"
             android:layout_width="@dimen/dp_24"
             android:layout_height="match_parent"
-            app:rv_backgroundColor="@color/common_white"
+            app:rv_backgroundColor="@color/white"
             app:rv_backgroundPressColor="@color/common_white_press"
             app:rv_cornerRadius_BL="@dimen/dp_4"
             app:rv_cornerRadius_TL="@dimen/dp_4"
@@ -41,7 +41,7 @@
         <RelativeLayout
             android:layout_width="@dimen/dp_37"
             android:layout_height="match_parent"
-            android:background="@color/common_white"
+            android:background="@color/white"
             onClickWithDebouncing="@{(view)->action.onAction(view,BaseActionConstant.ACTION_ADD_NUMBER_CONTENT,vm)}"
             android:orientation="vertical">
 
@@ -56,12 +56,12 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/common_divider_height"
                 android:background="@color/common_divider" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_1"
+                android:layout_height="@dimen/common_divider_height"
                 android:layout_alignParentBottom="true"
                 android:background="@color/common_divider" />
 
@@ -75,7 +75,7 @@
             android:id="@+id/mAddNumberViewPlusRl"
             android:layout_width="@dimen/dp_24"
             android:layout_height="match_parent"
-            app:rv_backgroundColor="@color/common_white"
+            app:rv_backgroundColor="@color/white"
             app:rv_backgroundPressColor="@color/common_white_press"
             app:rv_cornerRadius_BR="@dimen/dp_4"
             app:rv_cornerRadius_TR="@dimen/dp_4"
