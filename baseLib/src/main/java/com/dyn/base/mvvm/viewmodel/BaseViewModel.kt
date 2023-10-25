@@ -30,6 +30,7 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
     val mShortToastStr = MutableLiveData<CustomToastView.CustomToastBean>()
     val mLongToastStr = MutableLiveData<CustomToastView.CustomToastBean>()
     val mLoadingDialogStatus = MutableLiveData<@DialogStatus.EnumDialogStatus Int>()
+    var mLoadingDialogTipsStr :String? = null
     var mCustomViewActionListener: ICustomViewActionListener? = null
     val mHasTitle = MutableLiveData<Boolean>(true)
     val mLifeCycle = MutableLiveData<LifecycleOwner>()
@@ -154,8 +155,13 @@ open class BaseViewModel : ViewModel(), LifecycleObserver, BaseCustomModel {
         mLoadingDialogStatus.value = DialogStatus.LOADING_DIALOG_STATUS_SHOW_CANCEL
     }
 
-    fun showDialogUnCancel() {
-        mLoadingDialogStatus.value = DialogStatus.LOADING_DIALOG_STATUS_SHOW_UNCANCEL
+    fun showDialogUnCancel(tipsStr:String? =null) {
+        if (tipsStr.isNullOrEmpty()){
+            mLoadingDialogStatus.value = DialogStatus.LOADING_DIALOG_STATUS_SHOW_UNCANCEL
+        }else{
+            mLoadingDialogTipsStr = tipsStr
+            mLoadingDialogStatus.value = DialogStatus.LOADING_DIALOG_STATUS_SHOW_UNCANCEL_STR
+        }
     }
 
     fun hideDialog() {

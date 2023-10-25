@@ -18,6 +18,7 @@
         app:srcCompat="@drawable/light_progress_loading" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/loadingTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

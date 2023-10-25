@@ -28,6 +28,7 @@ import com.dyn.base.ui.base.BaseImmersionFragment
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_HIDE
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_SHOW_CANCEL
 import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_SHOW_UNCANCEL
+import com.dyn.base.ui.base.DialogStatus.Companion.LOADING_DIALOG_STATUS_SHOW_UNCANCEL_STR
 import com.dyn.base.ui.base.OnPermissionResultListener
 import com.dyn.base.ui.base.PermissionProxyClient
 import com.dyn.base.ui.databinding.DataBindingConfig
@@ -295,6 +296,9 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
 
                 LOADING_DIALOG_STATUS_SHOW_UNCANCEL -> {
                     progressLoading.showUnCancelableLoading()
+                }
+                LOADING_DIALOG_STATUS_SHOW_UNCANCEL_STR -> {
+                    progressLoading.showUnCancelableLoading(mViewModel.mLoadingDialogTipsStr)
                 }
 
                 LOADING_DIALOG_STATUS_HIDE -> {

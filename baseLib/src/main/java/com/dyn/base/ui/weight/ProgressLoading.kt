@@ -1,12 +1,20 @@
 package com.dyn.base.ui.weight
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.widget.ImageView
+import android.widget.TextView
+import com.blankj.utilcode.util.StringUtils
 import com.dyn.base.R
+import com.dyn.base.utils.StrUtils
 
 /**
  * Created by dyn on 2018/7/17.
@@ -30,8 +38,8 @@ class ProgressLoading private constructor(context: Context, theme: Int) : Dialog
 
 
         private lateinit var mDialog: ProgressLoading
-        private var animation: Animation? = null
         private var loadingView: ImageView? = null
+        private var loadingTv: TextView? = null
         private fun create(context: Context): ProgressLoading {
             mDialog = ProgressLoading(context, R.style.LightProgressDialog)
             mDialog.setContentView(R.layout.progress_dialog)
@@ -40,9 +48,7 @@ class ProgressLoading private constructor(context: Context, theme: Int) : Dialog
             lp?.dimAmount = 0.2f
             mDialog.window?.attributes = lp
             loadingView = mDialog.findViewById(R.id.iv_loading)
-            animation =
-                AnimationUtils.loadAnimation(context, R.anim.progress_load)
-
+            loadingTv = mDialog.findViewById(R.id.loadingTv)
             return mDialog
         }
     }
@@ -50,8 +56,12 @@ class ProgressLoading private constructor(context: Context, theme: Int) : Dialog
     private fun showLoading() {
         try {
             if (isShowing.not()) {
-                super.show()
-                loadingView?.startAnimation(animation)
+                val an = ObjectAnimator.ofFloat(loadingView!!,"rotation",0f,360f)
+                an.duration = 800
+                an.repeatCount = ValueAnimator.INFINITE
+                an.interpolator = LinearInterpolator()
+                an.start()
+                mDialog.show()
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -64,16 +74,21 @@ class ProgressLoading private constructor(context: Context, theme: Int) : Dialog
         showLoading()
     }
 
-    fun showUnCancelableLoading() {
+    fun showUnCancelableLoading(tipsStr:String? = null) {
         mDialog.setCancelable(false)
         mDialog.setCanceledOnTouchOutside(false)
+        if (tipsStr.isNullOrEmpty().not()){
+            loadingTv?.text = tipsStr
+        }else{
+            loadingTv?.text = StringUtils.getString(R.string.loading)
+
+        }
         showLoading()
     }
 
     fun hideLoading() {
         if (isShowing) {
-            super.dismiss()
-            loadingView?.clearAnimation()
+            mDialog.dismiss()
         }
     }
 }

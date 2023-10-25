@@ -78,7 +78,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/mDialogRightTv"
-                onClickWithDebouncing="@{(v)->action.onAction(v,BaseActionConstant.ACTION_CONFIRM,vm)}"
+                onClickWithDebouncing="@{(v)->action.onAction(v,BaseActionConstant.ACTION_CANCEL,vm)}"
                 visible="@{vm.hasCancelBt}"
                 tools:visibility="visible" />
             <com.flyco.roundview.RoundTextView
