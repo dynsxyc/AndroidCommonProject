@@ -50,7 +50,7 @@ abstract class BaseFragment<VM : BaseViewModel> : BaseImmersionFragment(),
     private var mOnBackPressedCallback: OnBackPressedCallback? = null
 
     private val progressLoading by lazy {
-        ProgressLoading.getInstance(requireContext())
+        ProgressLoading(requireContext())
     }
     protected var lifecycleIndex = 0
 

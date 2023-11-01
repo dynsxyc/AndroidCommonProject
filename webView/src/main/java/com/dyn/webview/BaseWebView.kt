@@ -108,8 +108,6 @@ open class BaseWebView(
     fun handleCallback(response: String) {
         if (!TextUtils.isEmpty(response)) {
             val trigger = "javascript:jieshou(${response})"
-//            val trigger = "javascript:jieshou(\"${Html.fromHtml(response)}\")"
-//            val trigger = "javascript:jieshou(\"555\")"
             callbackJs(trigger)
         }
     }
@@ -119,10 +117,16 @@ open class BaseWebView(
      * */
     private fun callbackJs(trigger: String) {
         try {
-            evaluateJavascript(trigger, null)
+            evaluateJavascript(trigger) {
+                Logger.i("js 方法返回->$it")
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun evaluateJavascript(script: String, resultCallback: ValueCallback<String>?) {
+        super.evaluateJavascript(script, resultCallback)
     }
 
     override fun loadUrl(url: String) {

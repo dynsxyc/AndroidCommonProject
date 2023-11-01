@@ -43,7 +43,6 @@
                 android:id="@+id/webView"
                 canGoBackStatus="@{vm.canGoBackStatus}"
                 backListener = "@{vm.backListener}"
-                dispatchEvent="@{vm.dispatchEvent}"
                 initWebView="@{webCallBack}"
                 interfaceName="@{vm.interfaceName}"
                 reloadWeb="@{vm.isReLoad}"

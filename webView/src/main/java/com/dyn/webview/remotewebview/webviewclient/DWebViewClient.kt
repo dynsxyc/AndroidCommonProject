@@ -53,38 +53,48 @@ class DWebViewClient(
         }
         Logger.i("shouldOverrideUrlLoading -------4-----------------")
         if (mHeader != null) {
-            view?.loadUrl(url,mHeader)
+            overrideUrl?.let {
+                mHeader!!.put("Referer",it)
+            }
+            view?.loadUrl(url, mHeader)
         } else {
-            view?.loadUrl(url)
+            overrideUrl?.let {
+                overrideHeader.clear()
+                overrideHeader.put("Referer",it)
+            }
+            view?.loadUrl(url,overrideHeader)
         }
+        overrideUrl = url
         return true
     }
+    private var overrideHeader = mutableMapOf<String,String>()
+    private var overrideUrl:String? = null
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-        // 当前链接的重定向
-        if (mTouchListener.isTouchByUser) {
-            return super.shouldOverrideUrlLoading(view, request)
-        }
-        // 如果链接跟当前链接一样，表示刷新
-        if (mWebView.url == request.url.toString()) {
-            return super.shouldOverrideUrlLoading(view, request)
-        }
-        if (handleLinked(request.url.toString())) {
-            return true
-        }
-        // 控制页面中点开新的链接在当前webView中打开
-        if (bridgeHelper?.shouldOverrideUrlLoading(request.url.toString()) == true){
-            return true
-        }
-        if (mHeader != null) {
-            view.loadUrl(request.url.toString(),mHeader)
-        } else {
-            view.loadUrl(request.url.toString())
-        }
-        return true
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+//        // 当前链接的重定向
+//        if (mTouchListener.isTouchByUser) {
+//            return super.shouldOverrideUrlLoading(view, request)
+//        }
+//        // 如果链接跟当前链接一样，表示刷新
+//        if (mWebView.url == request.url.toString()) {
+//            return super.shouldOverrideUrlLoading(view, request)
+//        }
+//        if (handleLinked(request.url.toString())) {
+//            return true
+//        }
+//        // 控制页面中点开新的链接在当前webView中打开
+//        if (bridgeHelper?.shouldOverrideUrlLoading(request.url.toString()) == true){
+//            return true
+//        }
+//        if (mHeader != null) {
+//            view.loadUrl(request.url.toString(),mHeader)
+//        } else {
+//            view.loadUrl(request.url.toString())
+//        }
+//        return true
+//    }
 
     /**
      * 支持电话、短信、邮件、地图跳转，跳转的都是手机系统自带的应用
@@ -103,6 +113,43 @@ class DWebViewClient(
                 ignored.printStackTrace()
             }
             return true
+        }
+        //        微信H5支付代码
+        if (url.startsWith("weixin://wap/pay?")) {
+            try {
+                val intent = Intent()
+                intent.action = Intent.ACTION_VIEW
+                intent.data = Uri.parse(url)
+                mWebView.context.startActivity(intent)
+//                if (mWebView.getContext() is Activity) {
+//                    (mWebView.getContext() as Activity).finish()
+//                }
+                Logger.i("调用微信支付")
+                mWebCallback.exec(mWebView.context,LEVEL_LOCAL,"close",GsonFactory.gson.toJson(overrideHeader),null)
+                return true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(mWebView.context, "请安装微信", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        if (url.startsWith("alipays:") || url.startsWith("alipay")) {
+            try {
+                mWebView.context.startActivity(
+                    Intent(
+                        "android.intent.action.VIEW",
+                        Uri.parse(url)
+                    )
+                )
+                Logger.i("调用支付宝支付")
+                return true
+            } catch (e: Exception) {
+                Toast.makeText(
+                    mWebView.context,
+                    "未检测到支付宝客户端，请安装后重试。",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
         return false
     }
@@ -158,5 +205,12 @@ class DWebViewClient(
         }
     }
 
+    override fun shouldInterceptRequest(
+        view: WebView?,
+        request: WebResourceRequest?
+    ): WebResourceResponse? {
+        Logger.i("shouldInterceptRequest request url->${request?.url}\n header->${request?.requestHeaders}")
+        return super.shouldInterceptRequest(view, request)
+    }
 
 }

@@ -19,7 +19,7 @@ object WebViewDefaultSettings {
         mWebSettings.setSupportZoom(false)
         mWebSettings.builtInZoomControls = false
 //        if (WebUtils.isNetworkConnected()) {
-            mWebSettings.cacheMode = WebSettings.LOAD_NO_CACHE
+            mWebSettings.cacheMode = WebSettings.LOAD_DEFAULT
 //        } else {
 //            mWebSettings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
 //        }
@@ -39,7 +39,6 @@ object WebViewDefaultSettings {
 
 //        mWebSettings.textZoom = 100
         mWebSettings.databaseEnabled = true
-//        mWebSettings.setAppCacheEnabled(true)
         mWebSettings.loadsImagesAutomatically = true
 //        mWebSettings.setSupportMultipleWindows(false)
         mWebSettings.blockNetworkImage = false//是否阻塞加载网络图片  协议http or https

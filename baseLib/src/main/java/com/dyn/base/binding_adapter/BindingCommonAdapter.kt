@@ -157,8 +157,7 @@ object BindingCommonAdapter {
     @BindingAdapter(value = ["rotate"], requireAll = false)
     @JvmStatic
     fun rotate(view: View, rotation: Float) {
-//        view.rotation = rotation
-        val animator = ObjectAnimator.ofFloat(view, "rotation", view.rotation, rotation)
+        val animator = ObjectAnimator.ofFloat(view,"rotation",view.rotation,rotation)
         animator.duration = 300
         animator.interpolator = LinearInterpolator()
         animator.start()

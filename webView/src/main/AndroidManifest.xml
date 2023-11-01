@@ -8,20 +8,17 @@
         android:usesCleartextTraffic="true">
         <!--这个服务是webView进程和APP主进程进行通信的  主进程的service-->
         <service android:name=".mainprocess.MainProHandleRemoteService"/>
-        <!-- 这个服务是优化webView加载速度使用的-->
-        <service android:name=".command.base.OptimizationService"
+        <!-- 这个服务是优化webView加载速度使用的 目前未使用多进程交互-->
+<!--        <service android:name=".command.base.OptimizationService"
             android:process=":remoteweb"
+            />-->
+        <service android:name=".command.base.OptimizationService"
             />
         <activity android:name=".WebViewActivity"
             android:screenOrientation="portrait"
             android:process=":remoteweb"
             android:theme="@style/AppTheme.NoActionBar"
             />
-        <service
-            android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
-            android:label="dexopt"
-            android:process=":dexopt" >
-        </service>
     </application>
 
 </manifest>

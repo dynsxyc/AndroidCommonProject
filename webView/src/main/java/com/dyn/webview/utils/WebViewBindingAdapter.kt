@@ -1,8 +1,7 @@
 package com.dyn.webview.utils
 
-import android.os.Build
 import android.os.Looper
-import android.text.TextUtils
+import android.view.View.FOCUS_DOWN
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.databinding.BindingAdapter
@@ -35,6 +34,7 @@ object WebViewBindingAdapter {
         webCallback?.let {
             web.requestFocus()
             web.isEnabled = true
+            it.onRequestWebView(web)
             web.registerWebViewCallBack(it,header)
         }
     }
@@ -57,10 +57,12 @@ object WebViewBindingAdapter {
                 Logger.i("调用js方法  3-》$jsStr")
                 web.evaluateJavascript(jsStr) {
                     //返回JS方法中的返回值，我们没有写返回值所以为null
+                    Logger.i("js 方法返回->$it")
                 }
             }
         }
     }
+    @SuppressLint("JavascriptInterface")
     @BindingAdapter(value = ["customInterfaceObject","customInterfaceName"], requireAll = true)
     @JvmStatic
     fun addJavascriptInterface(web: BaseWebView, interfaceObject: Any?, interfaceName: String?) {
@@ -77,27 +79,30 @@ object WebViewBindingAdapter {
         }
     }
 
-    @BindingAdapter(value = ["dispatchEvent"])
-    @JvmStatic
-    fun dispatchEvent(web: BaseWebView, event: DispatchWebEvent?) {
-        when (event) {
-            DispatchWebEvent.ONRESUME -> {
-                web.onResume()
-                web.dispatchEvent("pageResume")
-            }
-            DispatchWebEvent.ONSTOP -> {
-                web.dispatchEvent("pageStop")
-            }
-            DispatchWebEvent.ONPAUSE -> {
-                web.onPause()
-                web.dispatchEvent("pagePause")
-            }
-            DispatchWebEvent.ONDESTROYVIEW -> {
-                web.dispatchEvent("pageDestroy")
-            }
-            else -> {}
-        }
-    }
+//    @BindingAdapter(value = ["dispatchEvent"]) 不能这样用liveData不能分发到destroy位置
+//    @JvmStatic
+//    fun dispatchEvent(web: BaseWebView, event: DispatchWebEvent?) {
+//        Logger.i("dispatchEvent event->$event")
+//        when (event) {
+//            DispatchWebEvent.ONRESUME -> {
+//                web.onResume()
+//                web.dispatchEvent("pageResume")
+//            }
+//            DispatchWebEvent.ONSTOP -> {
+//                web.dispatchEvent("pageStop")
+//            }
+//            DispatchWebEvent.ONPAUSE -> {
+//                web.onPause()
+//                web.dispatchEvent("pagePause")
+//            }
+//            DispatchWebEvent.ONDESTROYVIEW -> {
+//                web.loadUrl("about:blank")
+//                web.destroy()
+//                web.dispatchEvent("pageDestroy")
+//            }
+//            else -> {}
+//        }
+//    }
 
     @BindingAdapter(value = ["clearWebView"])
     @JvmStatic

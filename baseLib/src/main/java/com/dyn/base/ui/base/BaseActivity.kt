@@ -41,7 +41,7 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
     private val vmClazz =
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
     private val progressLoading by lazy {
-        ProgressLoading.createNew(this)
+        ProgressLoading(this)
     }
     val mViewModel by lazy {
         getActivityViewModel(vmClazz)

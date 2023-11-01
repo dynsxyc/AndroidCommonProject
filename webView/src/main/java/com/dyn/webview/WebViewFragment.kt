@@ -193,21 +193,20 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
      * */
     override fun onResume() {
         super.onResume()
-        mViewModel.dispatchEvent.value = DispatchWebEvent.ONRESUME
+        currentWebView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mViewModel.dispatchEvent.value = DispatchWebEvent.ONPAUSE
+        currentWebView?.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        mViewModel.dispatchEvent.value = DispatchWebEvent.ONSTOP
     }
 
     override fun onDestroyView() {
-        mViewModel.dispatchEvent.value = DispatchWebEvent.ONDESTROYVIEW
+        currentWebView?.destroy()
         super.onDestroyView()
     }
 
@@ -371,6 +370,10 @@ class WebViewFragment : BaseFragment<WebViewModelView>(), WebCallback {
 
     override fun immersionBarEnabled(): Boolean {
         return true
+    }
+    private var currentWebView:WebView? = null
+    override fun onRequestWebView(webView: WebView) {
+        currentWebView = webView
     }
 
 }

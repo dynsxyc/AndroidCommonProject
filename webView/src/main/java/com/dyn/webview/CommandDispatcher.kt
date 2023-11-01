@@ -170,7 +170,7 @@ class CommandDispatcher {
         MainLooper.runOnUiThread(Runnable {
             dispatcherCallBack?.preHandleBeforeCallback(responseCode, actionName, response)
             Logger.i("response ->$response")
-            val params = gSon.fromJson<MutableMap<String, String>>(response, MutableMap::class.java)
+//            val params = gSon.fromJson<MutableMap<String, String>>(response, MutableMap::class.java)
 //            if (params.containsKey(WebConstants.NATIVE2WEB_CALLBACK) && params[WebConstants.NATIVE2WEB_CALLBACK].isNullOrEmpty().not()) {
                 callback?.onCallBack(response)
 //            }
