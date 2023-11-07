@@ -1,9 +1,11 @@
 ﻿package com.dyn.base.ui.base
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
+import android.os.Bundle
 import android.os.StrictMode
 import android.webkit.WebView
 import androidx.lifecycle.ViewModelStore
@@ -11,8 +13,6 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDex
 import cat.ereza.customactivityoncrash.config.CaocConfig
 import com.blankj.utilcode.util.ProcessUtils
-import com.dyn.base.BuildConfig
-import com.dyn.base.loadsir.CustomCallback
 import com.dyn.base.loadsir.EmptyCallback
 import com.dyn.base.loadsir.ErrorCallback
 import com.dyn.base.loadsir.LoadingCallback
@@ -51,7 +51,6 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
 
     protected open fun init() {
         LoadSir.beginBuilder()
-            .addCallback(CustomCallback())
             .addCallback(LoadingCallback())
             .addCallback(ErrorCallback())
             .addCallback(EmptyCallback())
@@ -89,7 +88,7 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
     private fun initLogger() {
         Logger.addLogAdapter(object : AndroidLogAdapter() {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
+                return isDebug()
             }
         })
     }
@@ -98,19 +97,19 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
      * debug模式下开启严苛模式,校验代码中是否存在违规的错误
      * 例如：UI访问网络 UI操作 IO等
      * */
-    private fun openStrictMode() {
-        if (BuildConfig.DEBUG) {
+    open fun openStrictMode() {
+        if (isDebug()) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectAll()
                     .penaltyLog()//违规打印日志
-//                    .penaltyDeath()//违规崩溃
+                    .penaltyDeath()//违规崩溃
                     .build()
             )
             StrictMode.setVmPolicy(
                 StrictMode.VmPolicy.Builder()
                     .detectAll()
-//                    .penaltyDeath()
+                    .penaltyDeath()
                     .penaltyLog()
                     .build()
             )
@@ -126,7 +125,58 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         }
     }
 
+    private var activityAccount = 0
+    private var isForeground = false
+
+    /**
+     * 监听应用 所有activity 生命周期
+     * */
+    fun initActivityLifecycleCallback() {
+        registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
+            override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+
+            }
+
+            override fun onActivityStarted(activity: Activity) {
+                if (activityAccount == 0) {
+                    //app回到前台
+                    isForeground = true;
+                }
+                activityAccount++;
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+
+            }
+
+            override fun onActivityPaused(activity: Activity) {
+
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                activityAccount--;
+                if (activityAccount == 0) {
+                    isForeground = false;
+                }
+
+            }
+
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+
+            }
+
+            override fun onActivityDestroyed(activity: Activity) {
+
+            }
+
+        })
+    }
+
     override val viewModelStore: ViewModelStore
         get() = mViewModelStore
+
+    open fun isDebug():Boolean{
+        return false
+    }
 
 }

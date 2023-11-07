@@ -17,7 +17,7 @@ class WebViewArgs(
         parcel.readString(),
         parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte(),
-        parcel.readSerializable() as HashMap<String, String>
+        parcel.readSerializable() as HashMap<String, String>?
     ) {
     }
 

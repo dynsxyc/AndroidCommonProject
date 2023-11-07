@@ -19,6 +19,15 @@ object BindingSwitchButtonAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("switchBtEnable")
+    fun switchBtEnable(
+        sBt: SwitchButton,
+        newValue: Boolean
+    ) {
+        sBt.isEnabled = newValue
+    }
+
+    @JvmStatic
     @InverseBindingAdapter(
         attribute = "switchBtChange",
         event = "switchBtAttrChanged"

@@ -10,8 +10,6 @@ android {
     defaultConfig {
         minSdkVersion app_android.minSdkVersion
         targetSdkVersion app_android.targetSdkVersion
-        versionCode 1
-        versionName version
     }
     buildTypes {
         release {
@@ -19,11 +17,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions { // 消除lint警告
+    namespace "com.github.lzyzsd.library"
+    lint {
         abortOnError false
         checkReleaseBuilds false
     }
-    namespace "com.github.lzyzsd.library"
 }
 
 dependencies {

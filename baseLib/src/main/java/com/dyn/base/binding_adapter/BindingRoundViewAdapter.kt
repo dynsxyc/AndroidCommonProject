@@ -17,6 +17,33 @@ object BindingRoundViewAdapter {
         view.delegate.strokeColor = color
     }
 
+
+    @BindingAdapter(value = ["rvBackgroundColor"], requireAll = false)
+    @JvmStatic
+    fun rvBackgroundColor(view: View, color: Int) {
+        val delegate = when (view) {
+            is RoundClearEditTextView ->
+                view.getDelegate()
+
+            is RoundTextView ->
+                view.delegate
+
+            is RoundLinearLayout ->
+                view.delegate
+
+            is RoundConstraintLayout ->
+                view.getDelegate()
+
+            is RoundFrameLayout ->
+                view.delegate
+
+            else -> null
+        }
+        delegate?.let {
+            it.backgroundColor = color
+        }
+    }
+
     @BindingAdapter(value = ["rv_backgroundColor"], requireAll = false)
     @JvmStatic
     fun rv_backgroundColor(view: View, color: Int) {

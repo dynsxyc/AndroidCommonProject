@@ -38,12 +38,11 @@ abstract class BaseActivity<VM : BaseViewModel> : DataBindingActivity(), ICustom
         getAppViewModelProvider().get(SharedViewModel::class.java)
     }
 
-    private val vmClazz =
-        (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
     private val progressLoading by lazy {
         ProgressLoading(this)
     }
     val mViewModel by lazy {
+        val vmClazz = (this::class.java.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>
         getActivityViewModel(vmClazz)
     }
 

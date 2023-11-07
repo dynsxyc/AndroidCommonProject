@@ -31,11 +31,12 @@ object BaseDialogUtils {
     private var mEditNumberDialog: Dialog? = null
     private var mTipsDialog: Dialog? = null
 
-    fun showNumberEditText(mActivity: Activity, initNumber: Int, onComplete: (Int) -> Unit) {
+    fun showNumberEditText(mActivity: Activity, initNumber: Int,title:String = "数量编辑",hintStr:String = "请输入数量", onComplete: (Int) -> Unit) {
         val contentView = LayoutInflater.from(mActivity).inflate(R.layout.dialog_model, null)
         val editText = contentView.findViewById<EditText>(R.id.mDialogEdit)
         editText.inputType = EditorInfo.TYPE_CLASS_NUMBER
         editText.setText(initNumber.toString())
+        editText.hint = hintStr
         var mNumber = initNumber
         val mMinNumber = 0
         val mMaxNumber = Int.MAX_VALUE - 1
@@ -74,7 +75,7 @@ object BaseDialogUtils {
                 mEditNumberDialog?.dismiss()
             }).setOnDismissListener(DialogInterface.OnDismissListener {
                 mEditNumberDialog = null
-            }).setText(R.id.mDialogTitleTipsTv, "数量编辑").setWidthAndHeight(
+            }).setText(R.id.mDialogTitleTipsTv, title).setWidthAndHeight(
                 ScreenUtils.getScreenWidth() * 3 / 4,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             ).show().dialog

@@ -22,11 +22,13 @@ object PopupManager {
         xOffset: Int = ConvertUtils.dp2px(0f),
         yOffset: Int = ConvertUtils.dp2px(0f),
         isViewMode:Boolean = true,
+        hasShadowBg:Boolean = true,
         params:LayoutParams = LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT),
         callBack: XPopupCallback? = null,
     ): BasePopupView {
         return XPopup.Builder(context)
             .atView(atView)
+            .hasShadowBg(hasShadowBg)
             .isViewMode(isViewMode)
             .popupPosition(position)
             .setPopupCallback(callBack)

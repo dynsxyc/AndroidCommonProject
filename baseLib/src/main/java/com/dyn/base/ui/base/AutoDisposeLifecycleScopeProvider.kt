@@ -41,6 +41,6 @@ class AutoDisposeLifecycleScopeProvider : LifecycleScopeProvider<AutoDisposeLife
     }
 
     override fun peekLifecycle(): ViewModelEvent {
-        return lifecycleEvents.value
+        return lifecycleEvents.value!!
     }
 }

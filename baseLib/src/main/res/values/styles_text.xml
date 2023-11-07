@@ -576,6 +576,9 @@
     <style name="WrapWrapTextSize16.33.medium">
         <item name="android:fontFamily">@font/medium</item>
     </style>
+    <style name="WrapWrapTextSize16.33.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="WrapWrapTextSize16.0A">
         <item name="android:textColor">@color/text_color_0A</item>

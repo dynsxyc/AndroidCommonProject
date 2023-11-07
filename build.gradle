@@ -1,10 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.6.0-RC'
+    ext.kotlin_version = '1.9.0'
     apply from: file("config/config.gradle")
     ext {
-        rootProject.ext.kotlin_version = '1.5.0'
         objectboxVersion = '3.7.0'
     }
 
@@ -48,11 +47,11 @@ buildscript {
     }
     dependencies {
 //        classpath "com.android.tools.build:gradle:3.4.2"
-        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'com.android.tools.build:gradle:8.1.2'
 
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0'
-        classpath "org.jetbrains.kotlin:kotlin-allopen:${rootProject.ext.kotlin_version}"
-        classpath "org.jetbrains.kotlin:kotlin-noarg:${rootProject.ext.kotlin_version}"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version'
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:${rootProject.ext.navigationVersion}"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
         // NOTE: Do not place your application dependencies here; they belong

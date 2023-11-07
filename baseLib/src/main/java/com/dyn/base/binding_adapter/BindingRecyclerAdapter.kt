@@ -124,7 +124,7 @@ object BindingRecyclerAdapter {
         requireAll = false
     )
     @JvmStatic
-    fun <T> insertData(
+    fun <T : Any> insertData(
         view: RecyclerView,
         itemData: T?,
         insertDataByPosition: Int,
@@ -190,7 +190,7 @@ object BindingRecyclerAdapter {
         requireAll = false
     )
     @JvmStatic
-    fun <T> removeItemByData(
+    fun <T : Any> removeItemByData(
         view: RecyclerView,
         removeData: T?
     ) {

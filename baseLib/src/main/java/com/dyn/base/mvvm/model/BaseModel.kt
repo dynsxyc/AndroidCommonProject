@@ -67,7 +67,7 @@ abstract class BaseModel<NET_DATA, RESULT_DATA> : INetDataObserver<NET_DATA> {
     /**
      * 刷新，如果是分页数据，将page置为初始位置 重新加载
      * */
-    fun refresh() {
+    public open fun refresh() {
         if (mIsLoading.not()) {
             mIsLoading = true
             if (mIsPaging) {

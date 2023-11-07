@@ -9,19 +9,21 @@ import android.webkit.WebView
 import com.dyn.webview.jsbridge.CallBackFunction
 
 /**
- * webView¼àÌı »Øµ÷
+ * webViewç›‘å¬ å›è°ƒ
  * */
 interface WebCallback {
-    //Ò³Ãæ¿ªÊ¼¼ÓÔØ
+    //é¡µé¢å¼€å§‹åŠ è½½
     fun onPageStarted(url: String?)
-    //Ò³Ãæ¼ÓÔØ½áÊø
+    //é¡µé¢åŠ è½½ç»“æŸ
     fun onPageFinished(url: String?)
-    //Ò³Ãæ¼ÓÔØ´íÎó
+    //Ã’Â³ÃƒÃ¦Â¼Ã“Ã”Ã˜Â´Ã­ÃÃ³
+    fun onRequestWebView(webView: WebView)
+    //é¡µé¢åŠ è½½é”™è¯¯
     fun onSmartPageError()
-    //ÍøÒ³ÖĞ  ÎÄ¼şÇëÇó¹¦ÄÜ´¥·¢
+    //ç½‘é¡µä¸­  æ–‡ä»¶è¯·æ±‚åŠŸèƒ½è§¦å‘
     fun onShowFileChooser(fileChooserParams: FileChooserParams?, filePathCallback: ValueCallback<Array<Uri>>?)
     /**
-     * Ö´ĞĞH5ÖĞµÄjsÖĞµÄ·½·¨
+     * æ‰§è¡ŒH5ä¸­çš„jsä¸­çš„æ–¹æ³•
      *
      * */
     fun exec(context: Context, commandLevel: Int, cmd: String, params: String?, webView: WebView)

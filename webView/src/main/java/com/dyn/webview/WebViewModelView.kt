@@ -23,8 +23,6 @@ class WebViewModelView : BaseLoadSirAndRefreshViewModel() {
     }
     //webView 回调监听
 //    val webCallback = MutableLiveData<WebCallback>()
-    //分发给H5 的页面生命周期回调
-    var dispatchEvent = MutableLiveData<DispatchWebEvent?>()
     init {
         enableRefresh.value = false
     }

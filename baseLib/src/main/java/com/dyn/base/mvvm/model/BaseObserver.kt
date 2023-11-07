@@ -4,11 +4,11 @@ import com.dyn.base.ui.base.AutoDisposeLifecycleScopeProvider
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 
-abstract class BaseObserver<T>(
+abstract class BaseObserver<T : Any>(
     val autoDisposeProvider: AutoDisposeLifecycleScopeProvider,
     private val listener: INetDataObserver<T>?
 ) : Observer<T> {
-    override fun onSubscribe(d: Disposable?) {
+    override fun onSubscribe(d: Disposable) {
     }
 
     override fun onNext(t: T) {

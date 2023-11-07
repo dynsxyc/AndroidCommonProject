@@ -48,7 +48,6 @@ object BaseToastUtils {
                 it.setGravity(Gravity.CENTER, 0, 0)
                 it.show()
             }
-            Logger.i("toast 显示内容->$currentToastStr")
             Observable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS).subscribe {
                 Logger.i("toast timer->$it")
                 if (it == 3L){

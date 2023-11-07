@@ -30,13 +30,15 @@ object AndroidLocationUtils {
     }
 
     private fun getFromLocation(location: Location, data: MutableLiveData<LocationAddress>) {
-        Observable.just(geocoder?.getFromLocation(location.latitude, location.longitude, 1))
-            .handlerThread().subscribe({
-                data.value = LocationAddress(location, it[0])
-            }, {
-                data.value = null
-                it.printStackTrace()
-            })
+        geocoder?.getFromLocation(location.latitude, location.longitude, 1)?.let {
+            Observable.just(it)
+                .handlerThread().subscribe({
+                    data.value = LocationAddress(location, it[0])
+                }, {
+                    data.value = null
+                    it.printStackTrace()
+                })
+        }
     }
 
     fun getFromLocationName(addressName: String, data: MutableLiveData<List<Address>>) {
